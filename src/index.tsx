@@ -9,8 +9,15 @@ const FormularioTEU = () => {
   //y obtengo el handler (setProducto) para asignar el producto (productoEncontrado)
   const [productoEncontrado, setProducto] = React.useState();
 
-  //por cada cambio en el input de Codigo de Barras, busco el producto ingresado
-  const onInputCodigobarras = (evento: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Por cada cambio en el input de Codigo de Barras, busco el producto ingresado
+   * @param key puede ser "nombre" (el nombre) o "codigo" (el codigo de barras)
+   * @param evento para saber de que inputbox viene el texto
+   */
+  const buscarProductoPor = (
+    key: string,
+    evento: React.ChangeEvent<HTMLInputElement>
+  ) => {
     //busco el producto por su codigo de barra en la lista de "productos"
     const producto = productos.find(
       (producto) => producto.codigo == evento.target.value
@@ -32,7 +39,9 @@ const FormularioTEU = () => {
             className="form-control"
             id="TextboxCodigobarras"
             aria-describedby="DescripcionTextboxCodigobarras"
-            onInput={onInputCodigobarras}
+            onInput={(evento: React.ChangeEvent<HTMLInputElement>) =>
+              buscarProductoPor("codigo", evento)
+            }
           />
           <div id="DescripcionTextboxCodigobarras" className="form-text">
             Escanee el codigo de barras seleccionando este cuadro
@@ -47,7 +56,7 @@ const FormularioTEU = () => {
             className="form-control"
             id="TextboxNombreproducto"
             //@ts-ignore porque puede entregar un indefinido (un producto vacio)
-            value={productoEncontrado ? productoEncontrado.nombre : ""}
+            placeholder={productoEncontrado ? productoEncontrado.nombre : ""}
           />
         </div>
         <div className="mb-3">
@@ -111,28 +120,35 @@ const FormularioTEU = () => {
           <input type="number" className="form-control" id="TextboxCantidad" />
         </div>
       </form>
-      <table>
-        <tr>
-          <th>codigo</th>
-          <th>nombre</th>
-          <th>descripcion</th>
-          <th>precioBruto</th>
-          <th>cantidad</th>
-        </tr>
-        {
-          //iterando por cada producto
-          productos.forEach((producto) => {
-            return (
-              <tr>
-                <td>producto.codigo</td>
-                <td>producto.nombre</td>
-                <td>producto.descripcion</td>
-                <td>producto.precioBruto</td>
-                <td>producto.cantidad</td>
-              </tr>
-            );
-          })
-        }
+      {
+        //debug de la lista de productos actuales guardados
+      }
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">codigo</th>
+            <th scope="col">nombre</th>
+            <th scope="col">descripcion</th>
+            <th scope="col">precioBruto</th>
+            <th scope="col">cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            //iterando por cada producto
+            productos.map((producto, indice) => {
+              return (
+                <tr key={indice}>
+                  <td>{producto.codigo}</td>
+                  <td>{producto.nombre}</td>
+                  <td>{producto.descripcion}</td>
+                  <td>{producto.precioBruto}</td>
+                  <td>{producto.cantidad}</td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
       </table>
     </>
   );
