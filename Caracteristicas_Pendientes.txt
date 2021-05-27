@@ -1,0 +1,15 @@
+crtl+shift+p (para ayuda)
+
+
+->host local+backup
+->buscar con nombre. 
+->el codigo de barra no es PK. hay productos que no tienen codigo de barras
+->puede haber multiples codigos de barra o matriciales (ej:QR)? 
+->reporte excel
+->base de datos normal (SQL)
+->foto
+
+
+
+
+->login
