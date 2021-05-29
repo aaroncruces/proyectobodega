@@ -2,29 +2,34 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+import Producto from "./Producto";
 import productos from "./listaProductos";
 
 const FormularioTEU = () => {
-  //inicializo el "productoEncontrado" como undefined (sin parametros en useState()),
-  //y obtengo el handler (setProducto) para asignar el producto (productoEncontrado)
-  const [productoEncontrado, setProducto] = React.useState();
+  //creo producto vacio, ya que no veo maneras de crear variables estaticas de forma elegante
+  const productoVacio = new Producto();
 
+  //y obtengo el setter (setProducto) para asignar el producto (productoActual)
+  const [productoActual, setProducto] = React.useState(productoVacio);
   /**
    * Por cada cambio en el input de Codigo de Barras, busco el producto ingresado
-   * @param key puede ser "nombre" (el nombre) o "codigo" (el codigo de barras)
+   * @param key puede ser  "codigo" (el codigo de barras) o "nombre" (el nombre)
    * @param evento para saber de que inputbox viene el texto
    */
   const buscarProductoPor = (
-    key: string,
+    key: "codigo" | "nombre",
     evento: React.ChangeEvent<HTMLInputElement>
   ) => {
+    //para no rehacer el producto cada vez
+    //static productoVacio = new Producto();
+
     //busco el producto por su codigo de barra en la lista de "productos"
-    const producto = productos.find(
-      (producto) => producto.codigo == evento.target.value
+    const productoEncontrado = productos.find(
+      (producto) => producto[key] == evento.target.value
     );
-    //@ts-ignore porque puede entregar un indefinido (un producto vacio)
-    setProducto(producto);
-    console.log(producto);
+
+    setProducto(productoEncontrado || productoVacio);
+    console.log(productoEncontrado);
   };
 
   return (
@@ -55,8 +60,10 @@ const FormularioTEU = () => {
             type="text"
             className="form-control"
             id="TextboxNombreproducto"
-            //@ts-ignore porque puede entregar un indefinido (un producto vacio)
-            placeholder={productoEncontrado ? productoEncontrado.nombre : ""}
+            onInput={(evento: React.ChangeEvent<HTMLInputElement>) =>
+              buscarProductoPor("nombre", evento)
+            }
+            value={productoActual.nombre}
           />
         </div>
         <div className="mb-3">
@@ -136,14 +143,28 @@ const FormularioTEU = () => {
         <tbody>
           {
             //iterando por cada producto
-            productos.map((producto, indice) => {
+            productos.map((productoIterado, indice) => {
               return (
-                <tr key={indice}>
-                  <td>{producto.codigo}</td>
-                  <td>{producto.nombre}</td>
-                  <td>{producto.descripcion}</td>
-                  <td>{producto.precioBruto}</td>
-                  <td>{producto.cantidad}</td>
+                <tr
+                  key={productoIterado.id}
+                  className={
+                    //coloreo el producto seleccionado
+                    productoIterado.id == productoActual.id
+                      ? "table-info"
+                      : "table-default"
+                  }
+                >
+                  <td>
+                    {
+                      //se supone que la id debe ser privada, pero es para debug
+                      productoIterado.id
+                    }
+                  </td>
+                  <td>{productoIterado.codigo}</td>
+                  <td>{productoIterado.nombre}</td>
+                  <td>{productoIterado.descripcion}</td>
+                  <td>{productoIterado.precioBruto}</td>
+                  <td>{productoIterado.cantidad}</td>
                 </tr>
               );
             })
