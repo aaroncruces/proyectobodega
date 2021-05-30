@@ -5,8 +5,96 @@ import * as ReactDOM from "react-dom";
 import Producto from "./Producto";
 import productos from "./listaProductos";
 
+enum RadioButtons {
+  BuscarPorCodigo = "BC",
+  EditarCodigo = "EC",
+  BuscarPorNombre = "BN",
+  EditarNombre = "EN",
+}
+
 const Formulario = () => {
-  console.log("render");
+  //----------------Funcionalidad: Manejo de los Radio buttons----------------//
+
+  /**
+   * Cambia de estados los radiobuttons en funcion del diagrama
+   * ./diagramas/Formulario.drawio>"Estados RadioButtons"
+   *
+   * Se asume que un cambio solo puede pasar de disabled-->enabled,
+   * y que se parte del estado 1
+   *
+   * No se como hacer que React no congele un HTMLInputElement a las modificaciones
+   * del usuario, si le doy un valor value={algo}, o checked={algo} en el jsx;
+   * Asi que voy a modificar el DOM directamente
+   *
+   * @param evento un radiobutton con id RadioButtons.elemento
+   */
+  const cambiandoRadioButtons = (
+    evento: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    console.log(evento.target.id);
+    // Entro en el estado 1
+    if (evento.target.id === RadioButtons.BuscarPorCodigo) {
+      (
+        document.getElementById(
+          RadioButtons.BuscarPorCodigo
+        ) as HTMLInputElement
+      ).checked = true;
+      (
+        document.getElementById(RadioButtons.EditarCodigo) as HTMLInputElement
+      ).checked = false;
+      (
+        document.getElementById(
+          RadioButtons.BuscarPorNombre
+        ) as HTMLInputElement
+      ).checked = false;
+      (
+        document.getElementById(RadioButtons.EditarNombre) as HTMLInputElement
+      ).checked = true;
+    }
+    // Entro en el estado 2
+    if (
+      evento.target.id === RadioButtons.EditarCodigo ||
+      evento.target.id === RadioButtons.EditarNombre
+    ) {
+      (
+        document.getElementById(
+          RadioButtons.BuscarPorCodigo
+        ) as HTMLInputElement
+      ).checked = false;
+      (
+        document.getElementById(RadioButtons.EditarCodigo) as HTMLInputElement
+      ).checked = true;
+      (
+        document.getElementById(
+          RadioButtons.BuscarPorNombre
+        ) as HTMLInputElement
+      ).checked = false;
+      (
+        document.getElementById(RadioButtons.EditarNombre) as HTMLInputElement
+      ).checked = true;
+    }
+    // Entro en el estado 3
+    if (evento.target.id === RadioButtons.BuscarPorNombre) {
+      (
+        document.getElementById(
+          RadioButtons.BuscarPorCodigo
+        ) as HTMLInputElement
+      ).checked = false;
+      (
+        document.getElementById(RadioButtons.EditarCodigo) as HTMLInputElement
+      ).checked = true;
+      (
+        document.getElementById(
+          RadioButtons.BuscarPorNombre
+        ) as HTMLInputElement
+      ).checked = true;
+      (
+        document.getElementById(RadioButtons.EditarNombre) as HTMLInputElement
+      ).checked = false;
+    }
+  };
+
+  //--------Funcionalidad: Busqueda de productos--------//
   //creo producto vacio, ya que no veo maneras de crear variables estaticas de forma elegante
   const productoVacio = new Producto();
   //y obtengo el setter (setProducto) para asignar el producto (productoActual)
@@ -25,11 +113,14 @@ const Formulario = () => {
 
     //busco el producto por codigo/nombre en la lista de productos
     // evento.target.value representa el valor en el cuadro de texto que se ha llamado
-    const productoEncontrado = productos.find(
+    let productoEncontrado: Producto = productos.find(
       (producto) => producto[key] == evento.target.value
     );
-
-    setProducto(productoEncontrado || productoVacio);
+    productoEncontrado = productoEncontrado || productoVacio;
+    setProducto(productoEncontrado);
+    document
+      .getElementById("TextboxNombreproducto")
+      .setAttribute("value", productoEncontrado.nombre);
     console.log(productoEncontrado);
   };
   return (
@@ -47,13 +138,33 @@ const Formulario = () => {
               type="text"
               className="form-control"
               id="TextboxCodigobarras"
-              aria-describedby="DescripcionTextboxCodigobarras"
+              placeholder="Escanee el codigo de barras"
               onInput={(evento: React.ChangeEvent<HTMLInputElement>) =>
                 buscarProductoPor("codigo", evento)
               }
             />
-            <div id="DescripcionTextboxCodigobarras" className="form-text">
-              Escanee el codigo de barras seleccionando este cuadro
+
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                id={RadioButtons.BuscarPorCodigo}
+                onChange={cambiandoRadioButtons}
+              />
+              <label className="form-check-label" htmlFor="buscarCodigo">
+                Buscar por Codigo
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                id={RadioButtons.EditarCodigo}
+                onChange={cambiandoRadioButtons}
+              />
+              <label className="form-check-label" htmlFor="editarCodigo">
+                Editar Codigo
+              </label>
             </div>
           </div>
 
@@ -65,8 +176,29 @@ const Formulario = () => {
               type="text"
               className="form-control"
               id="TextboxNombreproducto"
-              placeholder={productoActual.nombre}
             />
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                id={RadioButtons.BuscarPorNombre}
+                onChange={cambiandoRadioButtons}
+              />
+              <label className="form-check-label" htmlFor="buscarNombre">
+                Buscar por Nombre
+              </label>
+            </div>
+            <div className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                id={RadioButtons.EditarNombre}
+                onChange={cambiandoRadioButtons}
+              />
+              <label className="form-check-label" htmlFor="editarNombre">
+                Editar Nombre
+              </label>
+            </div>
           </div>
         </div>
         {
