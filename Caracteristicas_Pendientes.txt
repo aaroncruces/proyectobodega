@@ -1,8 +1,24 @@
+TODO
+->modificar formato numeros
+->impedir entrada de ciertos caracteres (o reformatear)
+->reformatear al defocusear
+->subir al inicio de la lista al producto seleccionado (si encontrado)
+->agregar producto (si nuevo), y ponerlo en la lista
+->eliminar de la lista al producto si ya no es "nuevo", sino "encontrado"
+->guardar lista en json
+->live-update del json en hdd (y asincronizar todo el ordeal)
+->cambiar colorines si el producto es "nuevo" o si es "encontrado", 
+    tanto en textboxes (con un halo o algo), como en la lista (con un relleno)
+->poner colores en textboxes al faltar datos
+->displayear los datos posibles al "buscar" algun producto (con un dropbox flotante o algo)
+->id:UUID para los productos
+->refactorear la parte de los radiobuttons a tener solo 2 booleans y no tocar el dom
+->documentar archivos que faltan
+
 crtl+shift+p (para ayuda)
 
 
 ->host local+backup
-->buscar con nombre. 
 ->el codigo de barra no es PK. hay productos que no tienen codigo de barras
 ->puede haber multiples codigos de barra o matriciales (ej:QR)? 
 ->reporte excel
@@ -11,5 +27,5 @@ crtl+shift+p (para ayuda)
 
 
 
-
+->repasar codigo
 ->login

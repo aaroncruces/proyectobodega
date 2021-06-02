@@ -1,6 +1,8 @@
 //vendors
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as Voca from "voca";
+import * as Currency from "currency.js";
 
 import Producto from "./Producto";
 import productos from "./listaProductos";
@@ -11,10 +13,23 @@ enum RadioButtons {
   BuscarPorNombre = "BN",
   EditarNombre = "EN",
 }
+enum TextBox {
+  TextboxCodigobarras = "TextboxCodigobarras",
+  TextboxNombreproducto = "TextboxNombreproducto",
+  TextboxDescripcionproducto = "TextboxDescripcionproducto",
+  TextboxPreciobruto = "TextboxPreciobruto",
+  TextboxIVA = "TextboxIVA",
+  TextboxPrecioneto = "TextboxPrecioneto",
+  TextboxCantidad = "TextboxCantidad",
+}
 
 const Formulario = () => {
+  //en render inicial
+  React.useEffect(() => {
+    //TODO: usar useRef
+    document.getElementById(TextBox.TextboxCodigobarras).focus();
+  }, []);
   //----------------Funcionalidad: Manejo de los Radio buttons----------------//
-
   /**
    * Cambia de estados los radiobuttons en funcion del diagrama
    * ./diagramas/Formulario.drawio>"Estados RadioButtons"
@@ -22,16 +37,13 @@ const Formulario = () => {
    * Se asume que un cambio solo puede pasar de disabled-->enabled,
    * y que se parte del estado 1
    *
-   * No se como hacer que React no congele un HTMLInputElement a las modificaciones
-   * del usuario, si le doy un valor value={algo}, o checked={algo} en el jsx;
-   * Asi que voy a modificar el DOM directamente
+   * TODO: modificar con useState
    *
    * @param evento un radiobutton con id RadioButtons.elemento
    */
-  const cambiandoRadioButtons = (
+  const onCambiandoRadioButtons = (
     evento: React.ChangeEvent<HTMLInputElement>
   ) => {
-    console.log(evento.target.id);
     // Entro en el estado 1
     if (evento.target.id === RadioButtons.BuscarPorCodigo) {
       (
@@ -94,35 +106,99 @@ const Formulario = () => {
     }
   };
 
-  //--------Funcionalidad: Busqueda de productos--------//
-  //creo producto vacio, ya que no veo maneras de crear variables estaticas de forma elegante
-  const productoVacio = new Producto();
-  //y obtengo el setter (setProducto) para asignar el producto (productoActual)
-  const [productoActual, setProducto] = React.useState(productoVacio);
+  //----------------Funcionalidad: Busqueda de productos----------------//
+  //Disgusting hacks:
+  //creacion de producto vacio,
+  //para evitar la creacion continua de pruductos al modificar los campos de busqueda (al fallar la busqueda)
+  //y para mantener los valores de un producto "nuevo"
+  //
+  const productoNuevo = new Producto();
+  //Al actualizar los parametros internos de un objeto, no se causa un re-render.
+  //Debo actualizar los valores internos de un objeto apuntando a un objeto dentro de una lista.
+  // asi que voy a re-renderizar manualmente usandorerenderizar(rerender + 1);
+  //cuando sepa "vigilar" los parametros internos de un objeto, re-factorizo
+  const [rerender, rerenderizar] = React.useState(0);
+  //para saber si el producto se encuentra o no en la base de datos
+  const [esProductoExistente, setEsProductoExistente] = React.useState(false);
+
+  //para manejar el producto a agregar/modificar
+  const [productoActual, setProducto] = React.useState(productoNuevo);
+
   /**
    * Por cada cambio en el input de Codigo de Barras, busco el producto ingresado
    * @param key puede ser  "codigo" (el codigo de barras) o "nombre" (el nombre)
    * @param evento para saber de que inputbox viene el texto
    */
-  const buscarProductoPor = (
-    key: "codigo" | "nombre",
-    evento: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    //para no rehacer el producto cada vez
-    //static productoVacio = new Producto();
+  const onIngresoDatos = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    //Elementos  temporales,
+    //hacerlos partes del componente cuando se sepa cambiar los radiobuttons reactivamente
+    const buscarPorCodigo = (
+      document.getElementById(RadioButtons.BuscarPorCodigo) as HTMLInputElement
+    ).checked;
+    const buscarPorNombre = (
+      document.getElementById(RadioButtons.BuscarPorNombre) as HTMLInputElement
+    ).checked;
 
-    //busco el producto por codigo/nombre en la lista de productos
-    // evento.target.value representa el valor en el cuadro de texto que se ha llamado
-    let productoEncontrado: Producto = productos.find(
-      (producto) => producto[key] == evento.target.value
-    );
-    productoEncontrado = productoEncontrado || productoVacio;
-    setProducto(productoEncontrado);
-    document
-      .getElementById("TextboxNombreproducto")
-      .setAttribute("value", productoEncontrado.nombre);
-    console.log(productoEncontrado);
+    let productoEncontrado: Producto;
+    //manejo de busqueda
+    if (evento.target.id === TextBox.TextboxCodigobarras && buscarPorCodigo) {
+      //realizando busqueda por codigo
+      productoEncontrado = productos.find(
+        (producto: Producto) => producto["codigo"] == evento.target.value
+      );
+    }
+    if (evento.target.id === TextBox.TextboxNombreproducto && buscarPorNombre) {
+      //realizando busqueda por codigo
+      productoEncontrado = productos.find(
+        (producto: Producto) => producto["nombre"] == evento.target.value
+      );
+    }
+    //si se ha realizado el encuentro de un producto existente el la base de datos, se setea el producto
+    if (productoEncontrado) {
+      setProducto(productoEncontrado);
+      setEsProductoExistente(true);
+      return;
+    }
+    //a partir de este punto no se ha encontrado el valor en la DB
+
+    //al tipear en codigo, si tengo seleccionado "Buscar por codigo" y no encuentro el codigo,
+    //asumir que el producto es nuevo (segun diagrama "Estados modificacion codigo")
+    if (evento.target.id === TextBox.TextboxCodigobarras && buscarPorCodigo) {
+      //ESTO ES IMPORTANTE, ingresarle el codigo inmediatamente al objeto observable por value
+      //si no, el textbox se quedará bloqueado
+      setProducto({ ...productoNuevo, codigo: evento.target.value });
+      setEsProductoExistente(false);
+      return;
+    }
+    //idem con nombre
+    if (evento.target.id === TextBox.TextboxNombreproducto && buscarPorNombre) {
+      setProducto({ ...productoNuevo, nombre: evento.target.value });
+      setEsProductoExistente(false);
+      return;
+    }
+    //En el caso de que no esté buscando, se asume edicion.
+    //Corregir valores internos en el "defocus" si las correcciones no pueden ser inmediatas (como trim)
+    if (evento.target.id === TextBox.TextboxCodigobarras)
+      productoActual.codigo = evento.target.value;
+    console.log(productoActual.codigo);
+    if (evento.target.id === TextBox.TextboxNombreproducto)
+      productoActual.nombre = Voca.capitalize(evento.target.value);
+    if (evento.target.id === TextBox.TextboxDescripcionproducto)
+      productoActual.descripcion = Voca.capitalize(evento.target.value);
+
+    //enforzar que sea numerico y que tenga el formato correcto en el jsx
+    if (evento.target.id === TextBox.TextboxCantidad)
+      productoActual.cantidad = Number.parseInt(evento.target.value);
+
+    //Gatillando re-render, ya que no se actualizan las referencias
+    //para poder editar directamente en una lista (si el producto actual existe en la lista),
+    //y a la vez, para poder editar el producto nuevo
+    rerenderizar(rerender + 1);
+    //la alternativa seria
+    //setProducto({ ...productoActual, codigo: evento.target.value });
+    //pero siempre genera una nueva referencia, obligandome a re-buscar en la lista de productos
   };
+
   return (
     <>
       <form className="container">
@@ -132,16 +208,14 @@ const Formulario = () => {
         <div className="row">
           <div className="col-md-4" id="CodigoBarras">
             <label htmlFor="TextboxCodigobarras" className="form-label">
-              Codigo de barras
+              Codigo de Barras
             </label>
             <input
               type="text"
               className="form-control"
-              id="TextboxCodigobarras"
-              placeholder="Escanee el codigo de barras"
-              onInput={(evento: React.ChangeEvent<HTMLInputElement>) =>
-                buscarProductoPor("codigo", evento)
-              }
+              id={TextBox.TextboxCodigobarras}
+              value={productoActual.codigo}
+              onInput={onIngresoDatos}
             />
 
             <div className="form-check form-check-inline">
@@ -149,7 +223,8 @@ const Formulario = () => {
                 className="form-check-input"
                 type="radio"
                 id={RadioButtons.BuscarPorCodigo}
-                onChange={cambiandoRadioButtons}
+                onChange={onCambiandoRadioButtons}
+                defaultChecked
               />
               <label className="form-check-label" htmlFor="buscarCodigo">
                 Buscar por Codigo
@@ -160,7 +235,7 @@ const Formulario = () => {
                 className="form-check-input"
                 type="radio"
                 id={RadioButtons.EditarCodigo}
-                onChange={cambiandoRadioButtons}
+                onChange={onCambiandoRadioButtons}
               />
               <label className="form-check-label" htmlFor="editarCodigo">
                 Editar Codigo
@@ -175,14 +250,16 @@ const Formulario = () => {
             <input
               type="text"
               className="form-control"
-              id="TextboxNombreproducto"
+              id={TextBox.TextboxNombreproducto}
+              value={productoActual.nombre}
+              onChange={onIngresoDatos}
             />
             <div className="form-check form-check-inline">
               <input
                 className="form-check-input"
                 type="radio"
                 id={RadioButtons.BuscarPorNombre}
-                onChange={cambiandoRadioButtons}
+                onChange={onCambiandoRadioButtons}
               />
               <label className="form-check-label" htmlFor="buscarNombre">
                 Buscar por Nombre
@@ -193,7 +270,8 @@ const Formulario = () => {
                 className="form-check-input"
                 type="radio"
                 id={RadioButtons.EditarNombre}
-                onChange={cambiandoRadioButtons}
+                onChange={onCambiandoRadioButtons}
+                defaultChecked
               />
               <label className="form-check-label" htmlFor="editarNombre">
                 Editar Nombre
@@ -212,8 +290,10 @@ const Formulario = () => {
             <input
               type="text"
               className="form-control"
-              id="TextboxDescripcionproducto"
               placeholder={productoActual.descripcion}
+              id={TextBox.TextboxDescripcionproducto}
+              value={productoActual.descripcion}
+              onChange={onIngresoDatos}
             />
           </div>
         </div>
@@ -226,11 +306,11 @@ const Formulario = () => {
               Precio Bruto
             </label>
             <input
-              type="number"
+              type="text"
               className="form-control"
-              id="TextboxPreciobruto"
-              aria-describedby="DescripcionTextboxPreciobruto"
-              placeholder={productoActual.precioBruto.toString()}
+              id={TextBox.TextboxPreciobruto}
+              value={productoActual.precioBruto}
+              onChange={onIngresoDatos}
             />
             <div id="DescripcionTextboxPreciobruto" className="form-text">
               Precio sin IVA
@@ -242,12 +322,12 @@ const Formulario = () => {
               IVA
             </label>
             <input
-              type="number"
+              type="text"
               className="form-control"
-              id="TextboxIVA"
-              aria-describedby="DescripcionTextboxPreciobruto"
               disabled={true}
-              placeholder={(productoActual.precioBruto * 0.19).toString()}
+              id={TextBox.TextboxIVA}
+              value={productoActual.precioBruto * 0.19}
+              onChange={onIngresoDatos}
             />
           </div>
 
@@ -258,9 +338,10 @@ const Formulario = () => {
             <input
               type="number"
               className="form-control"
-              id="TextboxPrecioneto"
               aria-describedby="DescripcionTextboxPrecioneto"
-              placeholder={(productoActual.precioBruto * 1.19).toString()}
+              id={TextBox.TextboxPrecioneto}
+              value={productoActual.precioBruto * 1.19}
+              onChange={onIngresoDatos}
             />
             <div id="DescripcionTextboxPrecioneto" className="form-text">
               Precio con IVA
@@ -274,8 +355,9 @@ const Formulario = () => {
             <input
               type="number"
               className="form-control"
-              id="TextboxCantidad"
-              placeholder={productoActual.cantidad.toString()}
+              id={TextBox.TextboxCantidad}
+              value={productoActual.cantidad}
+              onChange={onIngresoDatos}
             />
           </div>
         </div>
@@ -303,7 +385,7 @@ const Formulario = () => {
                   key={productoIterado.id}
                   className={
                     //coloreo el producto seleccionado
-                    productoIterado.id == productoActual.id
+                    productoIterado === productoActual
                       ? "table-info"
                       : "table-default"
                   }
