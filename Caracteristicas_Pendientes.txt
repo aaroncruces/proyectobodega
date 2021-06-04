@@ -1,7 +1,21 @@
 TODO
-->modificar formato numeros
-->impedir entrada de ciertos caracteres (o reformatear)
-->reformatear al defocusear
+✓->modificar formato numeros
+✓->impedir entrada de ciertos caracteres (o reformatear)
+✓->reformatear al defocusear
+->persistencia
+    ->express+archivos json
+    ->manejo async (desactivar los cuadros y botones, a demas de mustrar un "cargando")
+    ->mongodb
+    ->archivo local serverless (con electron)
+    ->selector de db/archivo
+    ->carga y descarga de excels
+    ->carga y descarga api website
+->boton de "crear nuevo producto"
+    ->guardar productoactual si no existe
+    ->guardar en archivo
+    ->productoactual=new
+    
+->requisitos fundamentales: nombre. Nada mas (los otros valores son defaults)
 ->subir al inicio de la lista al producto seleccionado (si encontrado)
 ->agregar producto (si nuevo), y ponerlo en la lista
 ->eliminar de la lista al producto si ya no es "nuevo", sino "encontrado"
@@ -13,19 +27,20 @@ TODO
 ->displayear los datos posibles al "buscar" algun producto (con un dropbox flotante o algo)
 ->id:UUID para los productos
 ->refactorear la parte de los radiobuttons a tener solo 2 booleans y no tocar el dom
+->al hacer click en la lista, seleccionar dato
 ->documentar archivos que faltan
-
-crtl+shift+p (para ayuda)
-
-
+->formatear y corregir formato de datos en 1er render
 ->host local+backup
 ->el codigo de barra no es PK. hay productos que no tienen codigo de barras
 ->puede haber multiples codigos de barra o matriciales (ej:QR)? 
 ->reporte excel
 ->base de datos normal (SQL)
 ->foto
-
-
+->buscar en la lan el server con la DB
 
 ->repasar codigo
+->minificaciones varias y ofuscaciones
 ->login
+
+
+crtl+shift+p (para ayuda)

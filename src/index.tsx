@@ -22,9 +22,25 @@ enum TextBox {
   TextboxPrecioneto = "TextboxPrecioneto",
   TextboxCantidad = "TextboxCantidad",
 }
-
+//variable debug para ver como cambian los eventos
+let numevento = 0;
 const Formulario = () => {
   //en render inicial
+  // const getData = () => {
+  //   fetch("./lista.json", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //   })
+  //     .then(function (response) {
+  //       console.log(response);
+  //       return response.json();
+  //     })
+  //     .then(function (myJson) {
+  //       console.log(myJson);
+  //     });
+  // };
   React.useEffect(() => {
     //TODO: usar useRef
     document.getElementById(TextBox.TextboxCodigobarras).focus();
@@ -130,6 +146,9 @@ const Formulario = () => {
    * @param evento para saber de que inputbox viene el texto
    */
   const onIngresoDatos = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("onIngresoDatos. Evento:", evento.target.id);
+    console.log("Numevento:", numevento);
+    numevento++;
     //Elementos  temporales,
     //hacerlos partes del componente cuando se sepa cambiar los radiobuttons reactivamente
     const buscarPorCodigo = (
@@ -180,15 +199,41 @@ const Formulario = () => {
     //Corregir valores internos en el "defocus" si las correcciones no pueden ser inmediatas (como trim)
     if (evento.target.id === TextBox.TextboxCodigobarras)
       productoActual.codigo = evento.target.value;
-    console.log(productoActual.codigo);
+
     if (evento.target.id === TextBox.TextboxNombreproducto)
       productoActual.nombre = Voca.capitalize(evento.target.value);
+
     if (evento.target.id === TextBox.TextboxDescripcionproducto)
       productoActual.descripcion = Voca.capitalize(evento.target.value);
 
+    //se ingresa solo numeros enteros
     //enforzar que sea numerico y que tenga el formato correcto en el jsx
     if (evento.target.id === TextBox.TextboxCantidad)
-      productoActual.cantidad = Number.parseInt(evento.target.value);
+      productoActual.cantidad =
+        Number.parseInt(Voca.replace(evento.target.value, /\D/g, "")) || 0;
+
+    //no deberian haber precios negativos, ni decimales, si los hubiera, habria que cambiar preciobruto:String
+    //o algo como una variable aparte, para poder almacenar comas y negativos al final de un string, para poder
+    //ingresar mas caracteres despues
+    if (evento.target.id === TextBox.TextboxPreciobruto)
+      productoActual.precioBruto = Currency(
+        Voca.replace(evento.target.value, /[^\d$,.-]/g, ""),
+        {
+          separator: ".",
+          symbol: "$",
+          decimal: ",",
+          precision: 0,
+        }
+      ).value;
+
+    if (evento.target.id === TextBox.TextboxPrecioneto)
+      productoActual.precioBruto =
+        Currency(Voca.replace(evento.target.value, /[^\d$,.-]/g, ""), {
+          separator: ".",
+          symbol: "$",
+          decimal: ",",
+          precision: 0,
+        }).value / 1.19;
 
     //Gatillando re-render, ya que no se actualizan las referencias
     //para poder editar directamente en una lista (si el producto actual existe en la lista),
@@ -196,7 +241,26 @@ const Formulario = () => {
     rerenderizar(rerender + 1);
     //la alternativa seria
     //setProducto({ ...productoActual, codigo: evento.target.value });
-    //pero siempre genera una nueva referencia, obligandome a re-buscar en la lista de productos
+    //pero se destruye y genera una nueva referencia, obligandome a re-buscar en la lista de productos
+  };
+
+  /**
+   * Trimea y capitaliza los textos al hacerles unfocus (donde corresponda)
+   * @param evento
+   */
+  const onCapitalizarTexto = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    if (evento.target.id === TextBox.TextboxCodigobarras)
+      productoActual.codigo = Voca.trim(evento.target.value).toUpperCase();
+
+    if (evento.target.id === TextBox.TextboxNombreproducto)
+      productoActual.nombre = Voca.capitalize(Voca.trim(evento.target.value));
+
+    if (evento.target.id === TextBox.TextboxDescripcionproducto)
+      productoActual.descripcion = Voca.capitalize(
+        Voca.trim(evento.target.value)
+      );
+    //gatillando re-render
+    rerenderizar(rerender + 1);
   };
 
   return (
@@ -216,6 +280,7 @@ const Formulario = () => {
               id={TextBox.TextboxCodigobarras}
               value={productoActual.codigo}
               onInput={onIngresoDatos}
+              onBlur={onCapitalizarTexto}
             />
 
             <div className="form-check form-check-inline">
@@ -253,6 +318,7 @@ const Formulario = () => {
               id={TextBox.TextboxNombreproducto}
               value={productoActual.nombre}
               onChange={onIngresoDatos}
+              onBlur={onCapitalizarTexto}
             />
             <div className="form-check form-check-inline">
               <input
@@ -294,6 +360,7 @@ const Formulario = () => {
               id={TextBox.TextboxDescripcionproducto}
               value={productoActual.descripcion}
               onChange={onIngresoDatos}
+              onBlur={onCapitalizarTexto}
             />
           </div>
         </div>
@@ -309,7 +376,12 @@ const Formulario = () => {
               type="text"
               className="form-control"
               id={TextBox.TextboxPreciobruto}
-              value={productoActual.precioBruto}
+              value={Currency(productoActual.precioBruto, {
+                separator: ".",
+                symbol: "$",
+                decimal: ",",
+                precision: 0,
+              }).format()}
               onChange={onIngresoDatos}
             />
             <div id="DescripcionTextboxPreciobruto" className="form-text">
@@ -326,7 +398,12 @@ const Formulario = () => {
               className="form-control"
               disabled={true}
               id={TextBox.TextboxIVA}
-              value={productoActual.precioBruto * 0.19}
+              value={Currency(productoActual.precioBruto * 0.19, {
+                separator: ".",
+                symbol: "$",
+                decimal: ",",
+                precision: 0,
+              }).format()}
               onChange={onIngresoDatos}
             />
           </div>
@@ -336,11 +413,16 @@ const Formulario = () => {
               Precio Neto
             </label>
             <input
-              type="number"
+              type="text"
               className="form-control"
               aria-describedby="DescripcionTextboxPrecioneto"
               id={TextBox.TextboxPrecioneto}
-              value={productoActual.precioBruto * 1.19}
+              value={Currency(productoActual.precioBruto * 1.19, {
+                separator: ".",
+                symbol: "$",
+                decimal: ",",
+                precision: 0,
+              }).format()}
               onChange={onIngresoDatos}
             />
             <div id="DescripcionTextboxPrecioneto" className="form-text">
@@ -353,7 +435,7 @@ const Formulario = () => {
               Cantidad
             </label>
             <input
-              type="number"
+              type="text"
               className="form-control"
               id={TextBox.TextboxCantidad}
               value={productoActual.cantidad}
@@ -361,20 +443,28 @@ const Formulario = () => {
             />
           </div>
         </div>
+        <button type="button" className="btn btn-primary btn-lg">
+          {esProductoExistente ? "Modificar Producto" : "Agregar Producto"}
+        </button>
       </form>
       {
-        //debug de la lista de productos actuales guardados
+        //lista de productos actuales guardados
       }
+
+      {productos.length < 1 && <h2>No hay productos guardados</h2>}
+
       <table className="table">
         <thead>
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">codigo</th>
-            <th scope="col">nombre</th>
-            <th scope="col">descripcion</th>
-            <th scope="col">precioBruto</th>
-            <th scope="col">cantidad</th>
-          </tr>
+          {productos.length >= 1 && (
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">codigo</th>
+              <th scope="col">nombre</th>
+              <th scope="col">descripcion</th>
+              <th scope="col">precioBruto</th>
+              <th scope="col">cantidad</th>
+            </tr>
+          )}
         </thead>
         <tbody>
           {
@@ -390,7 +480,7 @@ const Formulario = () => {
                       : "table-default"
                   }
                 >
-                  <th scope="rpw">
+                  <th scope="row">
                     {
                       //se supone que la id debe ser privada, pero es para debug
                       productoIterado.id

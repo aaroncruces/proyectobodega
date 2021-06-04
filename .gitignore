@@ -1,3 +1,4 @@
 node_modules
 dist
 diagramas/*.png
+server/recursos/testing.json
