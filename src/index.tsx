@@ -6,6 +6,8 @@ import * as Currency from "currency.js";
 
 import Producto from "./Producto";
 import productos from "./listaProductos";
+import lista from "./listaProductos";
+import * as Database from "./database";
 
 enum RadioButtons {
   BuscarPorCodigo = "BC",
@@ -25,26 +27,16 @@ enum TextBox {
 //variable debug para ver como cambian los eventos
 let numevento = 0;
 const Formulario = () => {
-  //en render inicial
-  // const getData = () => {
-  //   fetch("./lista.json", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       console.log(response);
-  //       return response.json();
-  //     })
-  //     .then(function (myJson) {
-  //       console.log(myJson);
-  //     });
-  // };
+  /**
+   * En render inicial
+   */
   React.useEffect(() => {
     //TODO: usar useRef
     document.getElementById(TextBox.TextboxCodigobarras).focus();
+    Database.getListaProductos();
+    //console.log(Database.dos);
   }, []);
+
   //----------------Funcionalidad: Manejo de los Radio buttons----------------//
   /**
    * Cambia de estados los radiobuttons en funcion del diagrama
@@ -250,7 +242,7 @@ const Formulario = () => {
    */
   const onCapitalizarTexto = (evento: React.ChangeEvent<HTMLInputElement>) => {
     if (evento.target.id === TextBox.TextboxCodigobarras)
-      productoActual.codigo = Voca.trim(evento.target.value).toUpperCase();
+      productoActual.codigo = Voca.trim(evento.target.value);
 
     if (evento.target.id === TextBox.TextboxNombreproducto)
       productoActual.nombre = Voca.capitalize(Voca.trim(evento.target.value));
@@ -263,6 +255,14 @@ const Formulario = () => {
     rerenderizar(rerender + 1);
   };
 
+  const onclickAgregar = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    if (!esProductoExistente) {
+      lista.push(productoActual);
+      setProducto(new Producto());
+      //gatillando re-render
+      rerenderizar(rerender + 1);
+    }
+  };
   return (
     <>
       <form className="container">
@@ -443,7 +443,11 @@ const Formulario = () => {
             />
           </div>
         </div>
-        <button type="button" className="btn btn-primary btn-lg">
+        <button
+          type="button"
+          className="btn btn-primary btn-lg"
+          onClick={onclickAgregar}
+        >
           {esProductoExistente ? "Modificar Producto" : "Agregar Producto"}
         </button>
       </form>

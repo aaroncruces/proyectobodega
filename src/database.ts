@@ -3,12 +3,17 @@
  * en una base de datos local, archivo de texto, lan, etc
  */
 
+import lista from "./listaProductos";
 import Producto from "./Producto";
-import productos from "./listaProductos";
 
+const urlReadListaProductos = "http://localhost:5000/lista-productos";
 /**
  * para obtener Productos
  */
-// export const getListaProductos: Producto[] = () => {
-//   return new Array(new Producto());
-// };
+export const getListaProductos = async (): Promise<Producto[]> => {
+  const respuesta = await fetch(urlReadListaProductos);
+  const listaProductos = await respuesta.json();
+  console.log(listaProductos);
+  // @ts-ignore. No se como hacerlo aun
+  return listaProductos;
+};

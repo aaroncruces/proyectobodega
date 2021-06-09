@@ -1,3 +1,30 @@
+
+
+Peticiones clientes
+->por usuarios
+    ->solo leer
+    ->modificar ()
+    ->etc
+ ->seleccion de qué hacer
+    ->agregar por pistoleo
+        ->hay sin codigo de barra (por ejemplo, conectores)
+        ->seleccionar producto existente
+        ->100x pistoleo
+    ->quitar por pistoleo
+    ->modificar
+->el inventario es independiente de la pagina web
+->marca
+->modelo
+->descripcion
+->cantidad
+->codigo interno (SKU primary key)
+-
+->codigo de barras
+->solo precio de venta (neto, primariamente)
+->ubicacion
+
+"bootstrap": "^5.0.0-beta3",
+
 TODO
 ✓->modificar formato numeros
 ✓->impedir entrada de ciertos caracteres (o reformatear)
@@ -37,6 +64,7 @@ TODO
 ->base de datos normal (SQL)
 ->foto
 ->buscar en la lan el server con la DB
+->avisar si no existe el producto
 
 ->repasar codigo
 ->minificaciones varias y ofuscaciones
