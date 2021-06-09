@@ -3,7 +3,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Voca from "voca";
 import * as Currency from "currency.js";
-
 import Producto from "./Producto";
 import productos from "./listaProductos";
 import lista from "./listaProductos";

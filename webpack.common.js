@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
     main: "./src/index.tsx",
-    vendor: ["react", "react-dom", "./src/vendor.ts"],
+    vendor: ["./src/vendor.ts"],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -28,14 +28,14 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
+      // {
+      //   test: /\.css$/i,
+      //   use: ["style-loader", "css-loader"],
+      // },
+      // {
+      //   test: /\.s[ac]ss$/i,
+      //   use: ["style-loader", "css-loader", "sass-loader"],
+      // },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/,
         type: "asset",
