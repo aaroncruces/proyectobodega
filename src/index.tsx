@@ -6,7 +6,7 @@ import * as Currency from "currency.js";
 import Producto from "./Producto";
 import productos from "./listaProductos";
 import lista from "./listaProductos";
-import * as Database from "./database";
+import * as Server from "./server";
 
 enum RadioButtons {
   BuscarPorCodigo = "BC",
@@ -32,7 +32,7 @@ const Formulario = () => {
   React.useEffect(() => {
     //TODO: usar useRef
     document.getElementById(TextBox.TextboxCodigobarras).focus();
-    Database.getListaProductos();
+    Server.getListaProductos();
     //console.log(Database.dos);
   }, []);
 
@@ -445,6 +445,7 @@ const Formulario = () => {
         <button
           type="button"
           className="btn btn-primary btn-lg"
+          //@ts-ignore
           onClick={onclickAgregar}
         >
           {esProductoExistente ? "Modificar Producto" : "Agregar Producto"}

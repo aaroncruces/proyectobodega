@@ -25,15 +25,17 @@ const productos = [
  * carpeta de recursos y cosas
  * entrega index.html en ruta "/"
  */
-App.use(Express.static(Path.resolve(__dirname, "../dist")));
+App.use(Express.static(Path.resolve(__dirname, "../html_testing")));
 
-App.get("/lista-productos", (req, res) => {
+App.get("/api/productos", (req, res) => {
   res.json(productos);
 });
-
-App.all("*", (req, res) => {
-  console.log("peticion");
-  res.status(404).send("404");
+App.use(Express.urlencoded({ extended: false }));
+App.use(Express.json());
+App.put("/post/:id", (req, res) => {
+  console.log(req.body);
+  console.log(req.params);
+  res.send("post:");
 });
 
 App.listen(5000);

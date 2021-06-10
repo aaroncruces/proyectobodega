@@ -3,3 +3,4 @@ dist
 diagramas/*.png
 server/recursos/testing.json
 ./package-lock.json
+html_testing

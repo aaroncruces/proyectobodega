@@ -6,7 +6,7 @@
 import lista from "./listaProductos";
 import Producto from "./Producto";
 
-const urlReadListaProductos = "http://localhost:5000/lista-productos";
+const urlReadListaProductos = "http://localhost:5000/api/productos";
 /**
  * para obtener Productos
  */
