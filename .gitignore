@@ -1,7 +1,8 @@
 node_modules
-dist
+dist_cliente
+dist_servidor
 diagramas/*.png
-server/recursos/testing.json
+src_servidor/recursos/testing.json
 ./package-lock.json
 html_testing
-src/testing.tsx
+src_cliente/testing.tsx

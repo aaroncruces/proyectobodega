@@ -3,13 +3,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    home: "./src/index.tsx",
-    // vendor: ["./src/vendor.ts"],
+    home: "./src_cliente/index.tsx",
+    //vendor: ["./src_cliente/vendor.ts"],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      favicon: "./src/favicon.ico",
+      template: "./src_cliente/index.html",
+      favicon: "./src_cliente/favicon.ico",
     }),
   ],
   module: {
@@ -23,7 +23,7 @@ module.exports = {
             options: {
               transpileOnly: true,
               happyPackMode: true,
-              configFile: path.resolve(__dirname, "tsconfig.json"),
+              configFile: path.resolve(__dirname, "tsconfig.cliente.json"),
             },
           },
         ],

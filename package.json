@@ -32,10 +32,11 @@
   "scripts": {
     "server": "nodemon ./server/app.js",
     "mongo": "mongodb",
-    "build": "rm -rf ./dist/* && webpack --config webpack.prod.js",
+    "build": "rm -rf ./dist_cliente/* && webpack --config webpack.prod.js",
     "start": "webpack-cli serve --mode development --config webpack.dev.js --host 0.0.0.0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.12.13"
   }

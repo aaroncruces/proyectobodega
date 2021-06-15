@@ -12,12 +12,21 @@ const conexion = Mongoose.connect("mongodb://localhost/control_inventario", {
 });
 //conexion.then().catch()
 
-// /**
-//  * añadiendo un producto generico
-//  */
-// (async () => {
-//   console.log(await ModeloProducto.create({}));
-// })();
+/**
+ * añadiendo un producto generico
+ */
+module.exports.ingresar_producto = async (producto) => {
+  console.log("ingresando producto");
+  try {
+    retorno = await ModeloProducto.create(producto);
+    await console.log(retorno);
+  } catch (error) {
+    // if (){
+
+    // }
+    console.log(error.errors.sku);
+  }
+};
 
 /**
  * Encontrar todos los que: cantidad: 0

@@ -11,9 +11,9 @@ const nombreColeccion = "productos";
 
 const schemaProducto = new Mongoose.Schema(
   {
-    sku: { type: String, default: "" }, //deletear: , default: ""; agregar: , unique: true , required: true
+    sku: { type: String, unique: true, required: true },
     codigo_barras: { type: String, default: "" },
-    modelo: { type: String, default: "" }, //deletear: , default: ""; agregar: , required: true
+    modelo: { type: String, required: true },
     marca: { type: String, default: "" },
     cantidad: { type: Number, default: 0 },
     descripcion: { type: String, default: "" },
