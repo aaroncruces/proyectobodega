@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@popperjs/core": "^2.9.2",
+    "@types/express": "^4.17.12",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
     "@types/voca": "^1.4.0",
@@ -19,6 +20,7 @@
     "sass-loader": "^12.0.0",
     "style-loader": "^2.0.0",
     "ts-loader": "^9.2.3",
+    "ts-node": "^10.0.0",
     "typescript": "^4.3.2",
     "voca": "^1.4.0",
     "webpack": "^5.38.1",
@@ -30,9 +32,8 @@
   "description": "My webpack project",
   "name": "my-webpack-project",
   "scripts": {
-    "server": "nodemon ./server/app.js",
-    "mongo": "mongodb",
-    "build": "rm -rf ./dist_cliente/* && webpack --config webpack.prod.js",
+    "server": "nodemon ",
+    "build_client": "rm -rf ./dist_cliente/* && webpack --config webpack.prod.js",
     "start": "webpack-cli serve --mode development --config webpack.dev.js --host 0.0.0.0"
   },
   "dependencies": {

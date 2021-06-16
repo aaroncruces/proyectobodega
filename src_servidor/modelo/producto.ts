@@ -2,18 +2,22 @@
  * Modelo: Producto
  * Definicion de un producto para guardar en database mongodb.
  */
-const Mongoose = require("mongoose");
+import mongoose from "mongoose";
 /**
  * Definicion verbosa de nombre de la coleccion en DB
  * para evitar el agregar la 's al final del nombre del modelo
  */
 const nombreColeccion = "productos";
 
-const schemaProducto = new Mongoose.Schema(
+/**
+ * {unique: true, required: true} son innecesarios.
+ * dada la naturaleza de las condiciones (vease tababase.ingresar_producto)
+ */
+const schemaProducto = new mongoose.Schema(
   {
-    sku: { type: String, unique: true, required: true },
+    sku: { type: String, default: "" },
     codigo_barras: { type: String, default: "" },
-    modelo: { type: String, required: true },
+    modelo: { type: String, default: "" },
     marca: { type: String, default: "" },
     cantidad: { type: Number, default: 0 },
     descripcion: { type: String, default: "" },
@@ -26,4 +30,4 @@ const schemaProducto = new Mongoose.Schema(
 );
 
 // nombre de la coleccion: productos
-module.exports = Mongoose.model(nombreColeccion, schemaProducto);
+module.exports = mongoose.model(nombreColeccion, schemaProducto);
