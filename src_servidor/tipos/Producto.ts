@@ -1,5 +1,8 @@
 /**
  * Definicion de producto, vease server/modelo
+ * tambien se usa desde el cliente,
+ * se encuentra aquí ya que es el servidor el que lo "compilo" con tsc
+ * (y da cosas raras si no restrinjo accesos a carpetas en tsconfig)
  */
 export default class Producto {
   sku: String = "";
@@ -11,13 +14,3 @@ export default class Producto {
   precio_venta_neto = 0;
   ubicacion: String = "";
 }
-// {
-//     sku: { type: String, default: "" }, //deletear: , default: ""; agregar: , unique: true , required: true
-//     codigo_barras: { type: String, default: "" },
-//     modelo: { type: String, default: "" }, //deletear: , default: ""; agregar: , required: true
-//     marca: { type: String, default: "" },
-//     cantidad: { type: Number, default: 0 },
-//     descripcion: { type: String, default: "" },
-//     precio_venta_neto: { type: Number, default: 0 },
-//     ubicacion: { type: String, default: "" },
-//   },

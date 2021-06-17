@@ -1,10 +1,13 @@
 /**
- * para compilacion rapida, se usa la opcion -T en ts-script descrita en nodemon.json
+ * Para compilacion rapida, se usa la opcion -T en ts-script descrita en nodemon.json
+ * Para enforcing y aviso de errores, quitar -T
  */
 const Database = require("./modelo/database");
 import express from "express";
 const app = express();
 import path from "path";
+import { Errores_ingreso } from "./tipos/Errores_ingreso"; //llaves necesarios debido al error de export default enum
+import { HttpStatusCode } from "./tipos/HttpStatusCode"; //llaves necesarios debido al error de export default enum
 
 const Cors = require("cors");
 
@@ -25,7 +28,7 @@ app.get("/api/productos", (req: Express.Request, res: Express.Response) => {
   //res.json(productos);
 });
 
-//App.use(Express.urlencoded({ extended: false }));
+//app.use(express.urlencoded({ extended: false }));
 //TODO: investigar opciones
 // @ts-ignore
 app.use(express.json());
@@ -33,26 +36,32 @@ app.use(express.json());
 app.post(
   "/api/ingreso",
   async (req: express.Request, res: express.Response) => {
-    //console.log(req.params);
-    console.log("post");
-    const producto = req.body;
-    //
-
-    // const respuesta = {
-    //   ingreso_exitoso: 200,
-    //   sku_repetida: false,
-    //   marca_repetida: false,
-    //   error_base_datos: false,
-    //   error_servidor: false,
-    //   otro_error: false,
-    // };
-    //respuesta["tipo-error"]["error-base-datos"]
     try {
+      //producto que intento ingresar
+      const producto = req.body;
+      //ingreso del producto
       await Database.ingresar_producto(producto);
-      res.status(200);
+      //cada objeto de respuesta debe tener un cuerpo json
+      res.status(HttpStatusCode.CREATED).send({});
     } catch (error) {
-      console.log(error);
+      // en caso de que el error sea del servidor
+      if (
+        !error.codigo_error ||
+        error.codigo_error == Errores_ingreso.OTRO_ERROR
+      ) {
+        res.status(HttpStatusCode.INTERNAL_SERVER_ERROR);
+      }
+      //si es debido al ciente
+      else {
+        res.status(HttpStatusCode.CONFLICT);
+      }
+      // Por ultimo, mando el error (que puede ser de cualquier tipo, y puede tener los motivos)
+      // por ejemplo:
+      // { codigo_error: Errores_ingreso.MODELO_MARCA_REPETIDA,
+      //   producto: producto_modelo_marca_encontrada,          }
+      res.setHeader("Content-Type", "application/json").json(error).send();
     }
+    // forzando termino, si algo falla (tecnicamente, inalcanzable)
     res.end();
   }
 );

@@ -4,13 +4,12 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Voca from "voca";
 import * as Currency from "currency.js";
-import Producto from "./Producto";
-import productos from "./listaProductos";
-import lista from "./listaProductos";
+import Producto from "../src_servidor/tipos/Producto";
 import * as Server from "./server";
+import { Alert } from "bootstrap";
+import { HttpStatusCode } from "../src_servidor/tipos/HttpStatusCode";
+import { Errores_ingreso } from "../src_servidor/tipos/Errores_ingreso";
 
-// TODO:
-//  ->Verificar que sku sea unica (al hacer ingreso de product
 const FormularioIngresoProductos = () => {
   //--------------------------------Control inputs--------------------------------
   // Definiendo variables de un producto
@@ -193,7 +192,7 @@ const FormularioIngresoProductos = () => {
   const on_click_ingresar_producto = async (
     evento: React.MouseEvent<HTMLButtonElement>
   ) => {
-    const productoEnviar: Producto = {
+    const estado_ingreso_producto = await Server.enviarProducto({
       sku,
       codigo_barras,
       modelo,
@@ -202,14 +201,38 @@ const FormularioIngresoProductos = () => {
       descripcion,
       precio_venta_neto,
       ubicacion,
-    };
-    Server.enviarProducto(productoEnviar);
-    //todo: fetch ingresar producto
+    });
+
+    if (estado_ingreso_producto.exito) {
+      //alert("Producto ingresado con exito");
+      borrar_formulario();
+    } else {
+      alert(estado_ingreso_producto.mensaje);
+
+      //borrando los campos que provocan los errores
+      if (
+        estado_ingreso_producto.codigo_error ==
+        Errores_ingreso.MODELO_MARCA_REPETIDA
+      ) {
+        set_modelo("");
+        set_marca("");
+      }
+      if (
+        estado_ingreso_producto.codigo_error == Errores_ingreso.SKU_REPETIDA
+      ) {
+        set_sku("");
+      }
+      if (
+        estado_ingreso_producto.codigo_error ==
+        Errores_ingreso.CODIGO_BARRAS_NO_VACIO_REPETIDO
+      ) {
+        set_codigo_barras("");
+      }
+    }
 
     //borrar_formulario();
   };
-  //para inline css:
-  //style={{ width: 18 + "rem" }}
+
   return (
     <>
       <div className="card mx-5 my-5">
@@ -390,10 +413,7 @@ const FormularioIngresoProductos = () => {
             <button
               className="me-3 mt-3 btn btn-primary"
               type="button"
-              disabled={
-                false
-                //sku == "" || modelo == ""
-              }
+              disabled={sku == "" || modelo == ""}
               onClick={on_click_ingresar_producto}
             >
               Ingresar Producto (indicar cuando falta un dato)
