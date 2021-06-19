@@ -7,9 +7,9 @@ Peticiones clientes
     ->etc
  ->seleccion de qué hacer
     ->agregar por pistoleo
-        ->hay sin codigo de barra (por ejemplo, conectores)
+        ✓hay sin codigo de barra (por ejemplo, conectores)
         ->seleccionar producto existente
-        ->100x pistoleo
+        ->+100 pistoleo
     ->quitar por pistoleo
     ->modificar
 ->el inventario es independiente de la pagina web
@@ -23,20 +23,20 @@ Peticiones clientes
 ->solo precio de venta (neto, primariamente)
 ->ubicacion
 
-"bootstrap": "^5.0.0-beta3",
 
 TODO
-✓->modificar formato numeros
-✓->impedir entrada de ciertos caracteres (o reformatear)
-✓->reformatear al defocusear
+✓modificar formato numeros
+✓impedir entrada de ciertos caracteres (o reformatear)
+✓reformatear al defocusear
 ->persistencia
     ->express+archivos json
     ->manejo async (desactivar los cuadros y botones, a demas de mustrar un "cargando")
-    ->mongodb
+    ✓mongodb
     ->archivo local serverless (con electron)
     ->selector de db/archivo
     ->carga y descarga de excels
     ->carga y descarga api website
+    ->websockets
 ->boton de "crear nuevo producto"
     ->guardar productoactual si no existe
     ->guardar en archivo
@@ -65,6 +65,7 @@ TODO
 ->foto
 ->buscar en la lan el server con la DB
 ->avisar si no existe el producto
+->barcode/qr por camara
 
 ->repasar codigo
 ->minificaciones varias y ofuscaciones
