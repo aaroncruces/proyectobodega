@@ -19,7 +19,7 @@ const conexion = mongoose.connect("mongodb://localhost/control_inventario", {
 /**
  * añadiendo un producto generico
  */
-const ingresar_producto = async (producto: Producto) => {
+export const ingresar_producto = async (producto: Producto) => {
   try {
     // Condiciones de ingreso:
     // 0) el producto debe existir
@@ -104,7 +104,15 @@ const ingresar_producto = async (producto: Producto) => {
   }
 };
 
-module.exports = { ingresar_producto };
+export const obtener_lista_productos = async (): Promise<Producto[]> => {
+  try {
+    const todos_los_productos: Producto[] = await ModeloProducto.find({});
+    return todos_los_productos;
+  } catch (error) {
+    throw error;
+  }
+};
+
 /**
  * Encontrar 1 solo :
  */

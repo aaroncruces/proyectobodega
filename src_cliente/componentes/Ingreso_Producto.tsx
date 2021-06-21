@@ -3,12 +3,13 @@ import React from "react";
 import replace from "voca/replace";
 import capitalize from "voca/capitalize";
 import upperCase from "voca/upper_case";
+import lowerCase from "voca/lower_case";
 import trim from "voca/trim";
 import * as currency from "currency.js";
 
 //customs
-import * as Server from "../server";
 import "../styles.scss";
+import { enviar_producto } from "../server";
 import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
 //import Producto from "../src_servidor/tipos/Producto";
 
@@ -60,21 +61,57 @@ const Ingreso_Producto = () => {
 
   /** Controlando Modelo */
 
-  //TODO: capitalizar apripiadamente. borrar doble espacios, tabs y puntos
   const [modelo, set_modelo] = React.useState("");
+
+  /**
+   * Elimina los espacios iniciales y finales
+   * Reduce los espacios multiples intersticiales
+   * Cambia los acentos graves a agudos
+   * Elimina caracteres especiales que no sean numeros, letras, y acentos del español
+   * !parece que permite los "_", ¿deberia permitir los "-"?
+   * @param palabra_entrada string que se quiera correjir
+   * @returns
+   */
+  const correccion_palabras = (palabra_entrada: string): string => {
+    //Elimina los espacios iniciales y finales
+    let palabra_salida = trim(palabra_entrada);
+    //Reduce los espacios multiples intersticiales
+    palabra_salida = replace(palabra_salida, /\s\s+/g, " ");
+    // Cambia los acentos graves a agudos
+    palabra_salida = replace(trim(palabra_salida), "à", "á");
+    palabra_salida = replace(trim(palabra_salida), "è", "é");
+    palabra_salida = replace(trim(palabra_salida), "ì", "í");
+    palabra_salida = replace(trim(palabra_salida), "ò", "ó");
+    palabra_salida = replace(trim(palabra_salida), "ù", "ú");
+    palabra_salida = replace(trim(palabra_salida), "À", "Á");
+    palabra_salida = replace(trim(palabra_salida), "È", "É");
+    palabra_salida = replace(trim(palabra_salida), "Ì", "Í");
+    palabra_salida = replace(trim(palabra_salida), "Ò", "Ó");
+    palabra_salida = replace(trim(palabra_salida), "Ù", "Ú");
+    palabra_salida = replace(trim(palabra_salida), "", "");
+    // Elimina caracteres especiales que no sean numeros, letras, y acentos del español
+    palabra_salida = replace(
+      palabra_salida,
+      /[^(\w|á|é|í|ó|ú|ñ|Á|É|Í|Ó|Ú|Ñ)\s]/gi,
+      ""
+    );
+    return palabra_salida;
+  };
+
   /**
    * Se activa al des-seleccionar el cuadro de texto
+   * Trim, borrado de
    * @param evento
    */
   const on_blur_modelo = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_modelo(trim(evento.target.value));
+    set_modelo(correccion_palabras(evento.target.value));
   };
   /**
    * Se activa al escribir datos en el cuadro.
    * @param evento
    */
   const on_input_modelo = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_modelo(capitalize(evento.target.value));
+    set_modelo(capitalize(lowerCase(evento.target.value)));
   };
 
   /** Controlando Cantidad */
@@ -96,14 +133,14 @@ const Ingreso_Producto = () => {
    * @param evento
    */
   const on_blur_ubicacion = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_ubicacion(trim(evento.target.value));
+    set_ubicacion(correccion_palabras(evento.target.value));
   };
   /**
    * Se activa al escribir datos en el cuadro.
    * @param evento
    */
   const on_input_ubicacion = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_ubicacion(capitalize(evento.target.value));
+    set_ubicacion(capitalize(lowerCase(evento.target.value)));
   };
 
   /** Controlando Marca */
@@ -113,14 +150,14 @@ const Ingreso_Producto = () => {
    * @param evento
    */
   const on_blur_marca = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_marca(trim(evento.target.value));
+    set_marca(correccion_palabras(evento.target.value));
   };
   /**
    * Se activa al escribir datos en el cuadro.
    * @param evento
    */
   const on_input_marca = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_marca(capitalize(evento.target.value));
+    set_marca(capitalize(lowerCase(evento.target.value)));
   };
 
   /** Controlando Precios
@@ -162,7 +199,7 @@ const Ingreso_Producto = () => {
    * @param evento
    */
   const on_blur_descripcion = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    set_descripcion(trim(evento.target.value));
+    set_descripcion(correccion_palabras(evento.target.value));
   };
   /**
    * Se activa al escribir datos en el cuadro.
@@ -171,7 +208,7 @@ const Ingreso_Producto = () => {
   const on_input_descripcion = (
     evento: React.ChangeEvent<HTMLInputElement>
   ) => {
-    set_descripcion(capitalize(evento.target.value));
+    set_descripcion(capitalize(lowerCase(evento.target.value)));
   };
 
   const borrar_formulario = () => {
@@ -192,7 +229,7 @@ const Ingreso_Producto = () => {
   const on_click_ingresar_producto = async (
     evento: React.MouseEvent<HTMLButtonElement>
   ) => {
-    const estado_ingreso_producto = await Server.enviarProducto({
+    const estado_ingreso_producto = await enviar_producto({
       sku,
       codigo_barras,
       modelo,
@@ -411,12 +448,22 @@ const Ingreso_Producto = () => {
             </div>
 
             <button
-              className="me-3 mt-3 btn btn-primary"
+              className={
+                sku != "" && modelo != ""
+                  ? "me-3 mt-3 btn btn-primary"
+                  : "me-3 mt-3 btn btn-danger"
+              }
               type="button"
               disabled={sku == "" || modelo == ""}
               onClick={on_click_ingresar_producto}
             >
-              Ingresar Producto (indicar cuando falta un dato)
+              {sku != "" && modelo != ""
+                ? "Ingresar Producto"
+                : sku == "" && modelo != ""
+                ? "Ingrese SKU "
+                : sku != "" && modelo == ""
+                ? "Ingrese Modelo"
+                : "Ingrese SKU y Modelo"}
             </button>
             <button
               className="me-3 mt-3 btn btn-secondary"

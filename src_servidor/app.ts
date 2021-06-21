@@ -2,7 +2,7 @@
  * Para compilacion rapida, se usa la opcion -T en ts-script descrita en nodemon.json
  * Para enforcing y aviso de errores, quitar -T
  */
-const Database = require("./modelo/database");
+import { ingresar_producto, obtener_lista_productos } from "./modelo/database";
 import express from "express";
 const app = express();
 import path from "path";
@@ -24,10 +24,6 @@ app.use(
   })
 );
 
-app.get("/api/productos", (req: Express.Request, res: Express.Response) => {
-  //res.json(productos);
-});
-
 //app.use(express.urlencoded({ extended: false }));
 //TODO: investigar opciones
 // @ts-ignore
@@ -40,7 +36,7 @@ app.post(
       //producto que intento ingresar
       const producto = req.body;
       //ingreso del producto
-      await Database.ingresar_producto(producto);
+      await ingresar_producto(producto);
       //cada objeto de respuesta debe tener un cuerpo json
       res.status(HttpStatusCode.CREATED).send({});
     } catch (error) {
@@ -59,11 +55,32 @@ app.post(
       // por ejemplo:
       // { codigo_error: Errores_ingreso.MODELO_MARCA_REPETIDA,
       //   producto: producto_modelo_marca_encontrada,          }
-      res.setHeader("Content-Type", "application/json").json(error).send();
+      res.setHeader("Content-Type", "application/json").json(error);
     }
-    // forzando termino, si algo falla (tecnicamente, inalcanzable)
-    res.end();
   }
 );
 
-app.listen(5000, () => console.log("escuchando"));
+app.get(
+  "/api/productos",
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const lista_productos = await obtener_lista_productos();
+      if (!lista_productos || lista_productos.length == 0) {
+        res.status(HttpStatusCode.NOT_FOUND);
+      } else {
+        res.status(HttpStatusCode.OK);
+      }
+
+      res.setHeader("Content-Type", "application/json").json(lista_productos);
+    } catch (error) {
+      res
+        .setHeader("Content-Type", "application/json")
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .send();
+    }
+  }
+);
+
+app.listen(5000, () => {
+  console.log("escuchando");
+});

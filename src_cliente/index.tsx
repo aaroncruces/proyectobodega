@@ -23,6 +23,7 @@ const APP = () => {
   return (
     <>
       <Modificacion_Producto />
+      <Ingreso_Producto />
     </>
   );
 };

@@ -9,7 +9,7 @@ import { Errores_ingreso } from "../src_servidor/tipos/Errores_ingreso";
 
 const url = "http://localhost:5000";
 
-export const enviarProducto = async (
+export const enviar_producto = async (
   producto: Producto
 ): Promise<{
   exito: boolean;
@@ -45,8 +45,8 @@ export const enviarProducto = async (
     // no puedo utilizar el manejo de errores de mongo/mongoose,
     // asi que los chequeos se harán manualmente.
 
-    // ! en condiciones normales, los errores 0,1,2 no deberian gatillarse
-    // ! se manejan en caso de haber error del programador
+    //* en condiciones normales, los errores 0,1,2 no deberian gatillarse
+    //* se manejan en caso de haber error del programador
 
     // 0) el producto debe existir
     if (datos_error.codigo_error == Errores_ingreso.PRODUCTO_NO_EXISTE)
@@ -114,5 +114,19 @@ export const enviarProducto = async (
     mensaje = "Hubo un error de servidor. Contactese con soporte.";
   }
 
-  return Promise.resolve({ exito, mensaje, codigo_error });
+  return { exito, mensaje, codigo_error };
+};
+
+export const obtener_lista_productos = async (): Promise<Producto[]> => {
+  const respuesta = await fetch(url + "/api/productos", {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  const lista_productos = await respuesta.json();
+  console.log(lista_productos);
+  return;
 };

@@ -70,6 +70,9 @@ TODO
 ->repasar codigo
 ->minificaciones varias y ofuscaciones
 ->login
+->logear errores
+->jest
+->gatsbi
 
 
 crtl+shift+p (para ayuda)
