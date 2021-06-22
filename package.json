@@ -38,6 +38,7 @@
     "build_server": "rm -rf ./dist_servidor/* && tsc --project tsconfig.servidor.json",
     "run_server": "node ./dist_servidor/app.js",
     "build_client": "rm -rf ./dist_cliente/* && webpack --config webpack.prod.js",
+    "compile": "rm -rf ./dist_servidor/* && tsc --project tsconfig.servidor.json && rm -rf ./dist_cliente/* && webpack --config webpack.prod.js && node ./dist_servidor/app.js",
     "start": "webpack-cli serve --mode development --config webpack.dev.js --host 0.0.0.0"
   },
   "dependencies": {
