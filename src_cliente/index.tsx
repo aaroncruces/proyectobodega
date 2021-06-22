@@ -22,7 +22,6 @@ import Modificacion_Producto from "./componentes/Modificacion_Producto";
 const APP = () => {
   return (
     <>
-      <Modificacion_Producto />
       <Ingreso_Producto />
     </>
   );
