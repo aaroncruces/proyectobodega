@@ -11,6 +11,7 @@ const PATHS = {
 };
 module.exports = merge(common, {
   mode: "production",
+  stats: { warnings: false },
   optimization: {
     sideEffects: false, //cuidado!
     splitChunks: {
