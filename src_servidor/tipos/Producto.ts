@@ -5,12 +5,12 @@
  * (y da cosas raras si no restrinjo accesos a carpetas en tsconfig)
  */
 export default class Producto {
-  sku: String = "";
-  codigo_barras: String = "";
-  modelo: String = "";
-  marca: String = "";
+  sku: string = "";
+  codigo_barras: string = "";
+  modelo: string = "";
+  marca: string = "";
   cantidad = 0;
-  descripcion: String = "";
+  descripcion: string = "";
   precio_venta_neto = 0;
-  ubicacion: String = "";
+  ubicacion: string = "";
 }

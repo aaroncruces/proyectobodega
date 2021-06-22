@@ -13,6 +13,8 @@ import { enviar_producto } from "../server";
 import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
 //import Producto from "../src_servidor/tipos/Producto";
 
+// todo: datalist de ubicaciones y marcas. Poner placeholders??
+// todo: popup en los invalid, validar segun bootstrap
 const Ingreso_Producto = () => {
   //--------------------------------Control inputs--------------------------------
   // Definiendo variables de un producto
@@ -278,7 +280,7 @@ const Ingreso_Producto = () => {
             <h5 className="card-title">Nuevo Producto</h5>
             <div className="row mb-3">
               <div className="col-md-4" id="sku-textbox">
-                <label htmlFor="sku" className="form-label">
+                <label htmlFor="sku" className="form-label ">
                   SKU
                 </label>
                 <input

@@ -73,6 +73,8 @@ TODO
 ->logear errores
 ->jest
 ->gatsbi
-
+->slow db response
+    ->queue
+-> popular db con 50k items o algo asi
 
 crtl+shift+p (para ayuda)

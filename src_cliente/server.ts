@@ -127,6 +127,5 @@ export const obtener_lista_productos = async (): Promise<Producto[]> => {
     },
   });
   const lista_productos = await respuesta.json();
-  console.log(lista_productos);
-  return;
+  return lista_productos;
 };
