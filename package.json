@@ -17,7 +17,10 @@
     "purgecss-webpack-plugin": "^4.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
     "sass": "^1.34.1",
     "sass-loader": "^12.0.0",
     "style-loader": "^2.0.0",
@@ -38,6 +41,7 @@
     "build_server": "rm -rf ./dist_servidor/* && tsc --project tsconfig.servidor.json",
     "run_server": "node ./dist_servidor/app.js",
     "build_client": "rm -rf ./dist_cliente/* && webpack --config webpack.prod.js",
+    "dev_client": "webpack-cli serve --mode development --config webpack.dev.js --host 0.0.0.0",
     "compile": "rm -rf ./dist_servidor/* && tsc --project tsconfig.servidor.json && rm -rf ./dist_cliente/* && webpack --config webpack.prod.js && node ./dist_servidor/app.js",
     "start": "webpack-cli serve --mode development --config webpack.dev.js --host 0.0.0.0"
   },

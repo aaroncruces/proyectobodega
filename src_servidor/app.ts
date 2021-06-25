@@ -81,13 +81,6 @@ app.get(
   }
 );
 
-app.listen(5000, () => {
-  const data = [
-    { group: "A", name: "SD" },
-    { group: "B", name: "FI" },
-    { group: "A", name: "MM" },
-    { group: "B", name: "CO" },
-  ];
-  const unique = [...new Set(data.map((item) => item.group))]; // [ 'A', 'B']
-  console.log(unique);
+app.listen(3000, () => {
+  console.log("escuchando en 3000");
 });

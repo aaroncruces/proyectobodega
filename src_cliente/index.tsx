@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // Paginas Ruteadas
 import Ingreso_Producto from "./componentes/Ingreso_Producto";
-import Modificacion_Producto from "./componentes/Modificacion_Producto";
+import Modificacion_Producto from "./componentes/Modificacion_Producto/Modificacion_Producto";
 /*
       <Router>
         <Route exact path="/">

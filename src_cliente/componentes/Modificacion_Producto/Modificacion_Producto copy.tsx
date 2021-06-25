@@ -9,12 +9,14 @@ import * as currency from "currency.js";
 
 //customs
 import "../styles.scss";
-import { obtener_lista_productos } from "../server";
-import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
-import Producto from "../../src_servidor/tipos/Producto";
-
+import { obtener_lista_productos } from "../../server";
+import { Errores_ingreso } from "../../../src_servidor/tipos/Errores_ingreso";
+import Producto from "../../../src_servidor/tipos/Producto";
+import Datalist from "./Datalist";
+let valor1 = "valor1";
 //todo: unificar componentes para css grid o bootstrap
 const Modificacion_Producto = () => {
+  let valor1 = "valor2";
   const [lista_productos_disponibles, set_lista_productos_disponibles] =
     React.useState([]);
   const [lista_productos_seleccionables, set_lista_productos_seleccionables] =
@@ -31,7 +33,6 @@ const Modificacion_Producto = () => {
     };
     fetchear();
   }, []);
-
   //--------------------------------Control inputs--------------------------------
   // Definiendo variables de un producto
   // No se define un unico objeto porque React no vigila los valores internos de este
@@ -77,10 +78,6 @@ escribo en campo:
       alerta: elija otro campo para filtrar el producto
     B) 1 producto encontrado
       "Producto encontrado"
-
-  
-
-
 
   todo: lista de productos disponibles seleccionables
   todo: indicar si no hay productos, server error, u otros errores
@@ -173,6 +170,48 @@ escribo en campo:
    * @param evento
    */
   const on_blur_sku = (evento: React.ChangeEvent<HTMLInputElement>) => {
+    /*
+
+0) todos los campos en blanco
+  lista_productos_seleccionables=lista_productos_disponibles
+  campos activos: solo campos alfanumericos
+  campos activos = Estado:NORMAL (default)
+
+escribo en campo:
+  1) no encontrado (a medida que vaya escribiendo el producto):
+    A) lista_productos_seleccionables completa (producto aun no buscado, o busqueda mal hecha)
+      estado campo escrito:INCORRECTO (hasta que lo encuentre)
+      borrar otros campos (asumiendo que la busqueda anterior era erronea)
+    B) lista_productos_seleccionables parcial (busqueda previa exitosa, buscando por otra categoria)
+      I) 1 solo producto en esta datalist (estado:correcto) 
+        se asume que se quiere borrar el producto, para realizar otra busqueda
+        reiniciar lista_productos_seleccionables (para la seleccion de nuevos productos)
+          rellenar listas de datalists (lista_sku, lista_modelo etc) (gatillado al reiniciar la lista)
+        borrar todos los campos
+        estado de todos los campos: NORMAL
+      II) multiples productos en esta datalist (estado:multiple)
+        se asume que se quiere filtrar el producto para reducir la cantidad de opciones, o encontrar el producto
+        estado campo escrito:INCORRECTO (hasta que lo encuentre)
+    siempre:
+      on blur, on input despues de x segundos
+        borrar este campo
+        estado: normal
+
+  2) encontrado (cuando justo escribo el string, o selecciono de la datalist):
+    siempre:
+      filtrar lista_productos_seleccionables
+      rellenar listas de datalists (lista_sku, lista_modelo etc)
+      estado campos con 1 solo datalist:CORRECTO
+      estado campos con multiples datalists: MULTIPLE
+    A) multiples productos encontrados
+      "Se han encontrado X productos"
+      alerta: elija otro campo para filtrar el producto
+    B) 1 producto encontrado
+      "Producto encontrado"
+
+  todo: lista de productos disponibles seleccionables
+  todo: indicar si no hay productos, server error, u otros errores
+    */
     set_sku(trim(evento.target.value));
   };
   /**

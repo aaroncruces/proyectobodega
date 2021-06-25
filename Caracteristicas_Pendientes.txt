@@ -78,3 +78,47 @@ TODO
 -> popular db con 50k items o algo asi
 
 crtl+shift+p (para ayuda)
+
+puedes usar las teclas ↑↓ para ver los comandos usados con anterioridad
+puedes usar las teclas ←→ para editar los comandos
+1) Login como administrador:
+    User:
+        ->root
+    Password:
+        ->tesladelta6818
+2) instalar acceso remoto
+    instalar snap
+        ->apt install snapd
+    aceptar instalacion
+        ->y
+    actualizar snap
+        ->snap install core
+    instalar sistema remoto
+        ->snap install ngrok
+3) re-loguear como administrador
+    Salir:
+        ->exit
+    User:
+        ->root
+    Password:
+        ->tesladelta6818
+4) [en otro computador]
+    instalar putty
+        https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.75-installer.msi
+    abrir putty,     
+5) activar acceso remoto
+    setear permiso (mucho cuidado, debe ser EXACTO)
+        ->ngrok authtoken 1uPlMHZ5UkZqhTGxeHX4pQ52YOS_7f8Y5icbmqSumHuxuFm6J
+
+
+
+
+
+
+
+
+
+
+
+
+
