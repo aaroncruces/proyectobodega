@@ -4,5 +4,5 @@ dist_servidor
 diagramas/*.png
 src_servidor/recursos/testing.json
 ./package-lock.json
-html_testing
+testing
 src_cliente/testing.tsx

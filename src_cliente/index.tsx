@@ -1,9 +1,12 @@
 import ReactDOM from "react-dom";
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// Paginas Ruteadas
-import Ingreso_Producto from "./componentes/Ingreso_Producto";
-import Modificacion_Producto from "./componentes/Modificacion_Producto/Modificacion_Producto";
+import Formulario_Ingreso_Producto from "./components/Formulario_Ingreso_Producto";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+//estilos+custom
+import "./styles.scss";
+
+//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 /*
       <Router>
         <Route exact path="/">
@@ -21,9 +24,9 @@ import Modificacion_Producto from "./componentes/Modificacion_Producto/Modificac
 
 const APP = () => {
   return (
-    <>
-      <Ingreso_Producto />
-    </>
+    <Provider store={store}>
+      <Formulario_Ingreso_Producto />
+    </Provider>
   );
 };
 ReactDOM.render(<APP />, document.getElementById("root"));

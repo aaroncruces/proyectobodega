@@ -117,6 +117,7 @@ export const enviar_producto = async (
   return { exito, mensaje, codigo_error };
 };
 
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 export const obtener_lista_productos = async (): Promise<Producto[]> => {
   const respuesta = await fetch(url + "/api/productos", {
     method: "GET",
@@ -126,6 +127,8 @@ export const obtener_lista_productos = async (): Promise<Producto[]> => {
       "Content-type": "application/json",
     },
   });
+  await delay(2000);
+  console.log("Waited 2s");
   const lista_productos = await respuesta.json();
   return lista_productos;
 };

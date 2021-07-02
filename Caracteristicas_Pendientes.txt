@@ -101,19 +101,21 @@ puedes usar las teclas ←→ para editar los comandos
     User:
         ->root
     Password:
-        ->tesladelta6818
+        ->tesladelta6818     
+4) activar acceso remoto
+    setear permiso (mucho cuidado, debe ser EXACTO)
+        ->ngrok authtoken 1uPlMHZ5UkZqhTGxeHX4pQ52YOS_7f8Y5icbmqSumHuxuFm6J
 4) [en otro computador]
     instalar putty
         https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.75-installer.msi
-    abrir putty,     
-5) activar acceso remoto
-    setear permiso (mucho cuidado, debe ser EXACTO)
-        ->ngrok authtoken 1uPlMHZ5UkZqhTGxeHX4pQ52YOS_7f8Y5icbmqSumHuxuFm6J
+    abrir putty,
 
 
 
 
-
+->auto enp0s7
+->allow-hotplug enp0s7
+->iface enp0s7 inet dhcp
 
 
 
