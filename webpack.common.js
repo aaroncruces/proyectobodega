@@ -9,7 +9,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src_cliente/index.html",
-      favicon: "./src_cliente/favicon.ico",
+      favicon: "./src_cliente/styling/favicon.ico",
     }),
   ],
   module: {

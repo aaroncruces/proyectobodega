@@ -16,50 +16,62 @@ import Button_Ingreso_Productos from "./Button_Ingreso_Productos";
 import Throbber from "./Throbber";
 // helpers & utilities
 import Producto from "../../src_servidor/tipos/Producto";
-import Props_Formulario from "../helpers/type_props_Formulario";
-import { obtener_lista_productos } from "../server";
+import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
+import Props_inputbox from "../helpers/type_props_Inputbox";
 // redux custom
 import StatelistaProductos from "../redux/listaProductos/type_state_listaProductos";
-import { setListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
+import { fetchListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
 
-/**
- * Definicion de estructura del estado local, para la ide
- * todo: deshacerse de esto, ya que sería redundante, usar la store
- */
-type localState = { productosAreLoading: boolean };
 /**
  * todo: precargar los item de la db, y ponerle un spinner de cargando, o algo asi
  * todo: definir validez o invalidez de los inputbox, inValidMessage deberia estar en Inputbox,
  * todo: isValid deberia setearse en los reducers (o quiza en una subscription??) y en los State* (StateSku)
  * @returns
  */
-class Formulario_Ingreso_Producto extends Component<
-  Props_Formulario,
-  localState
-> {
+class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
-
+    //todo: definir un statetype para facilidad con la ide
     this.state = {
-      productosAreLoading: true,
+      propsSku: {
+        classContainer: "col-md-4 form-group",
+        /**
+         * En primera instancia, solo se debe saber si sku está vacio
+         * se debe agregar mas condiciones al cargar la lista de productos
+         * @param valor
+         * @returns
+         */
+        invalidComparator: (valor: string | number): string =>
+          valor == "" ? "SKU es obligatorio" : "",
+      },
+      propsCodigoBarras: {
+        classContainer: "col-md-3 form-group",
+        invalidComparator: (valor: string | number): string => "",
+      },
     };
+    //todo: if no hay productos, cargarlos
+    //Cargando los productos de la db a la store
+    this.props.fetchListaProductos();
   }
 
-  componentDidMount() {
-    obtener_lista_productos().then((productos: Producto[]) => {
-      setListaProductos(productos);
-      console.log("listaproductos:", productos);
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.listaProductos && this.props.listaProductos)
+      console.log("noprod");
 
-      this.setState({
-        ...this.state,
-        productosAreLoading: false,
-      });
-    });
+    console.log("cdup prev", JSON.stringify(prevProps, null, 2));
+    console.log("cdup now", JSON.stringify(this.props, null, 2));
   }
 
   render() {
+    /**
+     * En el caso de sku existen condiciones para que sku sea invalido.
+     * Estas condiciones dependen expicitamente del formulario
+     * (en particular, del formulario de ingreso)
+     */
+
     return (
       <>
+        {JSON.stringify(this.state)}
         <form className="container">
           <div className="row mb-3">
             {/* TS sigue tirando errores inutiles del tipo
@@ -67,9 +79,9 @@ class Formulario_Ingreso_Producto extends Component<
       cuando se trata de un componente hijo.
       No se como arreglarlo, asi que...
       //@ts-ignore */}
-            <Inputbox_sku classContainer="col-md-4 form-group" />
+            <Inputbox_sku {...this.state.propsSku} />
             {/*//@ts-ignore */}
-            <Inputbox_codigo_barras classContainer="col-md-3 form-group" />
+            <Inputbox_codigo_barras {...this.state.propsCodigoBarras} />
             {/*//@ts-ignore */}
             <Inputbox_modelo classContainer="col-md-5 form-group" />
           </div>
@@ -95,13 +107,15 @@ class Formulario_Ingreso_Producto extends Component<
           </div>
           <div className="d-flex align-items-center">
             <Button_Ingreso_Productos />
-            "asdasd"
-            {JSON.stringify(this.props.listaProductos)}
-            {this.props.listaProductos === undefined && (
-              <div className="ms-auto">
-                <Throbber />
-              </div>
-            )}
+
+            {
+              //throbber para mustrar que se encuentran cargado los productos
+              this.props.listaProductos === undefined && (
+                <div className="ms-auto">
+                  <Throbber />
+                </div>
+              )
+            }
           </div>
         </form>
       </>
@@ -119,12 +133,14 @@ const mapStateToProps = (state) => ({
 });
 /**
  * Para que, en caso de que no hayan productos, obtener productos de la DB
+ * Dado que se necesita trackear cuando se ingresa un producto, se usa un thunk
  * @param dispatch
  * @returns
  */
-const mapDispatchToProps = (dispatch: (any) => any): Props_Formulario => ({
-  setListaProductos: (productos: Producto[]) =>
-    dispatch(setListaProductos(productos)),
+const mapDispatchToProps = (
+  dispatch: (any) => any
+): Props_Formulario_Ingreso => ({
+  fetchListaProductos: () => dispatch(fetchListaProductos()),
 });
 
 export default connect(

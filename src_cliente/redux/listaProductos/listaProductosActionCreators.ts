@@ -6,6 +6,7 @@
 import ListaProductosActionTypes from "./listaProductosActionTypes";
 import Action from "../type_action";
 import Producto from "../../../src_servidor/tipos/Producto";
+import { fetchProductos } from "../../helpers/server";
 /**
  * La listaProductos es representada internamente como un array
  * @param payload
@@ -15,5 +16,18 @@ const setListaProductos = (payload: Producto[]): Action => ({
   type: ListaProductosActionTypes.SET_LISTA_PRODUCTOS,
   payload,
 });
+/**
+ * Thunk que obtiene los productos de la DB y los guarda en la store
+ * @returns
+ */
+const fetchListaProductos = () => (dispatch) => {
+  fetchProductos()
+    .then((productos) => {
+      dispatch(setListaProductos(productos));
+    })
+    .catch((error) => {
+      setListaProductos(undefined);
+    });
+};
 
-export { setListaProductos };
+export { fetchListaProductos };

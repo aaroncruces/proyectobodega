@@ -4,7 +4,7 @@ import Formulario_Ingreso_Producto from "./components/Formulario_Ingreso_Product
 import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
-import "./styles.scss";
+import "./styling/styles.scss";
 
 //import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 /*

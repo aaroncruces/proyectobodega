@@ -11,10 +11,6 @@ class Inputbox_sku extends Inputbox<Props_inputbox> {
   labelBody = "SKU";
   format_onBlur = onBlur;
   format_onInput = onInput;
-  /**
-   * En el caso de sku existen condiciones para que sea invalido.
-   * Estas condiciones dependen expicitamente del formulario (en particular del formulario de ingreso)
-   */
 }
 /**
  *
@@ -25,8 +21,9 @@ const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: (state.skuReducer as StateSku).sku,
 });
 /**
- * Aquí se usa una action de tipo thunk (setAndVerifySku),
- * ya que no solo se debe setear sku, sino tambien su validez
+ * Se setea  SKU con redux.
+ * - Debido a que depende especificamente de los formularios si sku es invalido,
+ * el manejo de esto se hace en el formulario, no en redux
  * @param dispatch
  * @returns
  */

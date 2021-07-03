@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Comparador_invalidez from "../helpers/type_props_comparador_invalidez";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 
 /**
@@ -53,12 +52,16 @@ export default abstract class Inputbox<
    * - No creo que sea inteligente hacerlo en componentDidUpdate, debido a posibles loops
    * - string | number es debido a que algunos states de la store son numberstring | number
    */
-  invalidCompareMessage = (text: string | number) => "";
+  invalidComparator: (text: string | number) => string;
   constructor(props) {
     super(props);
-
+    // Es posible que el formulario le entregue la funcion comparadora.
+    // En este caso, invalidComparator quedará como la nueva funcion.
+    // En caso contrario, esta será una funcion placeholder.
+    this.invalidComparator =
+      this.props.invalidComparator || ((text: string | number) => "");
     this.state = {
-      invalidMessage: "",
+      invalidMessage: this.invalidComparator(this.props.textInputBox),
     };
   }
 
@@ -70,7 +73,7 @@ export default abstract class Inputbox<
     this.props.updateStoreValue(this.format_onInput(event.target.value));
     //no quiero usarlo en componentdidupdate, para evitar loops
     this.setState({
-      invalidMessage: this.invalidCompareMessage(
+      invalidMessage: this.invalidComparator(
         this.format_onInput(event.target.value)
       ),
     });

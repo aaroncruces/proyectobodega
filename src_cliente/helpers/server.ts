@@ -3,9 +3,9 @@
  * en una base de datos local, archivo de texto, lan, etc
  */
 
-import Producto from "../src_servidor/tipos/Producto";
-import { HttpStatusCode } from "../src_servidor/tipos/HttpStatusCode";
-import { Errores_ingreso } from "../src_servidor/tipos/Errores_ingreso";
+import Producto from "../../src_servidor/tipos/Producto";
+import { HttpStatusCode } from "../../src_servidor/tipos/HttpStatusCode";
+import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
 
 const url = "http://localhost:5000";
 
@@ -118,7 +118,12 @@ export const enviar_producto = async (
 };
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-export const obtener_lista_productos = async (): Promise<Producto[]> => {
+/**
+ * Obtiene la lista de productos del server
+ * ToDo: entregar undefined si hubo un error, si se obtuvo vacio, entregar []
+ * @returns
+ */
+export const fetchProductos = async (): Promise<Producto[]> => {
   const respuesta = await fetch(url + "/api/productos", {
     method: "GET",
     mode: "cors",
@@ -127,8 +132,7 @@ export const obtener_lista_productos = async (): Promise<Producto[]> => {
       "Content-type": "application/json",
     },
   });
-  await delay(2000);
-  console.log("Waited 2s");
+  await delay(5000);
   const lista_productos = await respuesta.json();
   return lista_productos;
 };
