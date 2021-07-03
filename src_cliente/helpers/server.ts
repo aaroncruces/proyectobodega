@@ -132,7 +132,7 @@ export const fetchProductos = async (): Promise<Producto[]> => {
       "Content-type": "application/json",
     },
   });
-  await delay(5000);
+  await delay(3000);
   const lista_productos = await respuesta.json();
   return lista_productos;
 };

@@ -31,37 +31,14 @@ import { fetchListaProductos } from "../redux/listaProductos/listaProductosActio
 class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
-    //todo: definir un statetype para facilidad con la ide
-    this.state = {
-      propsSku: {
-        classContainer: "col-md-4 form-group",
-        /**
-         * En primera instancia, solo se debe saber si sku está vacio
-         * se debe agregar mas condiciones al cargar la lista de productos
-         * @param valor
-         * @returns
-         */
-        invalidComparator: (valor: string | number): string =>
-          valor == "" ? "SKU es obligatorio" : "",
-      },
-      propsCodigoBarras: {
-        classContainer: "col-md-3 form-group",
-        invalidComparator: (valor: string | number): string => "",
-      },
-    };
-    //todo: if no hay productos, cargarlos
     //Cargando los productos de la db a la store
     this.props.fetchListaProductos();
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevProps.listaProductos && this.props.listaProductos)
-      console.log("noprod");
-
-    console.log("cdup prev", JSON.stringify(prevProps, null, 2));
-    console.log("cdup now", JSON.stringify(this.props, null, 2));
-  }
-
+  /*
+invalidComparator: (valor: string | number): string =>
+          valor == "" ? "SKU es obligatorio" : "",
+invalidComparator: (valor: string | number): string => ""
+*/
   render() {
     /**
      * En el caso de sku existen condiciones para que sku sea invalido.
@@ -71,7 +48,6 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
 
     return (
       <>
-        {JSON.stringify(this.state)}
         <form className="container">
           <div className="row mb-3">
             {/* TS sigue tirando errores inutiles del tipo
@@ -79,9 +55,9 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
       cuando se trata de un componente hijo.
       No se como arreglarlo, asi que...
       //@ts-ignore */}
-            <Inputbox_sku {...this.state.propsSku} />
+            <Inputbox_sku classContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_codigo_barras {...this.state.propsCodigoBarras} />
+            <Inputbox_codigo_barras classContainer="col-md-3 form-group" />
             {/*//@ts-ignore */}
             <Inputbox_modelo classContainer="col-md-5 form-group" />
           </div>
