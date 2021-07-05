@@ -1,3 +1,5 @@
+import Producto from "../../src_servidor/tipos/Producto";
+
 /**
  * - Enfuerza la estructura del prop de Inputbox
  * para que sea visible por todas sus sub-instancias.
@@ -26,7 +28,11 @@ type Props_Inputbox = {
   /**
    * Opcional
    * - En caso de no necesitar un comparador,
-   * dejar como default (string)=>"" en constructor de inputbox
+   * dejar como default (string)=>"" si invalidComparator no está definido
+   * - notese que si seteo condicionalmente (por ejemplo, Lista de productos fetcheadas o no aun):
+   * condicionAsincronaBasadaEnProps? invalidComparator1 :invalidComparator2.
+   * entonces, aunque se cumpla la condicion, se debe rerenderizar el componente para chequear la condicion nueva
+   *
    */
   invalidComparator?: (text: string | number) => string;
 };

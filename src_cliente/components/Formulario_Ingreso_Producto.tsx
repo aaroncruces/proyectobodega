@@ -17,7 +17,6 @@ import Throbber from "./Throbber";
 // helpers & utilities
 import Producto from "../../src_servidor/tipos/Producto";
 import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
-import Props_inputbox from "../helpers/type_props_Inputbox";
 // redux custom
 import StatelistaProductos from "../redux/listaProductos/type_state_listaProductos";
 import { fetchListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
@@ -34,18 +33,26 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
     //Cargando los productos de la db a la store
     this.props.fetchListaProductos();
   }
-  /*
-invalidComparator: (valor: string | number): string =>
-          valor == "" ? "SKU es obligatorio" : "",
-invalidComparator: (valor: string | number): string => ""
-*/
-  render() {
-    /**
-     * En el caso de sku existen condiciones para que sku sea invalido.
-     * Estas condiciones dependen expicitamente del formulario
-     * (en particular, del formulario de ingreso)
-     */
 
+  render() {
+    // Definiendo comparadores de invalidez para distintos cuadros de texto:
+    // todo: usar https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+    const MENSAJE_SKU_VACIO = "SKU es obligatorio";
+    const skuInvalidComparator =
+      this.props.listaProductos == undefined
+        ? //antes de cargar la lista de productos, SKU no puede ser vacio
+          (texto) => MENSAJE_SKU_VACIO
+        : (texto) => {
+            return "holakase";
+            if (texto == "") {
+              return MENSAJE_SKU_VACIO;
+            }
+            return "";
+          };
+    const propsSku = {
+      classContainer: "col-md-4 form-group",
+      invalidComparator: skuInvalidComparator,
+    };
     return (
       <>
         <form className="container">
@@ -55,9 +62,10 @@ invalidComparator: (valor: string | number): string => ""
       cuando se trata de un componente hijo.
       No se como arreglarlo, asi que...
       //@ts-ignore */}
-            <Inputbox_sku classContainer="col-md-4 form-group" />
+            <Inputbox_sku {...propsSku} />
             {/*//@ts-ignore */}
             <Inputbox_codigo_barras classContainer="col-md-3 form-group" />
+
             {/*//@ts-ignore */}
             <Inputbox_modelo classContainer="col-md-5 form-group" />
           </div>

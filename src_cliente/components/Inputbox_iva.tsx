@@ -11,7 +11,7 @@ import { IVA } from "../helpers/impuestos";
 
 class Inputbox_iva extends Inputbox<Props_inputbox> {
   name = "precio_venta_neto";
-  labelBody = "Precio de venta bruto";
+  labelBody = "IVA";
   format_onBlur = valueToNumber;
   format_onInput = valueToNumber;
 }
