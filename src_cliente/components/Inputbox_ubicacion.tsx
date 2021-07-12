@@ -17,7 +17,7 @@ const mapStateToProps = (state): Props_inputbox => ({
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
-  updateStoreValue: (ubicacion) => dispatch(setUbicacion(ubicacion)),
+  updateStoreValueReducer: (ubicacion) => dispatch(setUbicacion(ubicacion)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inputbox_ubicacion);

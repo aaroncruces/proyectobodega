@@ -33,7 +33,7 @@ const mapStateToProps = (state): Props_inputbox => ({
  * @returns
  */
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
-  updateStoreValue: (precio_venta_neto: number) =>
+  updateStoreValueReducer: (precio_venta_neto: number) =>
     dispatch(setPrecio_venta_neto(precio_venta_neto)),
 });
 

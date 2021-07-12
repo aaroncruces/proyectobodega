@@ -18,7 +18,7 @@ const mapStateToProps = (state): Props_inputbox => ({
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
-  updateStoreValue: (codigo_barras) =>
+  updateStoreValueReducer: (codigo_barras) =>
     dispatch(setCodigo_barras(codigo_barras)),
 });
 

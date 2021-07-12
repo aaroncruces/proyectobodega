@@ -17,7 +17,8 @@ const mapStateToProps = (state): Props_inputbox => ({
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
-  updateStoreValue: (descripcion) => dispatch(setDescripcion(descripcion)),
+  updateStoreValueReducer: (descripcion) =>
+    dispatch(setDescripcion(descripcion)),
 });
 
 export default connect(

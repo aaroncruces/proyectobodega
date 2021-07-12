@@ -33,7 +33,8 @@ const mapStateToProps = (state): Props_inputbox => ({
  * @returns
  */
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
-  updateStoreValue: (cantidad: number) => dispatch(setCantidad(cantidad)),
+  updateStoreValueReducer: (cantidad: number) =>
+    dispatch(setCantidad(cantidad)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inputbox_cantidad);

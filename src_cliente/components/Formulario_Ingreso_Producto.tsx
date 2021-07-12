@@ -17,16 +17,13 @@ import Throbber from "./Throbber";
 // helpers & utilities
 import Producto from "../../src_servidor/tipos/Producto";
 import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
+import Props_inputbox from "../helpers/type_props_Inputbox";
 // redux custom
 import StatelistaProductos from "../redux/listaProductos/type_state_listaProductos";
 import { fetchListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
+import StateModelo from "../redux/modelo/type_state_modelo";
+import StateMarca from "../redux/marca/type_state_marca";
 
-/**
- * todo: precargar los item de la db, y ponerle un spinner de cargando, o algo asi
- * todo: definir validez o invalidez de los inputbox, inValidMessage deberia estar en Inputbox,
- * todo: isValid deberia setearse en los reducers (o quiza en una subscription??) y en los State* (StateSku)
- * @returns
- */
 class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
@@ -34,24 +31,92 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
     this.props.fetchListaProductos();
   }
 
+  SKU_EMPTY_MESSAGE = "SKU es obligatorio";
+
+  skuInvalid_ListNotFetched = (text: string) =>
+    text == "" ? this.SKU_EMPTY_MESSAGE : "";
+
+  skuInvalidOrRepeated_ListFetched = (text: string) => {
+    if (text == "") return this.SKU_EMPTY_MESSAGE;
+    const productoEncontrado: Producto = this.props.listaProductosDB.find(
+      (producto) => producto.sku == text
+    );
+    return productoEncontrado
+      ? `El producto ya existe. ${productoEncontrado.modelo} ${productoEncontrado.marca}`
+      : "";
+  };
+  CODIGO_BARRAS_REPEATED_MESSAGE = "Ya existe un producto con este codigo";
+  codigoBarrasRepeated_ListFetched = (text: string) =>
+    this.props.listaProductosDB.find(
+      (producto) => producto.codigo_barras == text
+    )
+      ? this.CODIGO_BARRAS_REPEATED_MESSAGE
+      : "";
+
+  MODELO_EMPTY_MESSAGE = "Nombre del modelo es obligatorio";
+
+  modeloInvalid_ListNotFetched = (text: string) =>
+    text == "" ? this.MODELO_EMPTY_MESSAGE : "";
+
+  modeloInvalidOrMarcaRepeated_ListFetched = (text: string) => {
+    if (text == "") return this.MODELO_EMPTY_MESSAGE;
+    const productoEncontrado: Producto = this.props.listaProductosDB.find(
+      (producto) =>
+        producto.modelo == text && producto.marca == this.props.textboxMarca
+    );
+    return productoEncontrado
+      ? `El producto con marca ${productoEncontrado.marca} ya tiene este modelo.`
+      : "";
+  };
+
+  marcaAndModeloRepeated_ListFetched = (text: string) => {
+    const productoEncontrado: Producto = this.props.listaProductosDB.find(
+      (producto) =>
+        producto.marca == text && producto.modelo == this.props.textboxModelo
+    );
+
+    return productoEncontrado
+      ? `El producto con modelo ${productoEncontrado.modelo} ya tiene esta marca.`
+      : "";
+  };
+
   render() {
-    // Definiendo comparadores de invalidez para distintos cuadros de texto:
-    // todo: usar https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    const MENSAJE_SKU_VACIO = "SKU es obligatorio";
-    const skuInvalidComparator =
-      this.props.listaProductos == undefined
-        ? //antes de cargar la lista de productos, SKU no puede ser vacio
-          (texto) => MENSAJE_SKU_VACIO
-        : (texto) => {
-            return "holakase";
-            if (texto == "") {
-              return MENSAJE_SKU_VACIO;
-            }
-            return "";
-          };
-    const propsSku = {
-      classContainer: "col-md-4 form-group",
-      invalidComparator: skuInvalidComparator,
+    const propsSku: Props_inputbox = {
+      cssClassContainer: "col-md-4 form-group",
+      //debe definirse aqui (en render()), si no, no queda dinamico
+      invalidComparator:
+        this.props.listaProductosDB == undefined
+          ? this.skuInvalid_ListNotFetched
+          : this.skuInvalidOrRepeated_ListFetched,
+    };
+    const propsCodigoBarras: Props_inputbox = {
+      cssClassContainer: "col-md-3 form-group",
+      invalidComparator:
+        this.props.listaProductosDB == undefined
+          ? () => ""
+          : this.codigoBarrasRepeated_ListFetched,
+    };
+
+    const propsModelo: Props_inputbox = {
+      cssClassContainer: "col-md-5 form-group",
+      invalidComparator:
+        this.props.listaProductosDB == undefined
+          ? this.modeloInvalid_ListNotFetched
+          : this.modeloInvalidOrMarcaRepeated_ListFetched,
+    };
+    const propsMarca: Props_inputbox = {
+      cssClassContainer: "col-md-4 form-group",
+      invalidComparator:
+        this.props.listaProductosDB == undefined
+          ? () => ""
+          : this.marcaAndModeloRepeated_ListFetched,
+    };
+    const propsButtonIngreso = {
+      className: "me-3 mt-3 btn btn-primary",
+      testInvalid:
+        this.props.listaProductosDB == undefined
+          ? () => false
+          : this.marcaAndModeloRepeated_ListFetched,
     };
     return (
       <>
@@ -64,66 +129,55 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
       //@ts-ignore */}
             <Inputbox_sku {...propsSku} />
             {/*//@ts-ignore */}
-            <Inputbox_codigo_barras classContainer="col-md-3 form-group" />
-
+            <Inputbox_codigo_barras {...propsCodigoBarras} />
             {/*//@ts-ignore */}
-            <Inputbox_modelo classContainer="col-md-5 form-group" />
+            <Inputbox_modelo {...propsModelo} />
           </div>
           <div className="row mb-4">
             {/*//@ts-ignore */}
-            <Inputbox_cantidad classContainer="col-md-4 form-group" />
+            <Inputbox_cantidad cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_ubicacion classContainer="col-md-4 form-group" />
+            <Inputbox_ubicacion cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_marca classContainer="col-md-4 form-group" />
+            <Inputbox_marca {...propsMarca} />
           </div>
           <div className="row mb-3">
             {/*//@ts-ignore */}
-            <Inputbox_precio_venta_neto classContainer="col-md-4 form-group" />
+            <Inputbox_precio_venta_neto cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_iva classContainer="col-md-4 form-group" />
+            <Inputbox_iva cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_precio_venta_bruto classContainer="col-md-4 form-group" />
+            <Inputbox_precio_venta_bruto cssClassContainer="col-md-4 form-group" />
           </div>
           <div className="row mb-3">
             {/*//@ts-ignore */}
-            <Inputbox_descripcion classContainer="col-md-12 form-group" />
+            <Inputbox_descripcion cssClassContainer="col-md-12 form-group" />
           </div>
           <div className="d-flex align-items-center">
             <Button_Ingreso_Productos />
-
-            {
-              //throbber para mustrar que se encuentran cargado los productos
-              this.props.listaProductos === undefined && (
-                <div className="ms-auto">
-                  <Throbber />
-                </div>
-              )
-            }
+            {this.props.listaProductosDB === undefined && (
+              <div className="ms-auto">
+                <Throbber />
+              </div>
+            )}
           </div>
         </form>
       </>
     );
   }
 }
-/**
- * Lo unico que necesita saber el qué productos tiene la DB
- * @param state
- * @returns
- */
-const mapStateToProps = (state) => ({
-  listaProductos: (state.listaProductosReducer as StatelistaProductos)
+
+const mapStateToProps = (state: any): Props_Formulario_Ingreso => ({
+  listaProductosDB: (state.listaProductosReducer as StatelistaProductos)
     .listaProductos,
+  textboxModelo: (state.modeloReducer as StateModelo).modelo,
+  textboxMarca: (state.marcaReducer as StateMarca).marca,
 });
-/**
- * Para que, en caso de que no hayan productos, obtener productos de la DB
- * Dado que se necesita trackear cuando se ingresa un producto, se usa un thunk
- * @param dispatch
- * @returns
- */
+
 const mapDispatchToProps = (
   dispatch: (any) => any
 ): Props_Formulario_Ingreso => ({
+  //thunk
   fetchListaProductos: () => dispatch(fetchListaProductos()),
 });
 

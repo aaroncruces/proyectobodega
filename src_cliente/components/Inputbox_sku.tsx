@@ -12,22 +12,10 @@ class Inputbox_sku extends Inputbox<Props_inputbox> {
   format_onBlur = onBlur;
   format_onInput = onInput;
 }
-/**
- *
- * @param state contiene el valor de sku, invalidSku y invalidSkuMessage
- * @returns pasa como props: textInputBox, isInvalid, invalidMessage
- */
 const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: (state.skuReducer as StateSku).sku,
 });
-/**
- * Se setea  SKU con redux.
- * - Debido a que depende especificamente de los formularios si sku es invalido,
- * el manejo de esto se hace en el formulario, no en redux
- * @param dispatch
- * @returns
- */
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
-  updateStoreValue: (sku: string) => dispatch(setSku(sku)),
+  updateStoreValueReducer: (sku: string) => dispatch(setSku(sku)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Inputbox_sku);
