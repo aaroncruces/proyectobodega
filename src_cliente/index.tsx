@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
 import "./styling/styles.scss";
+//todo: to->english+locale
 
 //import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 /*

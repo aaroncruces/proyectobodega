@@ -1,13 +1,15 @@
 /**
  * esta cosa actua como interfaz para obtener y guardar los datos
  * en una base de datos local, archivo de texto, lan, etc
+ * todo: env variables para diferenciar
  */
 
 import Producto from "../../src_servidor/tipos/Producto";
 import { HttpStatusCode } from "../../src_servidor/tipos/HttpStatusCode";
 import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
 
-const url = "http://localhost:5000";
+//const url = "http://localhost:5000";
+const url = "";
 
 export const enviar_producto = async (
   producto: Producto
@@ -132,7 +134,10 @@ export const fetchProductos = async (): Promise<Producto[]> => {
       "Content-type": "application/json",
     },
   });
-  await delay(5000);
+
+  //await delay(5000);
+  await delay(0);
+
   const lista_productos = await respuesta.json();
   return lista_productos;
 };

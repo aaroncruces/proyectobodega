@@ -1,4 +1,5 @@
 /**
+ * todo: to->english+locale
  * Para compilacion rapida, se usa la opcion -T en ts-script descrita en nodemon.json
  * Para enforcing y aviso de errores, quitar -T
  */
