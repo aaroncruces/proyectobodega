@@ -48,7 +48,7 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
   CODIGO_BARRAS_REPEATED_MESSAGE = "Ya existe un producto con este codigo";
   codigoBarrasRepeated_ListFetched = (text: string) =>
     this.props.listaProductosDB.find(
-      (producto) => producto.codigo_barras == text
+      (producto) => text != "" && producto.codigo_barras == text
     )
       ? this.CODIGO_BARRAS_REPEATED_MESSAGE
       : "";

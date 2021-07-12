@@ -8,10 +8,11 @@ import Producto from "../../src_servidor/tipos/Producto";
 import { HttpStatusCode } from "../../src_servidor/tipos/HttpStatusCode";
 import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
 
-//const url = "http://localhost:5000";
-const url = "";
+const DEVEL = false;
 
-export const enviar_producto = async (
+const url = DEVEL ? "http://localhost:5000" : "";
+
+export const postProducto = async (
   producto: Producto
 ): Promise<{
   exito: boolean;
@@ -50,15 +51,12 @@ export const enviar_producto = async (
     //* en condiciones normales, los errores 0,1,2 no deberian gatillarse
     //* se manejan en caso de haber error del programador
 
-    // 0) el producto debe existir
     if (datos_error.codigo_error == Errores_ingreso.PRODUCTO_NO_EXISTE)
       mensaje = "El producto no se ha ingresado.";
 
-    // 1) sku debe estar presente, no ser ""
     if (datos_error.codigo_error == Errores_ingreso.SKU_VACIA)
       mensaje = "Ingrese SKU.";
 
-    // 2) modelo debe estar presente, no ser ""
     if (datos_error.codigo_error == Errores_ingreso.MODELO_VACIO)
       mensaje = "El producto no se ha ingresado";
 
@@ -120,11 +118,7 @@ export const enviar_producto = async (
 };
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-/**
- * Obtiene la lista de productos del server
- * ToDo: entregar undefined si hubo un error, si se obtuvo vacio, entregar []
- * @returns
- */
+
 export const fetchProductos = async (): Promise<Producto[]> => {
   const respuesta = await fetch(url + "/api/productos", {
     method: "GET",
@@ -134,9 +128,7 @@ export const fetchProductos = async (): Promise<Producto[]> => {
       "Content-type": "application/json",
     },
   });
-
-  //await delay(5000);
-  await delay(0);
+  if (DEVEL) await delay(5000);
 
   const lista_productos = await respuesta.json();
   return lista_productos;

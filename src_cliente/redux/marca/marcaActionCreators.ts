@@ -1,8 +1,3 @@
-/**
- * Entrega las acciones de actualizar el marca entregando el nuevo texto,
- * y la de eliminar el marca si hace falta.
- * Solo entrega objetos de tipo Action (autodefinidos), no actua, para eso es el reducer
- */
 import MarcaActionTypes from "./marcaActionTypes";
 import Action from "../type_action";
 

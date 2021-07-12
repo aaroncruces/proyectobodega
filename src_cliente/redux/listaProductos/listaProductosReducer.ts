@@ -4,17 +4,24 @@ import StateListaProductos from "./type_state_listaProductos";
 const initialState: StateListaProductos = {
   listaProductos: undefined,
 };
-/**
- * Actualiza el ListaProductos en la Store
- * @param state contiene el valor de listaProductos, nada mas
- * @param action puede ser setListaProductos(nuevoLISTA_PRODUCTOS) o resetListaProductos
- * @returns
- */
+
 const listaProductosReducer = (
   state: StateListaProductos = initialState,
   action: Action
-): StateListaProductos =>
-  action.type == ListaProductosActionsTypes.SET_LISTA_PRODUCTOS
+): StateListaProductos => {
+  return action.type == ListaProductosActionsTypes.SET_LISTA_PRODUCTOS
     ? { ...state, listaProductos: action.payload }
+    : action.type == ListaProductosActionsTypes.PUSH_PRODUCTO
+    ? {
+        ...state,
+        listaProductos: [...state.listaProductos, action.payload],
+      }
+    : action.type == ListaProductosActionsTypes.MODIFY_PRODUCTO
+    ? { ...state }
+    : action.type == ListaProductosActionsTypes.DELETE_PRODUCTO
+    ? { ...state }
+    : action.type == ListaProductosActionsTypes.CHANGE_PRODUCTO_AMOUNT
+    ? { ...state }
     : { ...state };
+};
 export default listaProductosReducer;

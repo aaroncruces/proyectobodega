@@ -6,7 +6,8 @@ import StateSku from "../redux/sku/type_state_sku";
 import StateModelo from "../redux/modelo/type_state_modelo";
 import StateCodigo_barras from "../redux/codigo_barras/type_state_codigo_barras";
 import StateMarca from "../redux/marca/type_state_marca";
-
+import { postTextToProductoDB } from "../redux/listaProductos/listaProductosActionCreators";
+import Producto from "../../src_servidor/tipos/Producto";
 const mapStateToProps = (state): Props_Button => ({
   label: checkStateForLabel(state),
   cssClass: checkStateForCSS(state),
@@ -14,7 +15,10 @@ const mapStateToProps = (state): Props_Button => ({
 });
 
 //todo thunk: guardar producto,then agregarlo a redux, catch deletear y recargar+error message
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch: (any) => any): Props_Button => ({
+  //thunk
+  onClick: () => dispatch(postTextToProductoDB()),
+});
 
 const checkStateForLabel = (state: any): string => {
   if (listIncorrectInputs(state).size > 0) return "Revise Inputboxes";
@@ -50,27 +54,27 @@ const listIncorrectInputs = (state: any): Set<string> => {
     .listaProductos;
   //db not loaded yet
   if (!listaProductos) return incorrectParameters;
-
+  console.log("0", state);
   const productoSKURepeated = listaProductos.find(
     (producto) => producto.sku == sku
   );
   if (productoSKURepeated) incorrectParameters.add(SKU);
-
+  console.log("1");
   const codigo_barras = (state.codigo_barrasReducer as StateCodigo_barras)
     .codigo_barras;
   const productoCodigoBarrasRepeated = listaProductos.find(
-    (producto) => producto.codigo_barras == codigo_barras
+    (producto) => codigo_barras != "" && producto.codigo_barras == codigo_barras
   );
   const CODIGO_BARRAS = "Codigo de barras";
   if (productoCodigoBarrasRepeated) incorrectParameters.add(CODIGO_BARRAS);
-
+  console.log("2");
   const marca = (state.marcaReducer as StateMarca).marca;
   const productoModeloMarcaCoincident = listaProductos.find(
     (producto) => producto.marca == marca && producto.modelo == modelo
   );
   const MARCA = "Marca";
   if (productoModeloMarcaCoincident) incorrectParameters.add(MODELO).add(MARCA);
-
+  console.log("3");
   return incorrectParameters;
 };
 

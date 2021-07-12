@@ -1,7 +1,8 @@
-/**
- * Accion de almacenar los productos desde la DB al store
- */
 enum ListaProductosActionsTypes {
   SET_LISTA_PRODUCTOS = "SET_LISTA_PRODUCTOS",
+  PUSH_PRODUCTO = "PUSH_PRODUCTO",
+  MODIFY_PRODUCTO = "MODIFY_PRODUCTO",
+  DELETE_PRODUCTO = "DELETE_PRODUCTO",
+  CHANGE_PRODUCTO_AMOUNT = "CHANGE_PRODUCTO_AMOUNT",
 }
 export default ListaProductosActionsTypes;
