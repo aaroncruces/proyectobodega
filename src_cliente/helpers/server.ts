@@ -1,16 +1,10 @@
-/**
- * esta cosa actua como interfaz para obtener y guardar los datos
- * en una base de datos local, archivo de texto, lan, etc
- * todo: env variables para diferenciar
- */
-
 import Producto from "../../src_servidor/tipos/Producto";
 import { HttpStatusCode } from "../../src_servidor/tipos/HttpStatusCode";
 import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
 
-const DEVEL = false;
-
-const url = DEVEL ? "http://localhost:5000" : "";
+//Webpack dev or prod
+//@ts-ignore
+const url = WP_URL || "";
 
 export const postProducto = async (
   producto: Producto
@@ -35,21 +29,13 @@ export const postProducto = async (
   let exito = false;
   let codigo_error;
 
-  // Producto ingresado correnctamente
   if (respuesta.status == HttpStatusCode.CREATED) {
     exito = true;
   }
 
-  // si no puede ingresar datos debido a el mismo usuario
   if (respuesta.status == HttpStatusCode.CONFLICT) {
     exito = false;
     codigo_error = datos_error.codigo_error;
-    // Dada la comprejidad de la combinacion de condiciones 3 y 4,
-    // no puedo utilizar el manejo de errores de mongo/mongoose,
-    // asi que los chequeos se harán manualmente.
-
-    //* en condiciones normales, los errores 0,1,2 no deberian gatillarse
-    //* se manejan en caso de haber error del programador
 
     if (datos_error.codigo_error == Errores_ingreso.PRODUCTO_NO_EXISTE)
       mensaje = "El producto no se ha ingresado.";
@@ -60,10 +46,6 @@ export const postProducto = async (
     if (datos_error.codigo_error == Errores_ingreso.MODELO_VACIO)
       mensaje = "El producto no se ha ingresado";
 
-    // 3) sku debe ser unico, no existir en la base de datos.
-    //    en caso de existir, indicar el nombre+marca del producto al que pertenece
-    // en principio, deberia tener obligadamente sku y modelo (debido a las restricciones)
-    // todo: igual validar que reciba estos datos
     if (datos_error.codigo_error == Errores_ingreso.SKU_REPETIDA) {
       mensaje =
         "El producto con la SKU: '" + datos_error.producto.sku + "' ya existe";
@@ -76,9 +58,6 @@ export const postProducto = async (
       mensaje += ".";
     }
 
-    // 4) la combinacion de modelo+marca debe ser unica
-    //    idem caso 3 (con sku)
-    // todo: idem caso 3
     if (datos_error.codigo_error == Errores_ingreso.MODELO_MARCA_REPETIDA) {
       mensaje = "El producto con modelo: '" + datos_error.producto.modelo + "'";
       if (datos_error.producto.marca != "")
@@ -89,7 +68,6 @@ export const postProducto = async (
         "'.";
     }
 
-    // 5) el codigo de barras puede ser vacio, pero si no, debe ser unico
     if (
       datos_error.codigo_error ==
       Errores_ingreso.CODIGO_BARRAS_NO_VACIO_REPETIDO
@@ -106,14 +84,15 @@ export const postProducto = async (
         mensaje += "; y marca: '" + datos_error.producto.marca + "'";
       mensaje += ".";
     }
-  } //end if (respuesta.status == HttpStatusCode.CONFLICT)
+  }
 
-  // Otro error, o error del servidor
   if (respuesta.status == HttpStatusCode.INTERNAL_SERVER_ERROR) {
     exito = false;
     mensaje = "Hubo un error de servidor. Contactese con soporte.";
   }
 
+  //@ts-ignore
+  if (WP_URL) await delay(5000);
   return { exito, mensaje, codigo_error };
 };
 
@@ -128,7 +107,8 @@ export const fetchProductos = async (): Promise<Producto[]> => {
       "Content-type": "application/json",
     },
   });
-  if (DEVEL) await delay(5000);
+  //@ts-ignore
+  if (WP_URL) await delay(5000);
 
   const lista_productos = await respuesta.json();
   return lista_productos;

@@ -122,11 +122,7 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
       <>
         <form className="container">
           <div className="row mb-3">
-            {/* TS sigue tirando errores inutiles del tipo
-      "...is not assignable to type 'IntrinsicAttributes..."
-      cuando se trata de un componente hijo.
-      No se como arreglarlo, asi que...
-      //@ts-ignore */}
+            {/*//@ts-ignore */}
             <Inputbox_sku {...propsSku} />
             {/*//@ts-ignore */}
             <Inputbox_codigo_barras {...propsCodigoBarras} />

@@ -8,12 +8,6 @@ import {
 import StatePrecio_venta_neto from "../redux/precio_venta_neto/type_state_precio_venta_neto";
 import { setPrecio_venta_neto } from "../redux/precio_venta_neto/precio_venta_netoActionCreators";
 
-class Inputbox_precio_venta_neto extends Inputbox<Props_inputbox> {
-  name = "precio_venta_neto";
-  labelBody = "Precio de venta neto";
-  format_onBlur = valueToNumber;
-  format_onInput = valueToNumber;
-}
 /**
  * Transforma el precio de venta neto del tipo 1234567 a "$ 1.234.567"
  * @param state <1234567> el estado contiene la precio_venta_neto como number
@@ -23,6 +17,10 @@ const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: valueToMoney(
     (state.precio_venta_netoReducer as StatePrecio_venta_neto).precio_venta_neto
   ),
+  name: "precio_venta_neto",
+  labelBody: "Precio de venta neto",
+  format_onBlur: valueToNumber,
+  format_onInput: valueToNumber,
 });
 
 /**
@@ -37,7 +35,4 @@ const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
     dispatch(setPrecio_venta_neto(precio_venta_neto)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Inputbox_precio_venta_neto);
+export default connect(mapStateToProps, mapDispatchToProps)(Inputbox);

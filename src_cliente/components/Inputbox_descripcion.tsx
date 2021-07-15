@@ -5,15 +5,12 @@ import { onInput, onBlur } from "../helpers/formato_descripciones";
 import StateDescripcion from "../redux/descripcion/type_state_descripcion";
 import { setDescripcion } from "../redux/descripcion/descripcionActionCreators";
 
-class Inputbox_descripcion extends Inputbox<Props_inputbox> {
-  name = "descripcion";
-  labelBody = "Descripcion";
-  format_onBlur = onBlur;
-  format_onInput = onInput;
-}
-
 const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: (state.descripcionReducer as StateDescripcion).descripcion,
+  name: "descripcion",
+  labelBody: "Descripcion",
+  format_onBlur: onBlur,
+  format_onInput: onInput,
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
@@ -21,7 +18,4 @@ const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
     dispatch(setDescripcion(descripcion)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Inputbox_descripcion);
+export default connect(mapStateToProps, mapDispatchToProps)(Inputbox);
