@@ -5,8 +5,8 @@ import {
   valueToMoney,
   valueToNumber,
 } from "../helpers/formato_cantidades_enteras";
-import StatePrecio_venta_neto from "../redux/precio_venta_neto/type_state_precio_venta_neto";
 import { setPrecio_venta_neto } from "../redux/precio_venta_neto/precio_venta_netoActionCreators";
+import { precioVentaNetoFromState } from "../redux/StateValueExtractor";
 
 /**
  * Transforma el precio de venta neto del tipo 1234567 a "$ 1.234.567"
@@ -14,9 +14,7 @@ import { setPrecio_venta_neto } from "../redux/precio_venta_neto/precio_venta_ne
  * @returns <"1.234.567"> la precio_venta_neto como string en los props
  */
 const mapStateToProps = (state): Props_inputbox => ({
-  textInputBox: valueToMoney(
-    (state.precio_venta_netoReducer as StatePrecio_venta_neto).precio_venta_neto
-  ),
+  textInputBox: valueToMoney(precioVentaNetoFromState(state)),
   name: "precio_venta_neto",
   labelBody: "Precio de venta neto",
   format_onBlur: valueToNumber,

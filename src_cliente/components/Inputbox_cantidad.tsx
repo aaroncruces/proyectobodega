@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import {
@@ -7,11 +7,10 @@ import {
 } from "../helpers/formato_cantidades_enteras";
 import StateCantidad from "../redux/cantidad/type_state_cantidad";
 import { setCantidad } from "../redux/cantidad/cantidadActionCreators";
+import { cantidadFromState } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
-  textInputBox: valueToString(
-    (state.cantidadReducer as StateCantidad).cantidad
-  ),
+  textInputBox: valueToString(cantidadFromState(state)),
   name: "cantidad",
   labelBody: "Cantidad",
   format_onBlur: valueToNumber,

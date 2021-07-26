@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // Subcomponentes
-import Inputbox_sku from "./Inputbox_sku";
+import Datalist_sku from "./Datalist_sku";
 import Inputbox_codigo_barras from "./Inputbox_codigo_barras";
 import Inputbox_modelo from "./Inputbox_modelo";
 import Inputbox_cantidad from "./Inputbox_cantidad";
@@ -23,7 +23,6 @@ import StatelistaProductos from "../redux/listaProductos/type_state_listaProduct
 import { fetchListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
 import StateModelo from "../redux/modelo/type_state_modelo";
 import StateMarca from "../redux/marca/type_state_marca";
-import Datalist_sku from "./Datalist_sku";
 
 class Formulario_Modificar_Producto extends Component<Props_Formulario_Ingreso> {
   constructor(props) {

@@ -4,9 +4,10 @@ import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
 import StateDescripcion from "../redux/descripcion/type_state_descripcion";
 import { setDescripcion } from "../redux/descripcion/descripcionActionCreators";
+import { descripcionFromState } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
-  textInputBox: (state.descripcionReducer as StateDescripcion).descripcion,
+  textInputBox: descripcionFromState(state),
   name: "descripcion",
   labelBody: "Descripcion",
   format_onBlur: onBlur,

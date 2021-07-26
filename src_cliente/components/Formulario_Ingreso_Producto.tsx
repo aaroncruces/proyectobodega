@@ -15,14 +15,10 @@ import Inputbox_descripcion from "./Inputbox_descripcion";
 import Button_Ingreso_Productos from "./Button_Ingreso_Productos";
 import Throbber from "./Throbber";
 // helpers & utilities
-import Producto from "../../src_servidor/tipos/Producto";
 import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
-import Props_inputbox from "../helpers/type_props_Inputbox";
 // redux custom
-import StatelistaProductos from "../redux/listaProductos/type_state_listaProductos";
 import { fetchListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
-import StateModelo from "../redux/modelo/type_state_modelo";
-import StateMarca from "../redux/marca/type_state_marca";
+import { listaProductosFromState } from "../redux/StateValueExtractor";
 
 class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
@@ -31,103 +27,20 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
     this.props.fetchListaProductos();
   }
 
-  SKU_EMPTY_MESSAGE = "SKU es obligatorio";
-
-  skuInvalid_ListNotFetched = (text: string) =>
-    text == "" ? this.SKU_EMPTY_MESSAGE : "";
-
-  skuInvalidOrRepeated_ListFetched = (text: string) => {
-    if (text == "") return this.SKU_EMPTY_MESSAGE;
-    const productoEncontrado: Producto = this.props.listaProductosDB.find(
-      (producto) => producto.sku == text
-    );
-    return productoEncontrado
-      ? `El producto ya existe. ${productoEncontrado.modelo} ${productoEncontrado.marca}`
-      : "";
-  };
-  CODIGO_BARRAS_REPEATED_MESSAGE = "Ya existe un producto con este codigo";
-  codigoBarrasRepeated_ListFetched = (text: string) =>
-    this.props.listaProductosDB.find(
-      (producto) => text != "" && producto.codigo_barras == text
-    )
-      ? this.CODIGO_BARRAS_REPEATED_MESSAGE
-      : "";
-
-  MODELO_EMPTY_MESSAGE = "Nombre del modelo es obligatorio";
-
-  modeloInvalid_ListNotFetched = (text: string) =>
-    text == "" ? this.MODELO_EMPTY_MESSAGE : "";
-
-  modeloInvalidOrMarcaRepeated_ListFetched = (text: string) => {
-    if (text == "") return this.MODELO_EMPTY_MESSAGE;
-    const productoEncontrado: Producto = this.props.listaProductosDB.find(
-      (producto) =>
-        producto.modelo == text && producto.marca == this.props.textboxMarca
-    );
-    return productoEncontrado
-      ? `El producto con marca ${productoEncontrado.marca} ya tiene este modelo.`
-      : "";
-  };
-
-  marcaAndModeloRepeated_ListFetched = (text: string) => {
-    const productoEncontrado: Producto = this.props.listaProductosDB.find(
-      (producto) =>
-        producto.marca == text && producto.modelo == this.props.textboxModelo
-    );
-
-    return productoEncontrado
-      ? `El producto con modelo ${productoEncontrado.modelo} ya tiene esta marca.`
-      : "";
-  };
-
   render() {
-    const propsSku: Props_inputbox = {
-      cssClassContainer: "col-md-4 form-group",
-      //debe definirse aqui (en render()), si no, no queda dinamico
-      invalidComparator:
-        this.props.listaProductosDB == undefined
-          ? this.skuInvalid_ListNotFetched
-          : this.skuInvalidOrRepeated_ListFetched,
-    };
-    const propsCodigoBarras: Props_inputbox = {
-      cssClassContainer: "col-md-3 form-group",
-      invalidComparator:
-        this.props.listaProductosDB == undefined
-          ? () => ""
-          : this.codigoBarrasRepeated_ListFetched,
-    };
-
-    const propsModelo: Props_inputbox = {
-      cssClassContainer: "col-md-5 form-group",
-      invalidComparator:
-        this.props.listaProductosDB == undefined
-          ? this.modeloInvalid_ListNotFetched
-          : this.modeloInvalidOrMarcaRepeated_ListFetched,
-    };
-    const propsMarca: Props_inputbox = {
-      cssClassContainer: "col-md-4 form-group",
-      invalidComparator:
-        this.props.listaProductosDB == undefined
-          ? () => ""
-          : this.marcaAndModeloRepeated_ListFetched,
-    };
     const propsButtonIngreso = {
       className: "me-3 mt-3 btn btn-primary",
-      testInvalid:
-        this.props.listaProductosDB == undefined
-          ? () => false
-          : this.marcaAndModeloRepeated_ListFetched,
     };
     return (
       <>
         <form className="container">
           <div className="row mb-3">
             {/*//@ts-ignore */}
-            <Inputbox_sku {...propsSku} />
+            <Inputbox_sku cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_codigo_barras {...propsCodigoBarras} />
+            <Inputbox_codigo_barras cssClassContainer="col-md-3 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_modelo {...propsModelo} />
+            <Inputbox_modelo cssClassContainer="col-md-5 form-group" />
           </div>
           <div className="row mb-4">
             {/*//@ts-ignore */}
@@ -135,7 +48,7 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
             {/*//@ts-ignore */}
             <Inputbox_ubicacion cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_marca {...propsMarca} />
+            <Inputbox_marca cssClassContainer="col-md-4 form-group" />
           </div>
           <div className="row mb-3">
             {/*//@ts-ignore */}
@@ -164,10 +77,7 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
 }
 
 const mapStateToProps = (state: any): Props_Formulario_Ingreso => ({
-  listaProductosDB: (state.listaProductosReducer as StatelistaProductos)
-    .listaProductos,
-  textboxModelo: (state.modeloReducer as StateModelo).modelo,
-  textboxMarca: (state.marcaReducer as StateMarca).marca,
+  listaProductosDB: listaProductosFromState(state),
 });
 
 const mapDispatchToProps = (

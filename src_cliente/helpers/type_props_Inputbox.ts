@@ -3,10 +3,10 @@ type Props_Inputbox = {
   updateStoreValueReducer?: (string) => any;
   cssClassContainer?: string;
   invalidComparator?: (text: string) => string;
-  otherValueObserved?: string;
   name?: string;
   labelBody?: string;
   format_onBlur?: (text: string) => string | number;
   format_onInput?: (text: string) => string | number;
+  disabled?: boolean;
 };
 export default Props_Inputbox;

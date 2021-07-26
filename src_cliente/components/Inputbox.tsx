@@ -44,6 +44,7 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
           value={this.props.textInputBox}
           onInput={this.onInput_Inputbox}
           onBlur={this.onBlur_Inputbox}
+          disabled={this.props.disabled}
         />
         {this.props.invalidComparator != undefined &&
           this.props.invalidComparator(this.props.textInputBox) != "" && (

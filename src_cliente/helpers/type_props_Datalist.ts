@@ -1,12 +1,13 @@
 type Props_Datalist = {
   textDatalist?: string;
+  listOfDatas?: string[] | number[];
   updateStoreValueReducer?: (string) => any;
   cssClassContainer?: string;
   invalidComparator?: (text: string) => string;
-  otherValueObserved?: string;
   name?: string;
   labelBody?: string;
-  //necesito formatearlo?????? no creo
+
+  //necesito formatearlo?
   format_onBlur?: (text: string) => string | number;
   format_onInput?: (text: string) => string | number;
 };

@@ -2,17 +2,31 @@ import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
-import StateCodigo_barras from "../redux/codigo_barras/type_state_codigo_barras";
 import { setCodigo_barras } from "../redux/codigo_barras/codigo_barrasActionCreators";
+import {
+  codigo_barrasFromState,
+  listaProductosFromState,
+} from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
-  textInputBox: (state.codigo_barrasReducer as StateCodigo_barras)
-    .codigo_barras,
+  textInputBox: codigo_barrasFromState(state),
   name: "codigo_barras",
   labelBody: "Codigo de barras",
   format_onBlur: onBlur,
   format_onInput: onInput,
+  invalidComparator:
+    listaProductosFromState(state) == undefined
+      ? () => ""
+      : codigoBarrasRepeated_ListFetched(state),
 });
+
+const CODIGO_BARRAS_REPEATED_MESSAGE = "Ya existe un producto con este codigo";
+const codigoBarrasRepeated_ListFetched = (state) => (text: string) =>
+  listaProductosFromState(state).find(
+    (producto) => text != "" && producto.codigo_barras == text
+  )
+    ? CODIGO_BARRAS_REPEATED_MESSAGE
+    : "";
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
   updateStoreValueReducer: (codigo_barras) =>

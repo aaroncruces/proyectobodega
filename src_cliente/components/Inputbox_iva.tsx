@@ -5,21 +5,19 @@ import {
   valueToMoney,
   valueToNumber,
 } from "../helpers/formato_cantidades_enteras";
-import StatePrecio_venta_neto from "../redux/precio_venta_neto/type_state_precio_venta_neto";
 import { setPrecio_venta_neto } from "../redux/precio_venta_neto/precio_venta_netoActionCreators";
 import { IVA } from "../helpers/impuestos";
+import { precioVentaNetoFromState } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: valueToMoney(
-    ((state.precio_venta_netoReducer as StatePrecio_venta_neto)
-      .precio_venta_neto /
-      (1 + IVA)) *
-      IVA
+    (precioVentaNetoFromState(state) / (1 + IVA)) * IVA
   ),
   name: "precio_venta_iva",
   labelBody: "IVA",
   format_onBlur: valueToNumber,
   format_onInput: valueToNumber,
+  disabled: true,
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({

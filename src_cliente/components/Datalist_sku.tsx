@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
 import StateSku from "../redux/sku/type_state_sku";
 import { setSku } from "../redux/sku/skuActionCreators";
