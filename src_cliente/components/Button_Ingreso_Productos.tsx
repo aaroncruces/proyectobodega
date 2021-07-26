@@ -54,12 +54,12 @@ const listIncorrectInputs = (state: any): Set<string> => {
     .listaProductos;
   //db not loaded yet
   if (!listaProductos) return incorrectParameters;
-  console.log("0", state);
+
   const productoSKURepeated = listaProductos.find(
     (producto) => producto.sku == sku
   );
   if (productoSKURepeated) incorrectParameters.add(SKU);
-  console.log("1");
+
   const codigo_barras = (state.codigo_barrasReducer as StateCodigo_barras)
     .codigo_barras;
   const productoCodigoBarrasRepeated = listaProductos.find(
@@ -67,14 +67,14 @@ const listIncorrectInputs = (state: any): Set<string> => {
   );
   const CODIGO_BARRAS = "Codigo de barras";
   if (productoCodigoBarrasRepeated) incorrectParameters.add(CODIGO_BARRAS);
-  console.log("2");
+
   const marca = (state.marcaReducer as StateMarca).marca;
   const productoModeloMarcaCoincident = listaProductos.find(
     (producto) => producto.marca == marca && producto.modelo == modelo
   );
   const MARCA = "Marca";
   if (productoModeloMarcaCoincident) incorrectParameters.add(MODELO).add(MARCA);
-  console.log("3");
+
   return incorrectParameters;
 };
 
