@@ -23,7 +23,7 @@ module.exports = {
             options: {
               transpileOnly: true,
               happyPackMode: true,
-              configFile: path.resolve(__dirname, "tsconfig.cliente.json"),
+              configFile: path.resolve(__dirname, "tsconfig.client.json"),
             },
           },
         ],
