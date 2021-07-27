@@ -27,7 +27,7 @@ import Formulario_Modificar_Producto from "./components/Formulario_Modificar_Pro
 const APP = () => {
   return (
     <Provider store={store}>
-      <Formulario_Ingreso_Producto />
+      <Formulario_Modificar_Producto />
     </Provider>
   );
 };

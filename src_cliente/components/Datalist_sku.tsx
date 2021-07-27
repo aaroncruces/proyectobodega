@@ -1,19 +1,52 @@
 import { connect } from "react-redux";
+import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
-import StateSku from "../redux/sku/type_state_sku";
 import { setSku } from "../redux/sku/skuActionCreators";
+import Producto from "../../src_servidor/tipos/Producto";
+import {
+  listaProductosFromState,
+  skuFromState,
+} from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
 import Props_Datalist from "../helpers/type_props_Datalist";
 
 const mapStateToProps = (state): Props_Datalist => ({
-  textDatalist: (state.skuReducer as StateSku).sku,
+  textDatalist: skuFromState(state),
   name: "sku",
   labelBody: "SKU",
   format_onBlur: onBlur,
   format_onInput: onInput,
+  invalidComparator:
+    listaProductosFromState(state) == undefined
+      ? skuInvalid_ListNotFetched
+      : skuInvalidOrRepeated_ListFetched(state),
+  listOfData:
+    listaProductosFromState(state) == undefined
+      ? listOfDataEmpty
+      : listOfData_ListFetched(state),
 });
+const listOfDataEmpty = [];
+const listOfData_ListFetched = (state): string[] =>
+  listaProductosFromState(state).map((producto: Producto) => producto.sku);
 
-const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
+const SKU_EMPTY_MESSAGE = "SKU es obligatorio";
+
+const skuInvalid_ListNotFetched = (text: string) =>
+  text == "" ? SKU_EMPTY_MESSAGE : "";
+
+const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
+  if (text == "") return SKU_EMPTY_MESSAGE;
+
+  const productoEncontrado: Producto = listaProductosFromState(state).find(
+    (producto) => producto.sku == text
+  );
+
+  return productoEncontrado
+    ? `El producto ya existe. ${productoEncontrado.modelo} ${productoEncontrado.marca}`
+    : "";
+};
+
+const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
   updateStoreValueReducer: (sku: string) => dispatch(setSku(sku)),
 });
 
