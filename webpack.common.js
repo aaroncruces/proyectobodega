@@ -3,13 +3,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    home: "./src_cliente/index.tsx",
-    //vendor: ["./src_cliente/vendor.ts"],
+    home: "./src_client/index.tsx",
+    //vendor: ["./src_client/vendor.ts"],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src_cliente/index.html",
-      favicon: "./src_cliente/styling/favicon.ico",
+      template: "./src_client/index.html",
+      favicon: "./src_client/styling/favicon.ico",
     }),
   ],
   module: {

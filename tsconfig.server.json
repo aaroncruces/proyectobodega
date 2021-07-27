@@ -2,9 +2,9 @@
   "include": ["./src_server"],
   "exclude": [
     "node_modules",
-    "./src_cliente",
+    "./src_client",
     "./src_html_testing",
-    "./dist_cliente",
+    "./dist_client",
     "./dist_server"
   ],
 

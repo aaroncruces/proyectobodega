@@ -11,5 +11,5 @@
     "target": "es6",
     "moduleResolution": "node"
   },
-  "files": ["src_cliente/index.tsx"]
+  "files": ["src_client/index.tsx"]
 }

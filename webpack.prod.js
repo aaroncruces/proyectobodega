@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
 
 const PATHS = {
-  src: path.join(__dirname, "src_cliente"),
+  src: path.join(__dirname, "src_client"),
 };
 module.exports = merge(common, {
   mode: "production",
@@ -33,7 +33,7 @@ module.exports = merge(common, {
   },
   output: {
     filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist_cliente"),
+    path: path.resolve(__dirname, "dist_client"),
     //Para React Router
     publicPath: "/",
   },

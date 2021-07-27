@@ -1,5 +1,5 @@
 node_modules
-dist_cliente
+dist_client
 dist_server
 diagramas/*.png
 src_servidor/recursos/testing.json
