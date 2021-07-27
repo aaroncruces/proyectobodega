@@ -1,6 +1,6 @@
-import Producto from "../../src_servidor/tipos/Producto";
-import { HttpStatusCode } from "../../src_servidor/tipos/HttpStatusCode";
-import { Errores_ingreso } from "../../src_servidor/tipos/Errores_ingreso";
+import Producto from "../../src_server/types/Producto";
+import { HttpStatusCode } from "../../src_server/types/HttpStatusCode";
+import { Errores_ingreso } from "../../src_server/types/Errores_ingreso";
 
 //Webpack dev or prod
 //@ts-ignore

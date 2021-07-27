@@ -1,6 +1,6 @@
 {
-  "watch": ["./src_servidor"],
+  "watch": ["./src_server"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "ts-node  -T --files --project tsconfig.servidor.json ./src_servidor/app.ts"
+  "exec": "ts-node  -T --files --project tsconfig.server.json ./src_server/app.ts"
 }

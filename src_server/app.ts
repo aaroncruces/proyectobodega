@@ -3,12 +3,12 @@
  * Para compilacion rapida, se usa la opcion -T en ts-script descrita en nodemon.json
  * Para enforcing y aviso de errores, quitar -T
  */
-import { ingresar_producto, obtener_lista_productos } from "./modelo/database";
+import { ingresar_producto, obtener_lista_productos } from "./model/database";
 import express from "express";
 const app = express();
 import path from "path";
-import { Errores_ingreso } from "./tipos/Errores_ingreso"; //llaves necesarios debido al error de export default enum
-import { HttpStatusCode } from "./tipos/HttpStatusCode"; //llaves necesarios debido al error de export default enum
+import { Errores_ingreso } from "./types/Errores_ingreso"; //llaves necesarios debido al error de export default enum
+import { HttpStatusCode } from "./types/HttpStatusCode"; //llaves necesarios debido al error de export default enum
 
 const Cors = require("cors");
 

@@ -1,4 +1,4 @@
-import Producto from "../../src_servidor/tipos/Producto";
+import Producto from "../../src_server/types/Producto";
 import StateCantidad from "./cantidad/type_state_cantidad";
 import StateCodigo_barras from "./codigo_barras/type_state_codigo_barras";
 import StateDescripcion from "./descripcion/type_state_descripcion";

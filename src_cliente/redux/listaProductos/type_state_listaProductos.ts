@@ -1,4 +1,4 @@
-import Producto from "../../../src_servidor/tipos/Producto";
+import Producto from "../../../src_server/types/Producto";
 
 /**
  * El store almacena, a demas del producto con el que estoy trabajando,

@@ -5,7 +5,6 @@ import {
   valueToString,
   valueToNumber,
 } from "../helpers/formato_cantidades_enteras";
-import StateCantidad from "../redux/cantidad/type_state_cantidad";
 import { setCantidad } from "../redux/cantidad/cantidadActionCreators";
 import { cantidadFromState } from "../redux/StateValueExtractor";
 

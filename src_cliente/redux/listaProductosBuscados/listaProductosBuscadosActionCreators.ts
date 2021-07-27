@@ -1,5 +1,5 @@
 import Action from "../type_action";
-import Producto from "../../../src_servidor/tipos/Producto";
+import Producto from "../../../src_server/types/Producto";
 import ListaProductosBuscadosActionsTypes from "./listaProductosBuscadosActionTypes";
 
 const setListaProductosBuscados = (payload: Producto[]): Action => ({

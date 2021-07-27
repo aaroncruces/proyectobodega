@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setSku } from "../redux/sku/skuActionCreators";
-import Producto from "../../src_servidor/tipos/Producto";
+import Producto from "../../src_server/types/Producto";
 import {
   listaProductosFromState,
   skuFromState,
@@ -40,9 +40,7 @@ const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
     (producto) => producto.sku == text
   );
 
-  return !productoEncontrado
-    ? `El producto ya existe. ${productoEncontrado.modelo} ${productoEncontrado.marca}`
-    : "";
+  return productoEncontrado == undefined ? "" : "";
 };
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({

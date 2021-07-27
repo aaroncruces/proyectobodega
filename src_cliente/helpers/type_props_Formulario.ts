@@ -1,4 +1,4 @@
-import Producto from "../../src_servidor/tipos/Producto";
+import Producto from "../../src_server/types/Producto";
 
 type Props_Formulario_Ingreso = {
   listaProductosDB?: Producto[];

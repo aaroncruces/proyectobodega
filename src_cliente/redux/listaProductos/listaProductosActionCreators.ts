@@ -1,6 +1,6 @@
 import ListaProductosActionTypes from "./listaProductosActionTypes";
 import Action from "../type_action";
-import Producto from "../../../src_servidor/tipos/Producto";
+import Producto from "../../../src_server/types/Producto";
 import { fetchProductos, postProducto } from "../../helpers/server";
 import StateSku from "../sku/type_state_sku";
 import StateCodigo_barras from "../codigo_barras/type_state_codigo_barras";

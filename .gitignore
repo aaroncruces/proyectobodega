@@ -1,6 +1,6 @@
 node_modules
 dist_cliente
-dist_servidor
+dist_server
 diagramas/*.png
 src_servidor/recursos/testing.json
 ./package-lock.json

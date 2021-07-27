@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Producto from "../tipos/Producto";
-import { Errores_ingreso } from "../tipos/Errores_ingreso"; //llaves necesarios debido al error de export default enum
+import Producto from "../types/Producto";
+import { Errores_ingreso } from "../types/Errores_ingreso"; //llaves necesarios debido al error de export default enum
 
 const ModeloProducto = require("./producto");
 //promesa de conexion
