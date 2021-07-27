@@ -29,19 +29,18 @@ const listOfDataEmpty = [];
 const listOfData_ListFetched = (state): string[] =>
   listaProductosFromState(state).map((producto: Producto) => producto.sku);
 
-const SKU_EMPTY_MESSAGE = "SKU es obligatorio";
-
-const skuInvalid_ListNotFetched = (text: string) =>
-  text == "" ? SKU_EMPTY_MESSAGE : "";
-
+const skuInvalid_ListNotFetched = (text: string) => {
+  if (text == "") return "";
+  return "Cargando lista. Espere por favor";
+};
 const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
-  if (text == "") return SKU_EMPTY_MESSAGE;
+  if (text == "") return "";
 
   const productoEncontrado: Producto = listaProductosFromState(state).find(
     (producto) => producto.sku == text
   );
 
-  return productoEncontrado
+  return !productoEncontrado
     ? `El producto ya existe. ${productoEncontrado.modelo} ${productoEncontrado.marca}`
     : "";
 };
