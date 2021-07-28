@@ -1,6 +1,6 @@
-import Producto from "../../../src_server/types/Producto";
+import Product from "../../../src_server/types/Product";
 
 type StateListaProductosBuscados = {
-  listaProductosBuscados: Producto[] | undefined;
+  listaProductosBuscados: Product[] | undefined;
 };
 export default StateListaProductosBuscados;

@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setSku } from "../redux/sku/skuActionCreators";
-import Producto from "../../src_server/types/Producto";
+import Product from "../../src_server/types/Product";
 import {
   listaProductosFromState,
   skuFromState,
@@ -27,7 +27,7 @@ const mapStateToProps = (state): Props_Datalist => ({
 });
 const listOfDataEmpty = [];
 const listOfData_ListFetched = (state): string[] =>
-  listaProductosFromState(state).map((producto: Producto) => producto.sku);
+  listaProductosFromState(state).map((producto: Product) => producto.sku);
 
 const skuInvalid_ListNotFetched = (text: string) => {
   if (text == "") return "";
@@ -36,7 +36,7 @@ const skuInvalid_ListNotFetched = (text: string) => {
 const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
   if (text == "") return "";
 
-  const productoEncontrado: Producto = listaProductosFromState(state).find(
+  const productoEncontrado: Product = listaProductosFromState(state).find(
     (producto) => producto.sku == text
   );
 

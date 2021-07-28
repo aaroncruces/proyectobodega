@@ -1,17 +1,17 @@
-import Producto from "../../src_server/types/Producto";
+import Product from "../../src_server/types/Product";
 import { HttpStatusCode } from "../../src_server/types/HttpStatusCode";
-import { Errores_ingreso } from "../../src_server/types/Errores_ingreso";
+import { InsertErrors } from "../../src_server/types/InsertErrors";
 
 //Webpack dev or prod
 //@ts-ignore
-const url = WP_URL || "";
+const url = WP_URL;
 
 export const postProducto = async (
-  producto: Producto
+  producto: Product
 ): Promise<{
   exito: boolean;
   mensaje: string;
-  codigo_error: Errores_ingreso | undefined;
+  codigo_error: InsertErrors | undefined;
 }> => {
   //intento ingresar el producto
   const respuesta = await fetch(url + "/api/ingreso", {
@@ -37,16 +37,16 @@ export const postProducto = async (
     exito = false;
     codigo_error = datos_error.codigo_error;
 
-    if (datos_error.codigo_error == Errores_ingreso.PRODUCTO_NO_EXISTE)
+    if (datos_error.codigo_error == InsertErrors.PRODUCTO_NO_EXISTE)
       mensaje = "El producto no se ha ingresado.";
 
-    if (datos_error.codigo_error == Errores_ingreso.SKU_VACIA)
+    if (datos_error.codigo_error == InsertErrors.SKU_VACIA)
       mensaje = "Ingrese SKU.";
 
-    if (datos_error.codigo_error == Errores_ingreso.MODELO_VACIO)
+    if (datos_error.codigo_error == InsertErrors.MODELO_VACIO)
       mensaje = "El producto no se ha ingresado";
 
-    if (datos_error.codigo_error == Errores_ingreso.SKU_REPETIDA) {
+    if (datos_error.codigo_error == InsertErrors.SKU_REPETIDA) {
       mensaje =
         "El producto con la SKU: '" + datos_error.producto.sku + "' ya existe";
       mensaje +=
@@ -58,7 +58,7 @@ export const postProducto = async (
       mensaje += ".";
     }
 
-    if (datos_error.codigo_error == Errores_ingreso.MODELO_MARCA_REPETIDA) {
+    if (datos_error.codigo_error == InsertErrors.MODELO_MARCA_REPETIDA) {
       mensaje = "El producto con modelo: '" + datos_error.producto.modelo + "'";
       if (datos_error.producto.marca != "")
         mensaje += ", y marca: '" + datos_error.producto.marca + "'";
@@ -69,8 +69,7 @@ export const postProducto = async (
     }
 
     if (
-      datos_error.codigo_error ==
-      Errores_ingreso.CODIGO_BARRAS_NO_VACIO_REPETIDO
+      datos_error.codigo_error == InsertErrors.CODIGO_BARRAS_NO_VACIO_REPETIDO
     ) {
       mensaje =
         "El producto con la el codigo de barras: '" +
@@ -98,7 +97,7 @@ export const postProducto = async (
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-export const fetchProductos = async (): Promise<Producto[]> => {
+export const fetchProductos = async (): Promise<Product[]> => {
   const respuesta = await fetch(url + "/api/productos", {
     method: "GET",
     mode: "cors",

@@ -1,12 +1,6 @@
-import Producto from "../../../src_server/types/Producto";
+import Product from "../../../src_server/types/Product";
 
-/**
- * El store almacena, a demas del producto con el que estoy trabajando,
- * los productos que se encuentren en la DB
- * - Si la DB se encuentra vacia, listaProductos=[]
- * - Si aun no se ha consultado, o la DB no responde, listaProductos=undefined
- */
 type StateListaProductos = {
-  listaProductos: Producto[] | undefined;
+  listaProductos: Product[] | undefined;
 };
 export default StateListaProductos;

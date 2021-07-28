@@ -3,7 +3,7 @@ import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setSku } from "../redux/sku/skuActionCreators";
-import Producto from "../../src_server/types/Producto";
+import Producto from "../../src_server/types/Product";
 import {
   listaProductosFromState,
   skuFromState,

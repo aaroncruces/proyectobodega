@@ -1,7 +1,7 @@
-import Producto from "../../src_server/types/Producto";
+import Product from "../../src_server/types/Product";
 
 type Props_Formulario_Ingreso = {
-  listaProductosDB?: Producto[];
+  listaProductosDB?: Product[];
 
   //El formulario necesita saber si la combinacion modelo/marca se repite
   textboxModelo?: string;

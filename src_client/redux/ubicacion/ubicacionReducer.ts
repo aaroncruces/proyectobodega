@@ -4,12 +4,6 @@ import StateUbicacion from "./type_state_ubicacion";
 const initialState: StateUbicacion = {
   ubicacion: "",
 };
-/**
- * Actualiza el Ubicacion en la Store
- * @param state contiene el valor de ubicacion, nada mas
- * @param action puede ser setUbicacion(nuevoUBICACION) o resetUbicacion
- * @returns
- */
 const ubicacionReducer = (
   state: StateUbicacion = initialState,
   action: Action

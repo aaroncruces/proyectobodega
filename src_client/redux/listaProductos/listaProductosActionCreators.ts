@@ -1,6 +1,6 @@
 import ListaProductosActionTypes from "./listaProductosActionTypes";
 import Action from "../type_action";
-import Producto from "../../../src_server/types/Producto";
+import Product from "../../../src_server/types/Product";
 import { fetchProductos, postProducto } from "../../helpers/server";
 import StateSku from "../sku/type_state_sku";
 import StateCodigo_barras from "../codigo_barras/type_state_codigo_barras";
@@ -19,11 +19,11 @@ import { setMarca } from "../../redux/marca/marcaActionCreators";
 import { setPrecio_venta_neto } from "../../redux/precio_venta_neto/precio_venta_netoActionCreators";
 import { setDescripcion } from "../../redux/descripcion/descripcionActionCreators";
 
-const setListaProductos = (payload: Producto[]): Action => ({
+const setListaProductos = (payload: Product[]): Action => ({
   type: ListaProductosActionTypes.SET_LISTA_PRODUCTOS,
   payload,
 });
-const pushProducto = (payload: Producto): Action => ({
+const pushProducto = (payload: Product): Action => ({
   type: ListaProductosActionTypes.PUSH_PRODUCTO,
   payload,
 });
@@ -46,7 +46,7 @@ const fetchListaProductos = () => (dispatch) => {
  */
 const postTextToProductoDB = () => (dispatch, getState) => {
   const state = getState();
-  const producto: Producto = {
+  const producto: Product = {
     sku: (state.skuReducer as StateSku).sku,
     codigo_barras: (state.codigo_barrasReducer as StateCodigo_barras)
       .codigo_barras,

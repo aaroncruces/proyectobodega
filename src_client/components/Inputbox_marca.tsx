@@ -4,8 +4,7 @@ import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
 import { setMarca } from "../redux/marca/marcaActionCreators";
 import StateModelo from "../redux/modelo/type_state_modelo";
-import Producto from "../../src_server/types/Producto";
-import StateListaProductos from "../redux/listaProductos/type_state_listaProductos";
+import Product from "../../src_server/types/Product";
 import {
   listaProductosFromState,
   marcaFromState,
@@ -23,7 +22,7 @@ const mapStateToProps = (state): Props_inputbox => ({
       : marcaAndModeloRepeated_ListFetched(state),
 });
 const marcaAndModeloRepeated_ListFetched = (state) => (text: string) => {
-  const productoEncontrado: Producto = listaProductosFromState(state).find(
+  const productoEncontrado: Product = listaProductosFromState(state).find(
     (producto) =>
       producto.marca == text &&
       producto.modelo == (state.modeloReducer as StateModelo).modelo

@@ -7,8 +7,8 @@ import { ingresar_producto, obtener_lista_productos } from "./model/database";
 import express from "express";
 const app = express();
 import path from "path";
-import { Errores_ingreso } from "./types/Errores_ingreso"; //llaves necesarios debido al error de export default enum
-import { HttpStatusCode } from "./types/HttpStatusCode"; //llaves necesarios debido al error de export default enum
+import { InsertErrors } from "./types/InsertErrors";
+import { HttpStatusCode } from "./types/HttpStatusCode";
 
 const Cors = require("cors");
 
@@ -16,7 +16,7 @@ const Cors = require("cors");
  * carpeta de recursos y cosas
  * entrega index.html en ruta "/"
  */
-app.use(express.static(path.resolve(__dirname, "../dist_cliente")));
+app.use(express.static(path.resolve(__dirname, "../dist_client")));
 
 //TODO: investigar sobre cors
 app.use(
@@ -34,28 +34,18 @@ app.post(
   "/api/ingreso",
   async (req: express.Request, res: express.Response) => {
     try {
-      //producto que intento ingresar
       const producto = req.body;
-      //ingreso del producto
       await ingresar_producto(producto);
-      //cada objeto de respuesta debe tener un cuerpo json
       res.status(HttpStatusCode.CREATED).send({});
     } catch (error) {
-      // en caso de que el error sea del servidor
       if (
         !error.codigo_error ||
-        error.codigo_error == Errores_ingreso.OTRO_ERROR
+        error.codigo_error == InsertErrors.OTRO_ERROR
       ) {
         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR);
-      }
-      //si es debido al ciente
-      else {
+      } else {
         res.status(HttpStatusCode.CONFLICT);
       }
-      // Por ultimo, mando el error (que puede ser de cualquier tipo, y puede tener los motivos)
-      // por ejemplo:
-      // { codigo_error: Errores_ingreso.MODELO_MARCA_REPETIDA,
-      //   producto: producto_modelo_marca_encontrada,          }
       res.setHeader("Content-Type", "application/json").json(error);
     }
   }

@@ -5,6 +5,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const glob = require("glob");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
+const webpack = require("webpack");
 
 const PATHS = {
   src: path.join(__dirname, "src_client"),
@@ -56,6 +57,9 @@ module.exports = merge(common, {
     }),
     new PurgeCSSPlugin({
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+    }),
+    new webpack.DefinePlugin({
+      WP_URL: '""',
     }),
   ],
 });

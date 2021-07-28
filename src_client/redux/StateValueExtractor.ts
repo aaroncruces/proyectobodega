@@ -1,4 +1,4 @@
-import Producto from "../../src_server/types/Producto";
+import Product from "../../src_server/types/Product";
 import StateCantidad from "./cantidad/type_state_cantidad";
 import StateCodigo_barras from "./codigo_barras/type_state_codigo_barras";
 import StateDescripcion from "./descripcion/type_state_descripcion";
@@ -9,7 +9,7 @@ import StatePrecio_venta_neto from "./precio_venta_neto/type_state_precio_venta_
 import StateSku from "./sku/type_state_sku";
 import StateUbicacion from "./ubicacion/type_state_ubicacion";
 
-const listaProductosFromState = (state): Producto[] =>
+const listaProductosFromState = (state): Product[] =>
   (state.listaProductosReducer as StateListaProductos).listaProductos;
 const skuFromState = (state): string => (state.skuReducer as StateSku).sku;
 const codigo_barrasFromState = (state): string =>

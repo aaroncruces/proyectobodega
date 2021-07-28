@@ -4,7 +4,7 @@ import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
 import { setModelo } from "../redux/modelo/modeloActionCreators";
 import StateMarca from "../redux/marca/type_state_marca";
-import Producto from "../../src_server/types/Producto";
+import Producto from "../../src_server/types/Product";
 import {
   listaProductosFromState,
   modeloFromState,

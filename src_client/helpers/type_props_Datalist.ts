@@ -7,7 +7,6 @@ type Props_Datalist = {
   name?: string;
   labelBody?: string;
   disabled?: boolean;
-  //necesito formatearlo?
   format_onBlur?: (text: string) => string | number;
   format_onInput?: (text: string) => string | number;
 };
