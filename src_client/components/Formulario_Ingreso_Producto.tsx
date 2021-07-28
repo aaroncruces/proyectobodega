@@ -12,7 +12,7 @@ import Inputbox_precio_venta_neto from "./Inputbox_precio_venta_neto";
 import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
 import Inputbox_iva from "./Inputbox_iva";
 import Inputbox_descripcion from "./Inputbox_descripcion";
-import Button_Ingreso_Productos from "./Button_Ingreso_Productos";
+import Button_Create_Product from "./Button_Create_Product";
 import Throbber from "./Throbber";
 // helpers & utilities
 import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
@@ -63,7 +63,7 @@ class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
             <Inputbox_descripcion cssClassContainer="col-md-12 form-group" />
           </div>
           <div className="d-flex align-items-center">
-            <Button_Ingreso_Productos />
+            <Button_Create_Product />
             {this.props.listaProductosDB === undefined && (
               <div className="ms-auto">
                 <Throbber />
