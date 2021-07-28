@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import React from "react";
-import Formulario_Ingreso_Producto from "./components/Formulario_Ingreso_Producto";
+import Form_Create_Product from "./components/Form_Create_Product";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
@@ -27,7 +27,7 @@ import Formulario_Modificar_Producto from "./components/Formulario_Modificar_Pro
 const APP = () => {
   return (
     <Provider store={store}>
-      <Formulario_Ingreso_Producto />
+      <Form_Create_Product />
     </Provider>
   );
 };

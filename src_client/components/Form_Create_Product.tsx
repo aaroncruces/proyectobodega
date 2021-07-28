@@ -20,7 +20,7 @@ import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 import { fetchListaProductos } from "../redux/listaProductos/listaProductosActionCreators";
 import { listaProductosFromState } from "../redux/StateValueExtractor";
 
-class Formulario_Ingreso_Producto extends Component<Props_Formulario_Ingreso> {
+class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
     //Cargando los productos de la db a la store
@@ -90,4 +90,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Formulario_Ingreso_Producto);
+)(Form_Create_Product);
