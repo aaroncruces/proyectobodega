@@ -1,6 +1,6 @@
 import Product from "../../../src_server/types/Product";
 
-type StateListaProductos = {
+type StateCachedProductList = {
   listaProductos: Product[] | undefined;
 };
-export default StateListaProductos;
+export default StateCachedProductList;

@@ -17,7 +17,7 @@ import Throbber from "./Throbber";
 // helpers & utilities
 import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 // redux custom
-import { fetchListaProductos } from "../redux/cachedProductList/listaProductosActionCreators";
+import { fetchListaProductos } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { listaProductosFromState } from "../redux/StateValueExtractor";
 
 class Form_Create_Product extends Component<Props_Formulario_Ingreso> {

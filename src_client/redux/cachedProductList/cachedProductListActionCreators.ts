@@ -1,4 +1,4 @@
-import ListaProductosActionTypes from "./listaProductosActionTypes";
+import ListaProductosActionTypes from "./cachedProductListActionTypes";
 import Action from "../type_action";
 import Product from "../../../src_server/types/Product";
 import { fetchProductos, postProducto } from "../../helpers/server";

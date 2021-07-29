@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Props_Button from "../helpers/type_props_button";
 import Button from "./Button";
-import { postTextToProductoDB } from "../redux/cachedProductList/listaProductosActionCreators";
+import { postTextToProductoDB } from "../redux/cachedProductList/cachedProductListActionCreators";
 import {
   codigo_barrasFromState,
   listaProductosFromState,

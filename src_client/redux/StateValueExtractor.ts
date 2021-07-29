@@ -2,7 +2,7 @@ import Product from "../../src_server/types/Product";
 import StateCantidad from "./cantidad/type_state_cantidad";
 import StateCodigo_barras from "./codigo_barras/type_state_codigo_barras";
 import StateDescripcion from "./descripcion/type_state_descripcion";
-import StateListaProductos from "./cachedProductList/type_state_listaProductos";
+import StateListaProductos from "./cachedProductList/type_StateCachedProductList";
 import StateMarca from "./marca/type_state_marca";
 import StateModelo from "./modelo/type_state_modelo";
 import StatePrecio_venta_neto from "./precio_venta_neto/type_state_precio_venta_neto";

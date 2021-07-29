@@ -1,14 +1,14 @@
 import Action from "../type_action";
-import ListaProductosActionsTypes from "./listaProductosActionTypes";
-import StateListaProductos from "./type_state_listaProductos";
-const initialState: StateListaProductos = {
+import ListaProductosActionsTypes from "./cachedProductListActionTypes";
+import StateCachedProductList from "./type_StateCachedProductList";
+const initialState: StateCachedProductList = {
   listaProductos: undefined,
 };
 
 const listaProductosReducer = (
-  state: StateListaProductos = initialState,
+  state: StateCachedProductList = initialState,
   action: Action
-): StateListaProductos => {
+): StateCachedProductList => {
   return action.type == ListaProductosActionsTypes.SET_LISTA_PRODUCTOS
     ? { ...state, listaProductos: action.payload }
     : action.type == ListaProductosActionsTypes.PUSH_PRODUCTO
