@@ -16,9 +16,8 @@ const mapStateToProps = (state): Props_Button => ({
   invalid: checkStateInvalid(state),
 });
 
-//todo thunk: guardar producto,then agregarlo a redux, catch deletear y recargar+error message
+//thunk
 const mapDispatchToProps = (dispatch: (any) => any): Props_Button => ({
-  //thunk
   onClick: () => dispatch(postTextToDBAndCache()),
 });
 

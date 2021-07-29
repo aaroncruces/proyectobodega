@@ -10,7 +10,7 @@ import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedPro
 import { listaProductosFromState } from "../redux/StateValueExtractor";
 import Datalist_sku from "./Datalist_sku";
 
-class Formulario_Modificar_Producto extends Component<Props_Formulario_Ingreso> {
+class Form_Modify_Product extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
     //Cargando los productos de la db a la store
@@ -54,4 +54,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Formulario_Modificar_Producto);
+)(Form_Modify_Product);

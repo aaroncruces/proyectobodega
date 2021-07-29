@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
 import "./styling/styles.scss";
-import Formulario_Modificar_Producto from "./components/Formulario_Modificar_Producto";
+import Form_Modify_Product from "./components/Form_Modify_Product";
 //todo: to->english+locale
 
 //import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -16,10 +16,10 @@ import Formulario_Modificar_Producto from "./components/Formulario_Modificar_Pro
           <a href="/modificacion_producto">modificacion_producto</a>
         </Route>
         <Route path="/ingreso_producto">
-          <Formulario_Ingreso_Producto /> />
+          <Form_Create_Product /> />
         </Route>
         <Route path="/modificacion_producto">
-          <Formulario_Modificar_Producto />
+          <Form_Modify_Product />
         </Route>
       </Router>
 */
