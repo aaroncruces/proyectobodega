@@ -1,8 +1,5 @@
-enum ListaProductosActionsTypes {
-  SET_LISTA_PRODUCTOS = "SET_LISTA_PRODUCTOS",
-  PUSH_PRODUCTO = "PUSH_PRODUCTO",
-  MODIFY_PRODUCTO = "MODIFY_PRODUCTO",
-  DELETE_PRODUCTO = "DELETE_PRODUCTO",
-  CHANGE_PRODUCTO_AMOUNT = "CHANGE_PRODUCTO_AMOUNT",
+enum cachedProductListActionTypes {
+  SET_PRODUCT_LIST_TO_CACHE = "SET_PRODUCT_LIST_TO_CACHE",
+  PUSH_PRODUCT_TO_CACHE = "PUSH_PRODUCT_TO_CACHE",
 }
-export default ListaProductosActionsTypes;
+export default cachedProductListActionTypes;

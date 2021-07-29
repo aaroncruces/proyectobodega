@@ -1,4 +1,4 @@
-import ListaProductosActionTypes from "./cachedProductListActionTypes";
+import cachedProductListActionTypes from "./cachedProductListActionTypes";
 import Action from "../type_action";
 import Product from "../../../src_server/types/Product";
 import { fetchProductos, postProducto } from "../../helpers/server";
@@ -19,32 +19,32 @@ import { setMarca } from "../../redux/marca/marcaActionCreators";
 import { setPrecio_venta_neto } from "../../redux/precio_venta_neto/precio_venta_netoActionCreators";
 import { setDescripcion } from "../../redux/descripcion/descripcionActionCreators";
 
-const setListaProductos = (payload: Product[]): Action => ({
-  type: ListaProductosActionTypes.SET_LISTA_PRODUCTOS,
+const setProductListToCache = (payload: Product[]): Action => ({
+  type: cachedProductListActionTypes.SET_PRODUCT_LIST_TO_CACHE,
   payload,
 });
-const pushProducto = (payload: Product): Action => ({
-  type: ListaProductosActionTypes.PUSH_PRODUCTO,
+const pushProductToCache = (payload: Product): Action => ({
+  type: cachedProductListActionTypes.PUSH_PRODUCT_TO_CACHE,
   payload,
 });
 
 /**
  * Thunk
  */
-const fetchListaProductos = () => (dispatch) => {
+const fetchProductsFromDBToCache = () => (dispatch) => {
   fetchProductos()
     .then((productos) => {
-      dispatch(setListaProductos(productos));
+      dispatch(setProductListToCache(productos));
     })
     .catch((error) => {
-      setListaProductos(undefined);
+      setProductListToCache(undefined);
     });
 };
 
 /**
  * Thunk
  */
-const postTextToProductoDB = () => (dispatch, getState) => {
+const postTextToDBAndCache = () => (dispatch, getState) => {
   const state = getState();
   const producto: Product = {
     sku: (state.skuReducer as StateSku).sku,
@@ -59,7 +59,7 @@ const postTextToProductoDB = () => (dispatch, getState) => {
     ).precio_venta_neto,
     descripcion: (state.descripcionReducer as StateDescripcion).descripcion,
   };
-  dispatch(pushProducto(producto));
+  dispatch(pushProductToCache(producto));
 
   dispatch(setSku(""));
   dispatch(setCodigo_barras(""));
@@ -82,4 +82,4 @@ const postTextToProductoDB = () => (dispatch, getState) => {
       //todo
     });
 };
-export { fetchListaProductos, postTextToProductoDB };
+export { fetchProductsFromDBToCache, postTextToDBAndCache };

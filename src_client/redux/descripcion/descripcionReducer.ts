@@ -4,12 +4,6 @@ import StateDescripcion from "./type_state_descripcion";
 const initialState: StateDescripcion = {
   descripcion: "",
 };
-/**
- * Actualiza el Descripcion en la Store
- * @param state contiene el valor de descripcion, nada mas
- * @param action puede ser setDescripcion(nuevoDESCRIPCION) o resetDescripcion
- * @returns
- */
 const descripcionReducer = (
   state: StateDescripcion = initialState,
   action: Action

@@ -2,7 +2,7 @@ import Product from "../../src_server/types/Product";
 import StateCantidad from "./cantidad/type_state_cantidad";
 import StateCodigo_barras from "./codigo_barras/type_state_codigo_barras";
 import StateDescripcion from "./descripcion/type_state_descripcion";
-import StateListaProductos from "./cachedProductList/type_StateCachedProductList";
+import StateCachedProductList from "./cachedProductList/type_StateCachedProductList";
 import StateMarca from "./marca/type_state_marca";
 import StateModelo from "./modelo/type_state_modelo";
 import StatePrecio_venta_neto from "./precio_venta_neto/type_state_precio_venta_neto";
@@ -10,7 +10,7 @@ import StateSku from "./sku/type_state_sku";
 import StateUbicacion from "./ubicacion/type_state_ubicacion";
 
 const listaProductosFromState = (state): Product[] =>
-  (state.listaProductosReducer as StateListaProductos).listaProductos;
+  (state.cachedProductListReducer as StateCachedProductList).cachedProductList;
 const skuFromState = (state): string => (state.skuReducer as StateSku).sku;
 const codigo_barrasFromState = (state): string =>
   (state.codigo_barrasReducer as StateCodigo_barras).codigo_barras;

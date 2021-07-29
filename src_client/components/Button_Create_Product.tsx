@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Props_Button from "../helpers/type_props_button";
 import Button from "./Button";
-import { postTextToProductoDB } from "../redux/cachedProductList/cachedProductListActionCreators";
+import { postTextToDBAndCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import {
   codigo_barrasFromState,
   listaProductosFromState,
@@ -19,7 +19,7 @@ const mapStateToProps = (state): Props_Button => ({
 //todo thunk: guardar producto,then agregarlo a redux, catch deletear y recargar+error message
 const mapDispatchToProps = (dispatch: (any) => any): Props_Button => ({
   //thunk
-  onClick: () => dispatch(postTextToProductoDB()),
+  onClick: () => dispatch(postTextToDBAndCache()),
 });
 
 const checkStateForLabel = (state: any): string => {

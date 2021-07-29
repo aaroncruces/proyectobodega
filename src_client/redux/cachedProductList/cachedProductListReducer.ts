@@ -1,27 +1,21 @@
 import Action from "../type_action";
-import ListaProductosActionsTypes from "./cachedProductListActionTypes";
+import cachedProductListActionTypes from "./cachedProductListActionTypes";
 import StateCachedProductList from "./type_StateCachedProductList";
 const initialState: StateCachedProductList = {
-  listaProductos: undefined,
+  cachedProductList: undefined,
 };
 
-const listaProductosReducer = (
+const cachedProductListReducer = (
   state: StateCachedProductList = initialState,
   action: Action
 ): StateCachedProductList => {
-  return action.type == ListaProductosActionsTypes.SET_LISTA_PRODUCTOS
-    ? { ...state, listaProductos: action.payload }
-    : action.type == ListaProductosActionsTypes.PUSH_PRODUCTO
+  return action.type == cachedProductListActionTypes.SET_PRODUCT_LIST_TO_CACHE
+    ? { ...state, cachedProductList: action.payload }
+    : action.type == cachedProductListActionTypes.PUSH_PRODUCT_TO_CACHE
     ? {
         ...state,
-        listaProductos: [...state.listaProductos, action.payload],
+        cachedProductList: [...state.cachedProductList, action.payload],
       }
-    : action.type == ListaProductosActionsTypes.MODIFY_PRODUCTO
-    ? { ...state }
-    : action.type == ListaProductosActionsTypes.DELETE_PRODUCTO
-    ? { ...state }
-    : action.type == ListaProductosActionsTypes.CHANGE_PRODUCTO_AMOUNT
-    ? { ...state }
     : { ...state };
 };
-export default listaProductosReducer;
+export default cachedProductListReducer;
