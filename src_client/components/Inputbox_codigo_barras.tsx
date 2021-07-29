@@ -5,7 +5,7 @@ import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setCodigo_barras } from "../redux/codigo_barras/codigo_barrasActionCreators";
 import {
   codigo_barrasFromState,
-  listaProductosFromState,
+  cachedProductListFromState,
 } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
@@ -15,14 +15,14 @@ const mapStateToProps = (state): Props_inputbox => ({
   format_onBlur: onBlur,
   format_onInput: onInput,
   invalidComparator:
-    listaProductosFromState(state) == undefined
+    cachedProductListFromState(state) == undefined
       ? () => ""
       : codigoBarrasRepeated_ListFetched(state),
 });
 
 const CODIGO_BARRAS_REPEATED_MESSAGE = "Ya existe un producto con este codigo";
 const codigoBarrasRepeated_ListFetched = (state) => (text: string) =>
-  listaProductosFromState(state).find(
+  cachedProductListFromState(state).find(
     (producto) => text != "" && producto.codigo_barras == text
   )
     ? CODIGO_BARRAS_REPEATED_MESSAGE

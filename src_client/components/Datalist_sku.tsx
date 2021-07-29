@@ -4,7 +4,7 @@ import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setSku } from "../redux/sku/skuActionCreators";
 import Product from "../../src_server/types/Product";
 import {
-  listaProductosFromState,
+  cachedProductListFromState,
   skuFromState,
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
@@ -17,17 +17,17 @@ const mapStateToProps = (state): Props_Datalist => ({
   format_onBlur: onBlur,
   format_onInput: onInput,
   invalidComparator:
-    listaProductosFromState(state) == undefined
+    cachedProductListFromState(state) == undefined
       ? skuInvalid_ListNotFetched
       : skuInvalidOrRepeated_ListFetched(state),
   listOfData:
-    listaProductosFromState(state) == undefined
+    cachedProductListFromState(state) == undefined
       ? listOfDataEmpty
       : listOfData_ListFetched(state),
 });
 const listOfDataEmpty = [];
 const listOfData_ListFetched = (state): string[] =>
-  listaProductosFromState(state).map((producto: Product) => producto.sku);
+  cachedProductListFromState(state).map((producto: Product) => producto.sku);
 
 const skuInvalid_ListNotFetched = (text: string) => {
   if (text == "") return "";
@@ -36,7 +36,7 @@ const skuInvalid_ListNotFetched = (text: string) => {
 const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
   if (text == "") return "";
 
-  const productoEncontrado: Product = listaProductosFromState(state).find(
+  const productoEncontrado: Product = cachedProductListFromState(state).find(
     (producto) => producto.sku == text
   );
 

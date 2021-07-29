@@ -18,7 +18,7 @@ import Throbber from "./Throbber";
 import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
-import { listaProductosFromState } from "../redux/StateValueExtractor";
+import { cachedProductListFromState } from "../redux/StateValueExtractor";
 
 class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
@@ -77,7 +77,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
 }
 
 const mapStateToProps = (state: any): Props_Formulario_Ingreso => ({
-  listaProductosDB: listaProductosFromState(state),
+  listaProductosDB: cachedProductListFromState(state),
 });
 
 const mapDispatchToProps = (

@@ -6,7 +6,7 @@ import { setModelo } from "../redux/modelo/modeloActionCreators";
 import StateMarca from "../redux/marca/type_state_marca";
 import Producto from "../../src_server/types/Product";
 import {
-  listaProductosFromState,
+  cachedProductListFromState,
   modeloFromState,
 } from "../redux/StateValueExtractor";
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state): Props_inputbox => ({
   format_onBlur: onBlur,
   format_onInput: onInput,
   invalidComparator:
-    listaProductosFromState(state) == undefined
+    cachedProductListFromState(state) == undefined
       ? modeloInvalid_ListNotFetched
       : modeloInvalidOrMarcaRepeated_ListFetched(state),
 });
@@ -30,7 +30,7 @@ const modeloInvalid_ListNotFetched = (text: string) =>
 const modeloInvalidOrMarcaRepeated_ListFetched = (state) => (text: string) => {
   if (text == "") return MODELO_EMPTY_MESSAGE;
 
-  const productoEncontrado: Producto = listaProductosFromState(state).find(
+  const productoEncontrado: Producto = cachedProductListFromState(state).find(
     (producto) =>
       producto.modelo == text &&
       producto.marca == (state.marcaReducer as StateMarca).marca

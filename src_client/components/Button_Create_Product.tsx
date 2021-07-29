@@ -4,7 +4,7 @@ import Button from "./Button";
 import { postTextToDBAndCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import {
   codigo_barrasFromState,
-  listaProductosFromState,
+  cachedProductListFromState,
   marcaFromState,
   modeloFromState,
   skuFromState,
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch: (any) => any): Props_Button => ({
 
 const checkStateForLabel = (state: any): string => {
   if (listIncorrectInputs(state).size > 0) return "Revise Inputboxes";
-  if (!listaProductosFromState(state)) return "Cargando productos";
+  if (!cachedProductListFromState(state)) return "Cargando productos";
   return "Ingreso Productos";
 };
 
@@ -31,7 +31,7 @@ const checkStateForCSS = (state: any): string =>
   listIncorrectInputs(state).size > 0 ? "btn btn-danger" : "btn btn-primary";
 
 const checkStateInvalid = (state: any): boolean =>
-  !listaProductosFromState(state) || listIncorrectInputs(state).size > 0;
+  !cachedProductListFromState(state) || listIncorrectInputs(state).size > 0;
 
 const listIncorrectInputs = (state: any): Set<string> => {
   let incorrectParameters = new Set<string>();
@@ -43,7 +43,7 @@ const listIncorrectInputs = (state: any): Set<string> => {
   if (sku == "") incorrectParameters.add(SKU);
   if (modelo == "") incorrectParameters.add(MODELO);
 
-  const listaProductos = listaProductosFromState(state);
+  const listaProductos = cachedProductListFromState(state);
 
   //db not loaded yet
   if (!listaProductos) return incorrectParameters;

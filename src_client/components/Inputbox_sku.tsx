@@ -5,7 +5,7 @@ import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setSku } from "../redux/sku/skuActionCreators";
 import Producto from "../../src_server/types/Product";
 import {
-  listaProductosFromState,
+  cachedProductListFromState,
   skuFromState,
 } from "../redux/StateValueExtractor";
 
@@ -16,7 +16,7 @@ const mapStateToProps = (state): Props_inputbox => ({
   format_onBlur: onBlur,
   format_onInput: onInput,
   invalidComparator:
-    listaProductosFromState(state) == undefined
+    cachedProductListFromState(state) == undefined
       ? skuInvalid_ListNotFetched
       : skuInvalidOrRepeated_ListFetched(state),
 });
@@ -28,7 +28,7 @@ const skuInvalid_ListNotFetched = (text: string) =>
 const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
   if (text == "") return SKU_EMPTY_MESSAGE;
 
-  const productoEncontrado: Producto = listaProductosFromState(state).find(
+  const productoEncontrado: Producto = cachedProductListFromState(state).find(
     (producto) => producto.sku == text
   );
 

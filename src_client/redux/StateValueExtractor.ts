@@ -9,7 +9,7 @@ import StatePrecio_venta_neto from "./precio_venta_neto/type_state_precio_venta_
 import StateSku from "./sku/type_state_sku";
 import StateUbicacion from "./ubicacion/type_state_ubicacion";
 
-const listaProductosFromState = (state): Product[] =>
+const cachedProductListFromState = (state): Product[] =>
   (state.cachedProductListReducer as StateCachedProductList).cachedProductList;
 const skuFromState = (state): string => (state.skuReducer as StateSku).sku;
 const codigo_barrasFromState = (state): string =>
@@ -27,7 +27,7 @@ const precioVentaNetoFromState = (state): number =>
 const descripcionFromState = (state): string =>
   (state.descripcionReducer as StateDescripcion).descripcion;
 export {
-  listaProductosFromState,
+  cachedProductListFromState,
   skuFromState,
   codigo_barrasFromState,
   modeloFromState,
