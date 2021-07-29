@@ -1,0 +1,12 @@
+enum ActiveParameterName {
+  NONE = "NONE",
+  SKU = "SKU",
+  CODIGO_BARRAS = "CODIGO_BARRAS",
+  MODELO = "MODELO",
+  MARCA = "MARCA",
+  CANTIDAD = "CANTIDAD",
+  DESCRIPCION = "DESCRIPCION",
+  PRECIO_VENTA_NETO = "PRECIO_VENTA_NETO",
+  UBICACION = "UBICACION",
+}
+export default ActiveParameterName;

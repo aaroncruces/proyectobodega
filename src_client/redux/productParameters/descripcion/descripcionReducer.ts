@@ -9,8 +9,8 @@ const descripcionReducer = (
   action: Action
 ): StateDescripcion =>
   action.type == DescripcionActionsTypes.SET_DESCRIPCION
-    ? { descripcion: action.payload }
+    ? { ...state, descripcion: action.payload }
     : action.type == DescripcionActionsTypes.RESET_DESCRIPCION
-    ? { descripcion: "" }
+    ? { ...state, descripcion: "" }
     : { ...state };
 export default descripcionReducer;

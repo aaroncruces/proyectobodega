@@ -9,8 +9,8 @@ const ubicacionReducer = (
   action: Action
 ): StateUbicacion =>
   action.type == UbicacionActionsTypes.SET_UBICACION
-    ? { ubicacion: action.payload }
+    ? { ...state, ubicacion: action.payload }
     : action.type == UbicacionActionsTypes.RESET_UBICACION
-    ? { ubicacion: "" }
+    ? { ...state, ubicacion: "" }
     : { ...state };
 export default ubicacionReducer;

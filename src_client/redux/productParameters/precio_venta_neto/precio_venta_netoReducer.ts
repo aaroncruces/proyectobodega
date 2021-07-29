@@ -10,8 +10,8 @@ const precio_venta_netoReducer = (
   action: Action
 ): StatePrecio_venta_neto =>
   action.type == Precio_venta_netoActionsTypes.SET_PRECIO_VENTA_NETO
-    ? { precio_venta_neto: action.payload }
+    ? { ...state, precio_venta_neto: action.payload }
     : action.type == Precio_venta_netoActionsTypes.RESET_PRECIO_VENTA_NETO
-    ? { precio_venta_neto: "" }
+    ? { ...state, precio_venta_neto: "" }
     : { ...state };
 export default precio_venta_netoReducer;

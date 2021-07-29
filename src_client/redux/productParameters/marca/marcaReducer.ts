@@ -9,8 +9,8 @@ const marcaReducer = (
   action: Action
 ): StateMarca =>
   action.type == MarcaActionsTypes.SET_MARCA
-    ? { marca: action.payload }
+    ? { ...state, marca: action.payload }
     : action.type == MarcaActionsTypes.RESET_MARCA
-    ? { marca: "" }
+    ? { ...state, marca: "" }
     : { ...state };
 export default marcaReducer;

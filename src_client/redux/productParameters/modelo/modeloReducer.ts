@@ -10,8 +10,8 @@ const modeloReducer = (
   action: Action
 ): StateModelo =>
   action.type == ModeloActionsTypes.SET_MODELO
-    ? { modelo: action.payload }
+    ? { ...state, modelo: action.payload }
     : action.type == ModeloActionsTypes.RESET_MODELO
-    ? { modelo: "" }
+    ? { ...state, modelo: "" }
     : { ...state };
 export default modeloReducer;

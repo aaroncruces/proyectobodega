@@ -9,8 +9,8 @@ const codigo_barrasReducer = (
   action: Action
 ): StateCodigo_barras =>
   action.type == Codigo_barrasActionsTypes.SET_CODIGO_BARRAS
-    ? { codigo_barras: action.payload }
+    ? { ...state, codigo_barras: action.payload }
     : action.type == Codigo_barrasActionsTypes.RESET_CODIGO_BARRAS
-    ? { codigo_barras: "" }
+    ? { ...state, codigo_barras: "" }
     : { ...state };
 export default codigo_barrasReducer;

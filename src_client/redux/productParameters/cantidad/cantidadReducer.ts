@@ -10,8 +10,8 @@ const cantidadReducer = (
   action: Action
 ): StateCantidad =>
   action.type == CantidadActionsTypes.SET_CANTIDAD
-    ? { cantidad: action.payload }
+    ? { ...state, cantidad: action.payload }
     : action.type == CantidadActionsTypes.RESET_CANTIDAD
-    ? { cantidad: "" }
+    ? { ...state, cantidad: "" }
     : { ...state };
 export default cantidadReducer;
