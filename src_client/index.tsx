@@ -27,7 +27,7 @@ import Form_Modify_Product from "./components/Form_Modify_Product";
 const APP = () => {
   return (
     <Provider store={store}>
-      <Form_Create_Product />
+      <Form_Modify_Product />
     </Provider>
   );
 };
