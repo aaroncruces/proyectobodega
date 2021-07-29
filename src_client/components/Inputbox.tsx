@@ -4,12 +4,6 @@ import Props_inputbox from "../helpers/type_props_Inputbox";
 export default class Inputbox<T extends Props_inputbox> extends Component<T> {
   constructor(props) {
     super(props);
-    this.state = {
-      invalidMessage:
-        this.props.invalidComparator == undefined
-          ? ""
-          : this.props.invalidComparator(""),
-    };
   }
 
   private onInput_Inputbox = (event: React.ChangeEvent<HTMLInputElement>) => {

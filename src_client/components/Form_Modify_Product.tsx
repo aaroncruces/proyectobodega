@@ -9,11 +9,11 @@ import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
 import Datalist_sku from "./Datalist_sku";
+import Props_Form_Modify_Product from "../helpers/type_Props_Form_Modify_Product";
 
 class Form_Modify_Product extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
-    //Cargando los productos de la db a la store
     this.props.fetchListaProductos();
   }
 
@@ -40,15 +40,13 @@ class Form_Modify_Product extends Component<Props_Formulario_Ingreso> {
   }
 }
 
-const mapStateToProps = (state: any): Props_Formulario_Ingreso => ({
-  listaProductosDB: cachedProductListFromState(state),
-});
+const mapStateToProps = (state: any): Props_Form_Modify_Product => ({});
 
 const mapDispatchToProps = (
   dispatch: (any) => any
-): Props_Formulario_Ingreso => ({
+): Props_Form_Modify_Product => ({
   //thunk
-  fetchListaProductos: () => dispatch(fetchProductsFromDBToCache()),
+  reFetchProductListToCache: () => dispatch(fetchProductsFromDBToCache()),
 });
 
 export default connect(
