@@ -5,7 +5,7 @@ import {
   valueToString,
   valueToNumber,
 } from "../helpers/formato_cantidades_enteras";
-import { setCantidad } from "../redux/cantidad/cantidadActionCreators";
+import { setCantidad } from "../redux/productParameters/cantidad/cantidadActionCreators";
 import { cantidadFromState } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({

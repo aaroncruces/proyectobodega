@@ -1,5 +1,5 @@
 import DescripcionActionTypes from "./descripcionActionTypes";
-import Action from "../type_action";
+import Action from "../../type_action";
 
 const setDescripcion = (payload: string): Action => ({
   type: DescripcionActionTypes.SET_DESCRIPCION,

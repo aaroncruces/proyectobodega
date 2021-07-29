@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import SkuActionsTypes from "./skuActionTypes";
 import StateSku from "./type_state_sku";
 const initialState: StateSku = {

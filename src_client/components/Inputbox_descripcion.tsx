@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
-import { setDescripcion } from "../redux/descripcion/descripcionActionCreators";
+import { setDescripcion } from "../redux/productParameters/descripcion/descripcionActionCreators";
 import { descripcionFromState } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({

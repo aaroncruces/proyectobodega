@@ -2,8 +2,8 @@ import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
-import { setMarca } from "../redux/marca/marcaActionCreators";
-import StateModelo from "../redux/modelo/type_state_modelo";
+import { setMarca } from "../redux/productParameters/marca/marcaActionCreators";
+import StateModelo from "../redux/productParameters/modelo/type_state_modelo";
 import Product from "../../src_server/types/Product";
 import {
   cachedProductListFromState,

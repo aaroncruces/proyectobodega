@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
-import { setCodigo_barras } from "../redux/codigo_barras/codigo_barrasActionCreators";
+import { setCodigo_barras } from "../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
 import {
   codigo_barrasFromState,
   cachedProductListFromState,

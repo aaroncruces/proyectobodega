@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import ModeloActionsTypes from "./modeloActionTypes";
 import StateModelo from "./type_state_modelo";
 

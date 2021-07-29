@@ -26,7 +26,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
     //Cargando los productos de la db a la store
     this.props.fetchListaProductos();
   }
-
+  //todo on discharge, clear params (sku, CB, Mrca, etc)
   render() {
     const propsButtonIngreso = {
       className: "me-3 mt-3 btn btn-primary",

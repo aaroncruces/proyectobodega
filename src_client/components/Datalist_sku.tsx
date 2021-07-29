@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_codigos";
-import { setSku } from "../redux/sku/skuActionCreators";
+import { setSku } from "../redux/productParameters/sku/skuActionCreators";
 import Product from "../../src_server/types/Product";
 import {
   cachedProductListFromState,

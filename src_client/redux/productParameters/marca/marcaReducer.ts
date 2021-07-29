@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import MarcaActionsTypes from "./marcaActionTypes";
 import StateMarca from "./type_state_marca";
 const initialState: StateMarca = {

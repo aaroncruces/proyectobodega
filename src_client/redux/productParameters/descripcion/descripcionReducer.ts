@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import DescripcionActionsTypes from "./descripcionActionTypes";
 import StateDescripcion from "./type_state_descripcion";
 const initialState: StateDescripcion = {

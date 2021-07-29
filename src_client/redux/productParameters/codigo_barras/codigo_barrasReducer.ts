@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import Codigo_barrasActionsTypes from "./codigo_barrasActionTypes";
 import StateCodigo_barras from "./type_state_codigo_barras";
 const initialState: StateCodigo_barras = {

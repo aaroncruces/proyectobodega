@@ -2,22 +2,22 @@ import cachedProductListActionTypes from "./cachedProductListActionTypes";
 import Action from "../type_action";
 import Product from "../../../src_server/types/Product";
 import { fetchProductos, postProducto } from "../../helpers/server";
-import StateSku from "../sku/type_state_sku";
-import StateCodigo_barras from "../codigo_barras/type_state_codigo_barras";
-import StateModelo from "../modelo/type_state_modelo";
-import StateCantidad from "../cantidad/type_state_cantidad";
-import StateUbicacion from "../ubicacion/type_state_ubicacion";
-import StateMarca from "../marca/type_state_marca";
-import StatePrecio_venta_neto from "../precio_venta_neto/type_state_precio_venta_neto";
-import StateDescripcion from "../descripcion/type_state_descripcion";
-import { setSku } from "../../redux/sku/skuActionCreators";
-import { setCodigo_barras } from "../../redux/codigo_barras/codigo_barrasActionCreators";
-import { setModelo } from "../../redux/modelo/modeloActionCreators";
-import { setCantidad } from "../../redux/cantidad/cantidadActionCreators";
-import { setUbicacion } from "../../redux/ubicacion/ubicacionActionCreators";
-import { setMarca } from "../../redux/marca/marcaActionCreators";
-import { setPrecio_venta_neto } from "../../redux/precio_venta_neto/precio_venta_netoActionCreators";
-import { setDescripcion } from "../../redux/descripcion/descripcionActionCreators";
+import StateSku from "../productParameters/sku/type_state_sku";
+import StateCodigo_barras from "../productParameters/codigo_barras/type_state_codigo_barras";
+import StateModelo from "../productParameters/modelo/type_state_modelo";
+import StateCantidad from "../productParameters/cantidad/type_state_cantidad";
+import StateUbicacion from "../productParameters/ubicacion/type_state_ubicacion";
+import StateMarca from "../productParameters/marca/type_state_marca";
+import StatePrecio_venta_neto from "../productParameters/precio_venta_neto/type_state_precio_venta_neto";
+import StateDescripcion from "../productParameters/descripcion/type_state_descripcion";
+import { setSku } from "../../redux/productParameters/sku/skuActionCreators";
+import { setCodigo_barras } from "../../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
+import { setModelo } from "../../redux/productParameters/modelo/modeloActionCreators";
+import { setCantidad } from "../../redux/productParameters/cantidad/cantidadActionCreators";
+import { setUbicacion } from "../../redux/productParameters/ubicacion/ubicacionActionCreators";
+import { setMarca } from "../../redux/productParameters/marca/marcaActionCreators";
+import { setPrecio_venta_neto } from "../../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
+import { setDescripcion } from "../../redux/productParameters/descripcion/descripcionActionCreators";
 
 const setProductListToCache = (payload: Product[]): Action => ({
   type: cachedProductListActionTypes.SET_PRODUCT_LIST_TO_CACHE,

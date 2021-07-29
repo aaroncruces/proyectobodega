@@ -1,13 +1,13 @@
 import Product from "../../src_server/types/Product";
-import StateCantidad from "./cantidad/type_state_cantidad";
-import StateCodigo_barras from "./codigo_barras/type_state_codigo_barras";
-import StateDescripcion from "./descripcion/type_state_descripcion";
+import StateCantidad from "./productParameters/cantidad/type_state_cantidad";
+import StateCodigo_barras from "./productParameters/codigo_barras/type_state_codigo_barras";
+import StateDescripcion from "./productParameters/descripcion/type_state_descripcion";
 import StateCachedProductList from "./cachedProductList/type_StateCachedProductList";
-import StateMarca from "./marca/type_state_marca";
-import StateModelo from "./modelo/type_state_modelo";
-import StatePrecio_venta_neto from "./precio_venta_neto/type_state_precio_venta_neto";
-import StateSku from "./sku/type_state_sku";
-import StateUbicacion from "./ubicacion/type_state_ubicacion";
+import StateMarca from "./productParameters/marca/type_state_marca";
+import StateModelo from "./productParameters/modelo/type_state_modelo";
+import StatePrecio_venta_neto from "./productParameters/precio_venta_neto/type_state_precio_venta_neto";
+import StateSku from "./productParameters/sku/type_state_sku";
+import StateUbicacion from "./productParameters/ubicacion/type_state_ubicacion";
 
 const cachedProductListFromState = (state): Product[] =>
   (state.cachedProductListReducer as StateCachedProductList).cachedProductList;

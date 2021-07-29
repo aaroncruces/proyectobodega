@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import Precio_venta_netoActionsTypes from "./precio_venta_netoActionTypes";
 import StatePrecio_venta_neto from "./type_state_precio_venta_neto";
 

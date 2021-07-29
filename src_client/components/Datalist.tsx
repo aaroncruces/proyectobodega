@@ -4,20 +4,14 @@ import Props_Datalist from "../helpers/type_props_Datalist";
 export default class Datalist<T extends Props_Datalist> extends Component<T> {
   constructor(props) {
     super(props);
-    this.state = {
-      invalidMessage:
-        this.props.invalidComparator == undefined
-          ? ""
-          : this.props.invalidComparator(""),
-    };
   }
 
-  private onInput_Inputbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private onInput_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateStoreValueReducer(
       this.props.format_onInput(event.target.value)
     );
   };
-  private onBlur_Inputbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private onBlur_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateStoreValueReducer(
       this.props.format_onBlur(event.target.value)
     );
@@ -43,8 +37,8 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
               : "form-control is-invalid"
           }
           value={this.props.textDatalist}
-          onInput={this.onInput_Inputbox}
-          onBlur={this.onBlur_Inputbox}
+          onInput={this.onInput_Datalist}
+          onBlur={this.onBlur_Datalist}
           disabled={this.props.disabled}
           list={this.props.name + "-datalistOptions"}
           id={this.props.name + "-iddatalist"}

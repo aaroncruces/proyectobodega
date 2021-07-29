@@ -5,7 +5,7 @@ import {
   valueToMoney,
   valueToNumber,
 } from "../helpers/formato_cantidades_enteras";
-import { setPrecio_venta_neto } from "../redux/precio_venta_neto/precio_venta_netoActionCreators";
+import { setPrecio_venta_neto } from "../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
 import { IVA } from "../helpers/impuestos";
 import { precioVentaNetoFromState } from "../redux/StateValueExtractor";
 

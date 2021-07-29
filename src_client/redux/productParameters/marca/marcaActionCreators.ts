@@ -1,5 +1,5 @@
 import MarcaActionTypes from "./marcaActionTypes";
-import Action from "../type_action";
+import Action from "../../type_action";
 
 const setMarca = (payload: string): Action => ({
   type: MarcaActionTypes.SET_MARCA,

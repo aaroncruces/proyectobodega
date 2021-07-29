@@ -1,5 +1,5 @@
 import UbicacionActionTypes from "./ubicacionActionTypes";
-import Action from "../type_action";
+import Action from "../../type_action";
 
 const setUbicacion = (payload: string): Action => ({
   type: UbicacionActionTypes.SET_UBICACION,

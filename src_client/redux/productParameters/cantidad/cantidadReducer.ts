@@ -1,4 +1,4 @@
-import Action from "../type_action";
+import Action from "../../type_action";
 import CantidadActionsTypes from "./cantidadActionTypes";
 import StateCantidad from "./type_state_cantidad";
 
