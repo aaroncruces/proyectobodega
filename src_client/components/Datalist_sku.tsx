@@ -52,7 +52,7 @@ const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
 };
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
-  updateStoreValueReducer: (sku: string) => dispatch(setSku(sku)),
+  updateParameterStoreReducer: (sku: string) => dispatch(setSku(sku)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Datalist);
