@@ -10,8 +10,8 @@ import {
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
 import Props_Datalist from "../helpers/type_props_Datalist";
-import ActiveParameterName from "../redux/productParameters/activeParameter/enum_ActiveParameterName";
-import { setActiveParameter } from "../redux/productParameters/activeParameter/activeParameterActionCreators";
+import ActiveParameterName from "../redux/productParameters/activeParameterList/enum_ActiveParameterName";
+import { setActiveParameter } from "../redux/productParameters/activeParameterList/activeParameterActionCreators";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textDatalist: skuFromState(state),

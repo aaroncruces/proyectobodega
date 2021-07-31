@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Props_Datalist from "../helpers/type_props_Datalist";
-import ActiveParameterName from "../redux/productParameters/activeParameter/enum_ActiveParameterName";
+import ActiveParameterName from "../redux/productParameters/activeParameterList/enum_ActiveParameterName";
 
 export default class Datalist<T extends Props_Datalist> extends Component<T> {
   constructor(props) {

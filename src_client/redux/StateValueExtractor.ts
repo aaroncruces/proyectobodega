@@ -8,8 +8,8 @@ import StateModelo from "./productParameters/modelo/type_state_modelo";
 import StatePrecio_venta_neto from "./productParameters/precio_venta_neto/type_state_precio_venta_neto";
 import StateSku from "./productParameters/sku/type_state_sku";
 import StateUbicacion from "./productParameters/ubicacion/type_state_ubicacion";
-import ActiveParameterName from "./productParameters/activeParameter/enum_ActiveParameterName";
-import StateActiveParameter from "./productParameters/activeParameter/type_StateStateActiveParameter";
+import ActiveParameterName from "./productParameters/activeParameterList/enum_ActiveParameterName";
+import StateActiveParameter from "./productParameters/activeParameterList/type_StateStateActiveParameter";
 
 const cachedProductListFromState = (state): Product[] =>
   (state.cachedProductListReducer as StateCachedProductList).cachedProductList;
