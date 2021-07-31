@@ -22,7 +22,7 @@ const mapStateToProps = (state): Props_inputbox => ({
       : modeloInvalidOrMarcaRepeated_ListFetched(state),
 });
 
-const MODELO_EMPTY_MESSAGE = "Nombre del modelo es obligatorio";
+const MODELO_EMPTY_MESSAGE = "Nombre del producto es obligatorio";
 
 const modeloInvalid_ListNotFetched = (text: string) =>
   text == "" ? MODELO_EMPTY_MESSAGE : "";

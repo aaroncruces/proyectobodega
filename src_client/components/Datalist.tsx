@@ -1,23 +1,32 @@
 import React, { Component } from "react";
+import Product from "../../src_server/types/Product";
 import Props_Datalist from "../helpers/type_props_Datalist";
 
-export default class Datalist<T extends Props_Datalist> extends Component<T> {
+type StateDatalist = {
+  invalidMessage: string;
+  listOfData: string[] | number[];
+};
+
+export default class Datalist extends Component<Props_Datalist, StateDatalist> {
   constructor(props) {
     super(props);
+    this.state = {
+      invalidMessage: "",
+      listOfData: [1, 2, 3, 4],
+    };
   }
 
-  private onInput_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
+  onInput_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = this.props.format_onInput(event.target.value);
     this.props.updateParameterStoreReducer(inputValue);
   };
-  private onBlur_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
+  onBlur_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateParameterStoreReducer(
       this.props.format_onBlur(event.target.value)
     );
   };
 
   render() {
-    //console.log(this.props.listOfData);
     return (
       <div
         className={this.props.cssClassContainer}
@@ -30,12 +39,11 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
           name={this.props.name}
           type="text"
           className={
-            this.props.invalidComparator == undefined ||
-            this.props.invalidComparator(this.props.textDatalist) == ""
+            this.state.invalidMessage == ""
               ? "form-control"
               : "form-control is-invalid"
           }
-          value={this.props.textDatalist}
+          value={this.props.textCurrentParam}
           onInput={this.onInput_Datalist}
           onBlur={this.onBlur_Datalist}
           disabled={!this.props.enabled}
@@ -44,15 +52,13 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
           placeholder=""
         />
         <datalist id={this.props.name + "-datalistOptions"}>
-          {this.props.listOfData.map((data: string | number) => (
+          {this.state.listOfData.map((data: string | number) => (
             <option value={data} />
           ))}
         </datalist>
-        {this.props.invalidComparator != undefined &&
-          this.props.invalidComparator(this.props.textDatalist) != "" && (
-            <div className="invalid-feedback">
-              {this.props.invalidComparator(this.props.textDatalist)}
-            </div>
+        {this.state.invalidMessage != undefined &&
+          this.state.invalidMessage != "" && (
+            <div className="invalid-feedback">{this.state.invalidMessage}</div>
           )}
       </div>
     );

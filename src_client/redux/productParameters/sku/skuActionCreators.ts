@@ -5,9 +5,9 @@ const setSku = (payload: string): Action => ({
   payload,
 });
 const activateSku = (): Action => ({
-  type: SkuActionTypes.ACTIVATE_PARAMETER,
+  type: SkuActionTypes.ACTIVATE_SKU,
 });
 const deactivateSku = (): Action => ({
-  type: SkuActionTypes.DEACTIVATE_PARAMETER,
+  type: SkuActionTypes.DEACTIVATE_SKU,
 });
 export { setSku, activateSku, deactivateSku };

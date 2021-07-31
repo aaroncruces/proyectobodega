@@ -6,8 +6,5 @@ const setFilteredProductList = (payload: Product[]): Action => ({
   type: FilteredProductListActionTypes.SET_FILTERED_PRODUCT_LIST,
   payload,
 });
-const filterList = (payload: Product): Action => ({
-  type: FilteredProductListActionTypes.FILTER_PRODUCT_LIST,
-  payload,
-});
-export { setFilteredProductList, filterList };
+
+export { setFilteredProductList };

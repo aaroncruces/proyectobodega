@@ -1,6 +1,6 @@
-enum SkuActionsTypes {
+enum SkuActionTypes {
   SET_SKU = "SET_SKU",
-  ACTIVATE_PARAMETER = "ACTIVATE_PARAMETER",
-  DEACTIVATE_PARAMETER = "DEACTIVATE_PARAMETER",
+  ACTIVATE_SKU = "ACTIVATE_SKU",
+  DEACTIVATE_SKU = "DEACTIVATE_SKU",
 }
-export default SkuActionsTypes;
+export default SkuActionTypes;

@@ -1,12 +1,11 @@
 import { connect } from "react-redux";
-import { onInput, onBlur } from "../helpers/formato_codigos";
-import { setSku } from "../redux/productParameters/sku/skuActionCreators";
+import { onInput, onBlur } from "../helpers/formato_descripciones";
 import Product from "../../src_server/types/Product";
 import {
   cachedProductListFromState,
+  filteredProductListFromState,
+  modeloActiveFromState,
   modeloFromState,
-  skuActiveFromState,
-  skuFromState,
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
 import Props_Datalist from "../helpers/type_props_Datalist";
@@ -18,14 +17,8 @@ const mapStateToProps = (state): Props_Datalist => ({
   labelBody: "Modelo",
   format_onBlur: onBlur,
   format_onInput: onInput,
-  invalidComparator: (txt) => "",
-  listOfData:
-    cachedProductListFromState(state) == undefined
-      ? []
-      : cachedProductListFromState(state).map(
-          (producto: Product) => producto.modelo
-        ),
-  enabled: skuActiveFromState(state),
+
+  enabled: modeloActiveFromState(state),
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({

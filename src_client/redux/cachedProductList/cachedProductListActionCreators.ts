@@ -60,7 +60,6 @@ const postTextToDBAndCache = () => (dispatch, getState) => {
     descripcion: (state.descripcionReducer as StateDescripcion).descripcion,
   };
   dispatch(pushProductToCache(producto));
-
   dispatch(setSku(""));
   dispatch(setCodigo_barras(""));
   dispatch(setModelo(""));
@@ -69,7 +68,6 @@ const postTextToDBAndCache = () => (dispatch, getState) => {
   dispatch(setMarca(""));
   dispatch(setPrecio_venta_neto(0));
   dispatch(setDescripcion(""));
-
   postProducto(producto)
     .then((mensajeServer) => {
       if (mensajeServer.exito) {
