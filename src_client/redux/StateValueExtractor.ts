@@ -8,6 +8,8 @@ import StateModelo from "./productParameters/modelo/type_state_modelo";
 import StatePrecio_venta_neto from "./productParameters/precio_venta_neto/type_state_precio_venta_neto";
 import StateSku from "./productParameters/sku/type_state_sku";
 import StateUbicacion from "./productParameters/ubicacion/type_state_ubicacion";
+import ActiveParameterName from "./productParameters/activeParameter/enum_ActiveParameterName";
+import StateActiveParameter from "./productParameters/activeParameter/type_StateStateActiveParameter";
 
 const cachedProductListFromState = (state): Product[] =>
   (state.cachedProductListReducer as StateCachedProductList).cachedProductList;
@@ -26,6 +28,8 @@ const precioVentaNetoFromState = (state): number =>
   (state.precio_venta_netoReducer as StatePrecio_venta_neto).precio_venta_neto;
 const descripcionFromState = (state): string =>
   (state.descripcionReducer as StateDescripcion).descripcion;
+const activeParameterFromState = (state): ActiveParameterName =>
+  (state.activeParameterReducer as StateActiveParameter).activeParameter;
 export {
   cachedProductListFromState,
   skuFromState,
@@ -36,4 +40,5 @@ export {
   marcaFromState,
   precioVentaNetoFromState,
   descripcionFromState,
+  activeParameterFromState,
 };

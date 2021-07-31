@@ -4,27 +4,37 @@ import { onInput, onBlur } from "../helpers/formato_codigos";
 import { setSku } from "../redux/productParameters/sku/skuActionCreators";
 import Product from "../../src_server/types/Product";
 import {
+  activeParameterFromState,
   cachedProductListFromState,
   skuFromState,
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
 import Props_Datalist from "../helpers/type_props_Datalist";
+import ActiveParameterName from "../redux/productParameters/activeParameter/enum_ActiveParameterName";
+import { setActiveParameter } from "../redux/productParameters/activeParameter/activeParameterActionCreators";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textDatalist: skuFromState(state),
+  parameterName: ActiveParameterName.SKU,
   name: "sku",
-  labelBody: "SKU",
+  labelBody: activeParameterFromState(state),
   format_onBlur: onBlur,
   format_onInput: onInput,
   invalidComparator:
     cachedProductListFromState(state) == undefined
       ? skuInvalid_ListNotFetched
       : skuInvalidOrRepeated_ListFetched(state),
-  listOfData:
-    cachedProductListFromState(state) == undefined
-      ? listOfDataEmpty
-      : listOfData_ListFetched(state),
+  listOfData: cachedProductListFromState(state).map(
+    (producto: Product) => producto.sku
+  ),
+  // cachedProductListFromState(state) == undefined
+  //   ? listOfDataEmpty
+  //   : listOfData_ListFetched(state),
+  disabled:
+    activeParameterFromState(state) !== ActiveParameterName.SKU &&
+    activeParameterFromState(state) !== ActiveParameterName.NONE,
 });
+
 const listOfDataEmpty = [];
 const listOfData_ListFetched = (state): string[] =>
   cachedProductListFromState(state).map((producto: Product) => producto.sku);
@@ -43,8 +53,10 @@ const skuInvalidOrRepeated_ListFetched = (state) => (text: string) => {
   return productoEncontrado == undefined ? "" : "";
 };
 
-const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
+const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
   updateStoreValueReducer: (sku: string) => dispatch(setSku(sku)),
+  updateStoreActiveParameterReducer: (activeParameter: ActiveParameterName) =>
+    dispatch(setActiveParameter(activeParameter)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Datalist);

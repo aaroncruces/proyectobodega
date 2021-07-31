@@ -11,10 +11,10 @@ import { cachedProductListFromState } from "../redux/StateValueExtractor";
 import Datalist_sku from "./Datalist_sku";
 import Props_Form_Modify_Product from "../helpers/type_Props_Form_Modify_Product";
 
-class Form_Modify_Product extends Component<Props_Formulario_Ingreso> {
+class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
   constructor(props) {
     super(props);
-    this.props.fetchListaProductos();
+    this.props.reFetchProductListToCache();
   }
 
   render() {
@@ -28,7 +28,7 @@ class Form_Modify_Product extends Component<Props_Formulario_Ingreso> {
             {/*//@ts-ignore */}
             <Datalist_sku cssClassContainer="col-md-4 form-group" />
 
-            {this.props.listaProductosDB === undefined && (
+            {this.props.cachedProductList === undefined && (
               <div className="ms-auto">
                 <Throbber />
               </div>
@@ -40,7 +40,9 @@ class Form_Modify_Product extends Component<Props_Formulario_Ingreso> {
   }
 }
 
-const mapStateToProps = (state: any): Props_Form_Modify_Product => ({});
+const mapStateToProps = (state: any): Props_Form_Modify_Product => ({
+  cachedProductList: cachedProductListFromState(state),
+});
 
 const mapDispatchToProps = (
   dispatch: (any) => any

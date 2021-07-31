@@ -4,13 +4,13 @@ import ActiveParameterName from "./enum_ActiveParameterName";
 import StateActiveParameter from "./type_StateStateActiveParameter";
 
 const initialState: StateActiveParameter = {
-  parameterActive: ActiveParameterName.NONE,
+  activeParameter: ActiveParameterName.NONE,
 };
 const activeParameterReducer = (
   state: StateActiveParameter = initialState,
   action: Action
 ): StateActiveParameter =>
   action.type == ActiveParameterActionsTypes.SET_ACTIVE_PARAMETER
-    ? { ...state, parameterActive: action.payload }
+    ? { ...state, activeParameter: action.payload }
     : { ...state };
 export default activeParameterReducer;

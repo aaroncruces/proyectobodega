@@ -1,6 +1,6 @@
 import ActiveParameterName from "./enum_ActiveParameterName";
 
 type StateActiveParameter = {
-  parameterActive: ActiveParameterName;
+  activeParameter: ActiveParameterName;
 };
 export default StateActiveParameter;
