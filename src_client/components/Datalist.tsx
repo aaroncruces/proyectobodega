@@ -41,7 +41,7 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
           disabled={!this.props.enabled}
           list={this.props.name + "-datalistOptions"}
           id={this.props.name + "-iddatalist"}
-          placeholder="Busqueda por SKU"
+          placeholder=""
         />
         <datalist id={this.props.name + "-datalistOptions"}>
           {this.props.listOfData.map((data: string | number) => (

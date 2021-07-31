@@ -10,6 +10,7 @@ import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedPro
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
 import Datalist_sku from "./Datalist_sku";
 import Props_Form_Modify_Product from "../helpers/type_Props_Form_Modify_Product";
+import Datalist_modelo from "./Datalist_modelo";
 
 class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
   constructor(props) {
@@ -27,6 +28,8 @@ class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
           <div className="row mb-3">
             {/*//@ts-ignore */}
             <Datalist_sku cssClassContainer="col-md-4 form-group" />
+            {/*//@ts-ignore */}
+            <Datalist_modelo cssClassContainer="col-md-4 form-group" />
 
             {this.props.cachedProductList === undefined && (
               <div className="ms-auto">

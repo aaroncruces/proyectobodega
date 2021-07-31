@@ -107,7 +107,7 @@ export const fetchProductos = async (): Promise<Product[]> => {
     },
   });
   //@ts-ignore
-  if (WP_URL) await delay(5000);
+  if (WP_URL) await delay(1000);
 
   const lista_productos = await respuesta.json();
   return lista_productos;
