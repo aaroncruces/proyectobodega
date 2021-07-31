@@ -6,7 +6,6 @@ import ubicacionReducer from "./productParameters/ubicacion/ubicacionReducer";
 import marcaReducer from "./productParameters/marca/marcaReducer";
 import precio_venta_netoReducer from "./productParameters/precio_venta_neto/precio_venta_netoReducer";
 import descripcionReducer from "./productParameters/descripcion/descripcionReducer";
-import activeParameterListReducer from "./productParameters/activeParameterList/activeParameterListReducer";
 import cachedProductListReducer from "./cachedProductList/cachedProductListReducer";
 import filteredProductListReducer from "./filteredProductList/filteredProductListReducer";
 import { combineReducers } from "redux";
@@ -21,6 +20,5 @@ const rootReducer = combineReducers({
   descripcionReducer,
   cachedProductListReducer,
   filteredProductListReducer,
-  activeParameterListReducer, //<--- borrar
 });
 export default rootReducer;

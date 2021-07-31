@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Props_Datalist from "../helpers/type_props_Datalist";
-import ActiveParameterName from "../redux/productParameters/activeParameterList/enum_ActiveParameterName";
 
 export default class Datalist<T extends Props_Datalist> extends Component<T> {
   constructor(props) {
@@ -9,10 +8,10 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
 
   private onInput_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = this.props.format_onInput(event.target.value);
-    this.props.updateStoreValueReducer(inputValue);
+    this.props.updateParameterStoreReducer(inputValue);
   };
   private onBlur_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.updateStoreValueReducer(
+    this.props.updateParameterStoreReducer(
       this.props.format_onBlur(event.target.value)
     );
   };

@@ -1,5 +1,8 @@
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
 
-const filterCachedProductList = (state) => {
+const filterCachedProductListAndActivateParameters = (
+  state,
+  parameterName: ParameterName
+) => {
   const cachedProductList = cachedProductListFromState(state);
 };

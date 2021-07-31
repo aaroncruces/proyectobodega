@@ -1,4 +1,4 @@
-enum ActiveParameterName {
+enum ParameterName {
   SKU = "SKU",
   CODIGO_BARRAS = "CODIGO_BARRAS",
   MODELO = "MODELO",
@@ -8,4 +8,4 @@ enum ActiveParameterName {
   PRECIO_VENTA_NETO = "PRECIO_VENTA_NETO",
   UBICACION = "UBICACION",
 }
-export default ActiveParameterName;
+export default ParameterName;
