@@ -9,9 +9,6 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
 
   private onInput_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = this.props.format_onInput(event.target.value);
-    inputValue == ""
-      ? this.props.updateStoreActiveParameterReducer(ActiveParameterName.NONE)
-      : this.props.updateStoreActiveParameterReducer(this.props.parameterName);
     this.props.updateStoreValueReducer(inputValue);
   };
   private onBlur_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +39,7 @@ export default class Datalist<T extends Props_Datalist> extends Component<T> {
           value={this.props.textDatalist}
           onInput={this.onInput_Datalist}
           onBlur={this.onBlur_Datalist}
-          disabled={this.props.disabled}
+          disabled={!this.props.enabled}
           list={this.props.name + "-datalistOptions"}
           id={this.props.name + "-iddatalist"}
           placeholder="Busqueda por SKU"

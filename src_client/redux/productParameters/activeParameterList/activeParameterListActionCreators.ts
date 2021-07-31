@@ -1,10 +1,10 @@
-import ActiveParameterActionsTypes from "./activeParameterActionTypes";
+import ActiveParameterListActionsTypes from "./activeParameterListActionTypes";
 import Action from "../../type_action";
 import ActiveParameterName from "./enum_ActiveParameterName";
 
-const setActiveParameter = (payload: ActiveParameterName): Action => ({
-  type: ActiveParameterActionsTypes.SET_ACTIVE_PARAMETER,
+const setActiveParameterList = (payload: ActiveParameterName[]): Action => ({
+  type: ActiveParameterListActionsTypes.SET_ACTIVE_PARAMETER_LIST,
   payload,
 });
 
-export { setActiveParameter };
+export { setActiveParameterList };

@@ -1,5 +1,4 @@
 enum ActiveParameterName {
-  NONE = "NONE",
   SKU = "SKU",
   CODIGO_BARRAS = "CODIGO_BARRAS",
   MODELO = "MODELO",

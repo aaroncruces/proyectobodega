@@ -1,4 +1,4 @@
-enum ActiveParameterActionsTypes {
-  SET_ACTIVE_PARAMETER = "SET_ACTIVE_PARAMETER",
+enum ActiveParameterListActionsTypes {
+  SET_ACTIVE_PARAMETER_LIST = "SET_ACTIVE_PARAMETER_LIST",
 }
-export default ActiveParameterActionsTypes;
+export default ActiveParameterListActionsTypes;

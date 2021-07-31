@@ -1,6 +1,6 @@
 import ActiveParameterName from "./enum_ActiveParameterName";
 
-type StateActiveParameter = {
-  activeParameter: ActiveParameterName;
+type StateActiveParameterList = {
+  activeParameterList: ActiveParameterName[];
 };
-export default StateActiveParameter;
+export default StateActiveParameterList;

@@ -1,4 +1,6 @@
 enum SkuActionsTypes {
   SET_SKU = "SET_SKU",
+  ACTIVATE_PARAMETER = "ACTIVATE_PARAMETER",
+  DEACTIVATE_PARAMETER = "DEACTIVATE_PARAMETER",
 }
 export default SkuActionsTypes;

@@ -9,11 +9,13 @@ import StatePrecio_venta_neto from "./productParameters/precio_venta_neto/type_s
 import StateSku from "./productParameters/sku/type_state_sku";
 import StateUbicacion from "./productParameters/ubicacion/type_state_ubicacion";
 import ActiveParameterName from "./productParameters/activeParameterList/enum_ActiveParameterName";
-import StateActiveParameter from "./productParameters/activeParameterList/type_StateStateActiveParameter";
+import StateStateActiveParameterList from "./productParameters/activeParameterList/type_StateStateActiveParameterList";
 
 const cachedProductListFromState = (state): Product[] =>
   (state.cachedProductListReducer as StateCachedProductList).cachedProductList;
 const skuFromState = (state): string => (state.skuReducer as StateSku).sku;
+const skuActiveFromState = (state): boolean =>
+  (state.skuReducer as StateSku).sku_parameterActive;
 const codigo_barrasFromState = (state): string =>
   (state.codigo_barrasReducer as StateCodigo_barras).codigo_barras;
 const modeloFromState = (state): string =>
@@ -28,11 +30,13 @@ const precioVentaNetoFromState = (state): number =>
   (state.precio_venta_netoReducer as StatePrecio_venta_neto).precio_venta_neto;
 const descripcionFromState = (state): string =>
   (state.descripcionReducer as StateDescripcion).descripcion;
-const activeParameterFromState = (state): ActiveParameterName =>
-  (state.activeParameterReducer as StateActiveParameter).activeParameter;
+const activeParameterListFromState = (state): ActiveParameterName[] =>
+  (state.activeParameterReducer as StateStateActiveParameterList)
+    .activeParameterList;
 export {
   cachedProductListFromState,
   skuFromState,
+  skuActiveFromState,
   codigo_barrasFromState,
   modeloFromState,
   cantidadFromState,
@@ -40,5 +44,5 @@ export {
   marcaFromState,
   precioVentaNetoFromState,
   descripcionFromState,
-  activeParameterFromState,
+  activeParameterListFromState,
 };
