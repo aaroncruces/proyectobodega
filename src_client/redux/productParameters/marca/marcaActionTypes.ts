@@ -1,5 +1,6 @@
-enum MarcaActionsTypes {
+enum MarcaActionTypes {
   SET_MARCA = "SET_MARCA",
-  RESET_MARCA = "RESET_MARCA",
+  ACTIVATE_MARCA = "ACTIVATE_MARCA",
+  DEACTIVATE_MARCA = "DEACTIVATE_MARCA",
 }
-export default MarcaActionsTypes;
+export default MarcaActionTypes;

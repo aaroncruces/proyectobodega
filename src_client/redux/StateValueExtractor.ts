@@ -25,6 +25,8 @@ const ubicacionFromState = (state): string =>
   (state.ubicacionReducer as StateUbicacion).ubicacion;
 const marcaFromState = (state): string =>
   (state.marcaReducer as StateMarca).marca;
+const marcaActiveFromState = (state): boolean =>
+  (state.marcaReducer as StateMarca).marca_parameterActive;
 const precioVentaNetoFromState = (state): number =>
   (state.precio_venta_netoReducer as StatePrecio_venta_neto).precio_venta_neto;
 const descripcionFromState = (state): string =>
@@ -45,6 +47,7 @@ export {
   cantidadFromState,
   ubicacionFromState,
   marcaFromState,
+  marcaActiveFromState,
   precioVentaNetoFromState,
   descripcionFromState,
 };

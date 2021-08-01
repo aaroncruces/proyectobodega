@@ -5,5 +5,10 @@ const setMarca = (payload: string): Action => ({
   type: MarcaActionTypes.SET_MARCA,
   payload,
 });
-const resetMarca = (): Action => ({ type: MarcaActionTypes.RESET_MARCA });
-export { setMarca, resetMarca };
+const activateMarca = (): Action => ({
+  type: MarcaActionTypes.ACTIVATE_MARCA,
+});
+const deactivateMarca = (): Action => ({
+  type: MarcaActionTypes.DEACTIVATE_MARCA,
+});
+export { setMarca, activateMarca, deactivateMarca };
