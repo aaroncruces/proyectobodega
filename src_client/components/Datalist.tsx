@@ -52,8 +52,8 @@ export default class Datalist extends Component<Props_Datalist, StateDatalist> {
           placeholder=""
         />
         <datalist id={this.props.name + "-datalistOptions"}>
-          {this.state.listOfData.map((data: string | number) => (
-            <option value={data} />
+          {this.props.listOfData.map((data: string | number, index) => (
+            <option key={index} value={data} />
           ))}
         </datalist>
         {this.state.invalidMessage != undefined &&

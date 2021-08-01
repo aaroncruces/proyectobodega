@@ -12,13 +12,22 @@ import Props_Datalist from "../helpers/type_props_Datalist";
 import { setModelo } from "../redux/productParameters/modelo/modeloActionCreators";
 
 const mapStateToProps = (state): Props_Datalist => ({
-  textDatalist: modeloFromState(state),
+  textCurrentParam: modeloFromState(state),
   name: "modelo",
   labelBody: "Modelo",
   format_onBlur: onBlur,
   format_onInput: onInput,
-
   enabled: modeloActiveFromState(state),
+  listOfData:
+    cachedProductListFromState(state) && !filteredProductListFromState(state)
+      ? cachedProductListFromState(state).map(
+          (product: Product) => product.modelo
+        )
+      : filteredProductListFromState(state)
+      ? filteredProductListFromState(state).map(
+          (product: Product) => product.modelo
+        )
+      : ["Cargando..."],
 });
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({

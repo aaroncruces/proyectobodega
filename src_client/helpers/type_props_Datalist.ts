@@ -19,15 +19,17 @@ type Props_Datalist = {
   marcaParamActive?: boolean;
   valueCantidadParam?: number;
   cantidadParamActive?: boolean;
-
+  listOfData?: string[];
   //dispatchers
   updateParameterStoreReducer?: (string) => any;
   updateFilteredProductList?: (string) => any;
-  activateSKU?: (any) => any;
-  deactivateSKU?: (any) => any;
-  activateModelo?: (any) => any;
-  deactivateModelo?: (any) => any;
-  activateMarca?: (any) => any;
-  deactivateMarca?: (any) => any;
+  updateSku?: (sku: string) => any;
+  activateSku?: () => any;
+  deactivateSku?: () => any;
+  updateModelo?: (modelo: string) => any;
+  activateModelo?: () => any;
+  deactivateModelo?: () => any;
+  activateMarca?: () => any;
+  deactivateMarca?: () => any;
 };
 export default Props_Datalist;
