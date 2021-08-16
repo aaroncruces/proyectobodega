@@ -17,15 +17,28 @@ import {
   setSku,
 } from "../redux/productParameters/sku/skuActionCreators";
 import {
+  activateUbicacion,
+  deactivateUbicacion,
+  setUbicacion,
+} from "../redux/productParameters/ubicacion/ubicacionActionCreators";
+import {
+  activateDescripcion,
+  deactivateDescripcion,
+  setDescripcion,
+} from "../redux/productParameters/descripcion/descripcionActionCreators";
+import {
+  activateCodigo_barras,
+  deactivateCodigo_barras,
+  setCodigo_barras,
+} from "../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
+import {
   cachedProductListFromState,
-  cantidadFromState,
   codigo_barrasFromState,
   descripcionFromState,
   filteredProductListFromState,
   marcaFromState,
   modeloActiveFromState,
   modeloFromState,
-  precioVentaNetoFromState,
   skuFromState,
   ubicacionFromState,
 } from "../redux/StateValueExtractor";
@@ -33,6 +46,8 @@ import Props_Datalist from "./type_props_Datalist";
 import State_Datalist from "./type_State_Datalist";
 import lowerCase from "voca/lower_case";
 import trim from "voca/trim";
+import { setCantidad } from "../redux/productParameters/cantidad/cantidadActionCreators";
+import { setPrecio_venta_neto } from "../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
 
 export const execOnInput = (
   props: Props_Datalist,
@@ -52,7 +67,7 @@ export const execOnInput = (
     inputValue
   );
 
-  setDatalists_LockUnlockOptions(filteredListWithValue, props, props.paramName);
+  setDatalistText_LockUnlock(filteredListWithValue, props);
 
   if (!listContains(props.filteredProductList, props.paramName, inputValue)) {
     stateSetter({
@@ -81,6 +96,7 @@ export const execOnBlur = (
   if (filteredListWithValue.length == 0) {
   }
 };
+
 export const execOnFocus = (
   props: Props_Datalist,
   inputValue: string
@@ -92,6 +108,9 @@ const rebuilFilteredListFromCache = (props: Props_Datalist): void => {
   const valueSkuText = props.valueSkuParam;
   const valueModeloText = props.valueModeloParam;
   const valueMarcaText = props.valueMarcaParam;
+  const valueCodigoBarrasText = props.valueCodigoBarrasParam;
+  const valueUbicacionText = props.valueUbicacionParam;
+  const valueDescripcionText = props.valueDescripcionParam;
   const reFilteredProductList = props.cachedProductList.filter((product) => {
     let productValid = true;
     if (props.paramName != ParameterName.SKU) {
@@ -108,13 +127,29 @@ const rebuilFilteredListFromCache = (props: Props_Datalist): void => {
         productValid &&
         (product.marca == valueMarcaText || valueMarcaText == "");
     }
-    //!!!...etc
+    if (props.paramName != ParameterName.CODIGO_BARRAS) {
+      productValid =
+        productValid &&
+        (product.codigo_barras == valueCodigoBarrasText ||
+          valueCodigoBarrasText == "");
+    }
+    if (props.paramName != ParameterName.DESCRIPCION) {
+      productValid =
+        productValid &&
+        (product.descripcion == valueDescripcionText ||
+          valueDescripcionText == "");
+    }
+    if (props.paramName != ParameterName.UBICACION) {
+      productValid =
+        productValid &&
+        (product.ubicacion == valueUbicacionText || valueUbicacionText == "");
+    }
     return productValid;
   });
   props.updateFilteredProductList(reFilteredProductList);
 };
 
-const availableParamsOnList = (
+const availableValuesOnList = (
   productList: Product[],
   paramName: ParameterName
 ): string[] => {
@@ -152,7 +187,10 @@ const lockDatalistsExcept = (props: Props_Datalist): void => {
   props.paramName != ParameterName.SKU && props.deactivateSku();
   props.paramName != ParameterName.MODELO && props.deactivateModelo();
   props.paramName != ParameterName.MARCA && props.deactivateMarca();
-  //!!!...etc
+  props.paramName != ParameterName.UBICACION && props.deactivateUbicacion();
+  props.paramName != ParameterName.DESCRIPCION && props.deactivateDescripcion();
+  props.paramName != ParameterName.CODIGO_BARRAS &&
+    props.deactivateCodigoBarras();
 };
 
 const filterProductListBy = (
@@ -165,6 +203,7 @@ const filterProductListBy = (
     (product: Product) => product[trueParameterName] == paramValue
   );
 };
+
 const listContains = (
   productList: Product[],
   paramName: ParameterName,
@@ -179,14 +218,13 @@ const listContains = (
   return listContainingParam.length > 0;
 };
 
-// !!! diferenciate contains (error on input) vs == (error on blur)
-const setDatalists_LockUnlockOptions = (
+const setDatalistText_LockUnlock = (
   currentFilteredList: Product[],
-  props: Props_Datalist,
-  paramName: ParameterName
+  props: Props_Datalist
 ): void => {
-  if (paramName != ParameterName.SKU) {
-    const listOfAvailableSku = availableParamsOnList(
+  const paramNameCurrentDatalist = props.paramName;
+  if (paramNameCurrentDatalist != ParameterName.SKU) {
+    const listOfAvailableSku = availableValuesOnList(
       currentFilteredList,
       ParameterName.SKU
     );
@@ -201,8 +239,8 @@ const setDatalists_LockUnlockOptions = (
       props.activateSku();
     }
   }
-  if (paramName != ParameterName.MODELO) {
-    const listOfAvailableModelo = availableParamsOnList(
+  if (paramNameCurrentDatalist != ParameterName.MODELO) {
+    const listOfAvailableModelo = availableValuesOnList(
       currentFilteredList,
       ParameterName.MODELO
     );
@@ -217,11 +255,12 @@ const setDatalists_LockUnlockOptions = (
       props.activateModelo();
     }
   }
-  if (paramName != ParameterName.MARCA) {
-    const listOfAvailableMarca = availableParamsOnList(
+  if (paramNameCurrentDatalist != ParameterName.MARCA) {
+    const listOfAvailableMarca = availableValuesOnList(
       currentFilteredList,
       ParameterName.MARCA
     );
+
     if (listOfAvailableMarca.length == 0) {
       props.updateMarca("");
     }
@@ -232,6 +271,58 @@ const setDatalists_LockUnlockOptions = (
     if (listOfAvailableMarca.length > 1) {
       props.activateMarca();
     }
+  }
+  if (paramNameCurrentDatalist != ParameterName.UBICACION) {
+    const listOfAvailableUbicacion = availableValuesOnList(
+      currentFilteredList,
+      ParameterName.UBICACION
+    );
+    if (listOfAvailableUbicacion.length == 0) {
+      props.updateUbicacion("");
+    }
+    if (listOfAvailableUbicacion.length == 1) {
+      props.deactivateUbicacion();
+      props.updateUbicacion(listOfAvailableUbicacion[0]);
+    }
+    if (listOfAvailableUbicacion.length > 1) {
+      props.activateUbicacion();
+    }
+  }
+  if (paramNameCurrentDatalist != ParameterName.DESCRIPCION) {
+    const listOfAvailableDescripcion = availableValuesOnList(
+      currentFilteredList,
+      ParameterName.DESCRIPCION
+    );
+    if (listOfAvailableDescripcion.length == 0) {
+      props.updateDescripcion("");
+    }
+    if (listOfAvailableDescripcion.length == 1) {
+      props.deactivateDescripcion();
+      props.updateDescripcion(listOfAvailableDescripcion[0]);
+    }
+    if (listOfAvailableDescripcion.length > 1) {
+      props.activateDescripcion();
+    }
+  }
+  if (paramNameCurrentDatalist != ParameterName.CODIGO_BARRAS) {
+    const listOfAvailableCodigoBarras = availableValuesOnList(
+      currentFilteredList,
+      ParameterName.CODIGO_BARRAS
+    );
+    if (listOfAvailableCodigoBarras.length == 0) {
+      props.updateCodigoBarras("");
+    }
+    if (listOfAvailableCodigoBarras.length == 1) {
+      props.deactivateCodigoBarras();
+      props.updateCodigoBarras(listOfAvailableCodigoBarras[0]);
+    }
+    if (listOfAvailableCodigoBarras.length > 1) {
+      props.activateCodigoBarras();
+    }
+  }
+  if (currentFilteredList.length == 1) {
+    props.updateCantidad(currentFilteredList[0].cantidad);
+    props.updatePrecioNeto(currentFilteredList[0].precio_venta_neto);
   }
 };
 
@@ -247,7 +338,9 @@ export const commonStateProps = (
   valueSkuParam: skuFromState(state),
   valueModeloParam: modeloFromState(state),
   valueMarcaParam: marcaFromState(state),
-  valueCantidadParam: cantidadFromState(state),
+  valueCodigoBarrasParam: codigo_barrasFromState(state),
+  valueDescripcionParam: descripcionFromState(state),
+  valueUbicacionParam: ubicacionFromState(state),
   modeloParamActive: modeloActiveFromState(state),
   listOfData:
     !!cachedProductListFromState(state) && !filteredProductListFromState(state)
@@ -276,21 +369,33 @@ export const commonStateProps = (
 export const commonDispatchers = (dispatch: (any) => any): Props_Datalist => ({
   updateFilteredProductList: (productList: Product[]) =>
     dispatch(setFilteredProductList(productList)),
+
   updateSku: (sku: string) => dispatch(setSku(sku)),
   activateSku: () => dispatch(activateSku()),
   deactivateSku: () => dispatch(deactivateSku()),
+
   updateModelo: (modelo: string) => dispatch(setModelo(modelo)),
   activateModelo: () => dispatch(activateModelo()),
   deactivateModelo: () => dispatch(deactivateModelo()),
+
   updateMarca: (marca: string) => dispatch(setMarca(marca)),
   activateMarca: () => dispatch(activateMarca()),
   deactivateMarca: () => dispatch(deactivateMarca()),
-});
 
-/*
-//colectar valores store
-    const skuValue = this.props.valueSkuParam;
-    const modeloValue = this.props.valueModeloParam;
-    const marcaValue = this.props.valueMarcaParam;
-    const cantidadValue = this.props.valueCantidadParam;
-*/
+  updateUbicacion: (ubicacion: string) => dispatch(setUbicacion(ubicacion)),
+  activateUbicacion: () => dispatch(activateUbicacion()),
+  deactivateUbicacion: () => dispatch(deactivateUbicacion()),
+
+  updateDescripcion: (descripcion: string) =>
+    dispatch(setDescripcion(descripcion)),
+  activateDescripcion: () => dispatch(activateDescripcion()),
+  deactivateDescripcion: () => dispatch(deactivateDescripcion()),
+
+  updateCodigoBarras: (descripcion: string) =>
+    dispatch(setCodigo_barras(descripcion)),
+  activateCodigoBarras: () => dispatch(activateCodigo_barras()),
+  deactivateCodigoBarras: () => dispatch(deactivateCodigo_barras()),
+
+  updateCantidad: (cantidad: number) => dispatch(setCantidad(cantidad)),
+  updatePrecioNeto: (precio: number) => dispatch(setPrecio_venta_neto(precio)),
+});

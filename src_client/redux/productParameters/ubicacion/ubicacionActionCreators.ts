@@ -5,7 +5,10 @@ const setUbicacion = (payload: string): Action => ({
   type: UbicacionActionTypes.SET_UBICACION,
   payload,
 });
-const resetUbicacion = (): Action => ({
-  type: UbicacionActionTypes.RESET_UBICACION,
+const activateUbicacion = (): Action => ({
+  type: UbicacionActionTypes.ACTIVATE_UBICACION,
 });
-export { setUbicacion, resetUbicacion };
+const deactivateUbicacion = (): Action => ({
+  type: UbicacionActionTypes.DEACTIVATE_UBICACION,
+});
+export { setUbicacion, activateUbicacion, deactivateUbicacion };

@@ -6,8 +6,4 @@ const setCantidad = (payload: number): Action => ({
   payload,
 });
 
-const resetCantidad = (): Action => ({
-  type: CantidadActionTypes.RESET_CANTIDAD,
-});
-
-export { setCantidad, resetCantidad };
+export { setCantidad };

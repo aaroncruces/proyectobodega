@@ -9,34 +9,62 @@ type Props_Datalist = {
   format_onInput?: (text: string) => string | number;
   format_onBlur?: (text: string) => string | number;
   defaultPlaceholder?: string;
+
   //from redux store
   enabled?: boolean;
   cachedProductList?: Product[];
   filteredProductList?: Product[];
   textCurrentParam?: string | number;
+
   valueSkuParam?: string;
   skuParamActive?: boolean;
+
   valueModeloParam?: string;
   modeloParamActive?: boolean;
+
   valueMarcaParam?: string;
   marcaParamActive?: boolean;
-  valueCantidadParam?: number;
-  cantidadParamActive?: boolean;
+
+  valueCodigoBarrasParam?: string;
+  codigoBarrasParamActive?: boolean;
+
+  valueDescripcionParam?: string;
+  descripcionParamActive?: boolean;
+
+  valueUbicacionParam?: string;
+  ubicacionParamActive?: boolean;
+
   listOfData?: string[];
+
   //dispatchers
   updateParameterStoreReducer?: (string) => any;
   updateFilteredProductList?: (string) => any;
+
   updateSku?: (sku: string) => any;
   activateSku?: () => any;
   deactivateSku?: () => any;
+
   updateModelo?: (modelo: string) => any;
   activateModelo?: () => any;
   deactivateModelo?: () => any;
+
   updateMarca?: (marca: string) => any;
   activateMarca?: () => any;
   deactivateMarca?: () => any;
+
+  updateCodigoBarras?: (codigo_barras: string) => any;
+  activateCodigoBarras?: () => any;
+  deactivateCodigoBarras?: () => any;
+
+  updateUbicacion?: (ubicacion: string) => any;
+  activateUbicacion?: () => any;
+  deactivateUbicacion?: () => any;
+
+  updateDescripcion?: (descripcion: string) => any;
+  activateDescripcion?: () => any;
+  deactivateDescripcion?: () => any;
+
   updateCantidad?: (cantidad: number) => any;
-  activateCantidad?: () => any;
-  deactivateCantidad?: () => any;
+  updatePrecioNeto?: (cantidad: number) => any;
 };
 export default Props_Datalist;

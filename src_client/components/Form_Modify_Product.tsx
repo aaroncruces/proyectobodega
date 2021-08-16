@@ -3,15 +3,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 // Subcomponentes
 import Throbber from "./Throbber";
-// helpers & utilities
-import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
-import Datalist_sku from "./Datalist_sku";
 import Props_Form_Modify_Product from "../helpers/type_Props_Form_Modify_Product";
+import Datalist_sku from "./Datalist_sku";
 import Datalist_modelo from "./Datalist_modelo";
 import Datalist_marca from "./Datalist_marca";
+import Datalist_codigo_barras from "./Datalist_codigo_barras";
+import Datalist_ubicacion from "./Datalist_ubicacion";
+import Inputbox_cantidad from "./Inputbox_cantidad";
 
 class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
   constructor(props) {
@@ -30,16 +31,27 @@ class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
             {/*//@ts-ignore */}
             <Datalist_sku cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Datalist_modelo cssClassContainer="col-md-4 form-group" />
+            <Datalist_codigo_barras cssClassContainer="col-md-3 form-group" />
+            {/*//@ts-ignore */}
+            <Datalist_modelo cssClassContainer="col-md-5 form-group" />
+          </div>
+          <div className="row mb-3">
+            {/*//@ts-ignore*/}
+            <Inputbox_cantidad
+              {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
+            />
+            {/*//@ts-ignore UBUCACION*/}
+            <Datalist_ubicacion cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
             <Datalist_marca cssClassContainer="col-md-4 form-group" />
-
-            {this.props.cachedProductList === undefined && (
-              <div className="ms-auto">
-                <Throbber />
-              </div>
-            )}
           </div>
+
+          <div className="row mb-3"></div>
+          {this.props.cachedProductList === undefined && (
+            <div className="ms-auto">
+              <Throbber />
+            </div>
+          )}
         </form>
       </>
     );

@@ -5,7 +5,10 @@ const setDescripcion = (payload: string): Action => ({
   type: DescripcionActionTypes.SET_DESCRIPCION,
   payload,
 });
-const resetDescripcion = (): Action => ({
-  type: DescripcionActionTypes.RESET_DESCRIPCION,
+const activateDescripcion = (): Action => ({
+  type: DescripcionActionTypes.ACTIVATE_DESCRIPCION,
 });
-export { setDescripcion, resetDescripcion };
+const deactivateDescripcion = (): Action => ({
+  type: DescripcionActionTypes.DEACTIVATE_DESCRIPCION,
+});
+export { setDescripcion, activateDescripcion, deactivateDescripcion };
