@@ -49,6 +49,8 @@ import trim from "voca/trim";
 import { setCantidad } from "../redux/productParameters/cantidad/cantidadActionCreators";
 import { setPrecio_venta_neto } from "../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
 
+//TODO: move to the datalist itself
+
 export const execOnInput = (
   props: Props_Datalist,
   inputValue: string,
@@ -81,6 +83,7 @@ export const execOnInput = (
     });
   }
 };
+
 export const execOnBlur = (
   props: Props_Datalist,
   inputValue: string,
@@ -238,6 +241,10 @@ const setDatalistText_LockUnlock = (
     if (listOfAvailableSku.length > 1) {
       props.activateSku();
     }
+  } else {
+    if (currentFilteredList.length == 1) {
+      props.deactivateSku();
+    }
   }
   if (paramNameCurrentDatalist != ParameterName.MODELO) {
     const listOfAvailableModelo = availableValuesOnList(
@@ -253,6 +260,10 @@ const setDatalistText_LockUnlock = (
     }
     if (listOfAvailableModelo.length > 1) {
       props.activateModelo();
+    }
+  } else {
+    if (currentFilteredList.length == 1) {
+      props.deactivateModelo();
     }
   }
   if (paramNameCurrentDatalist != ParameterName.MARCA) {
@@ -271,6 +282,10 @@ const setDatalistText_LockUnlock = (
     if (listOfAvailableMarca.length > 1) {
       props.activateMarca();
     }
+  } else {
+    if (currentFilteredList.length == 1) {
+      props.deactivateMarca();
+    }
   }
   if (paramNameCurrentDatalist != ParameterName.UBICACION) {
     const listOfAvailableUbicacion = availableValuesOnList(
@@ -286,6 +301,10 @@ const setDatalistText_LockUnlock = (
     }
     if (listOfAvailableUbicacion.length > 1) {
       props.activateUbicacion();
+    }
+  } else {
+    if (currentFilteredList.length == 1) {
+      props.deactivateUbicacion();
     }
   }
   if (paramNameCurrentDatalist != ParameterName.DESCRIPCION) {
@@ -303,6 +322,10 @@ const setDatalistText_LockUnlock = (
     if (listOfAvailableDescripcion.length > 1) {
       props.activateDescripcion();
     }
+  } else {
+    if (currentFilteredList.length == 1) {
+      props.deactivateDescripcion();
+    }
   }
   if (paramNameCurrentDatalist != ParameterName.CODIGO_BARRAS) {
     const listOfAvailableCodigoBarras = availableValuesOnList(
@@ -318,6 +341,10 @@ const setDatalistText_LockUnlock = (
     }
     if (listOfAvailableCodigoBarras.length > 1) {
       props.activateCodigoBarras();
+    }
+  } else {
+    if (currentFilteredList.length == 1) {
+      props.deactivateCodigoBarras();
     }
   }
   if (currentFilteredList.length == 1) {

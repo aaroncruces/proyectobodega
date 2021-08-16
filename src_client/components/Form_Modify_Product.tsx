@@ -12,7 +12,12 @@ import Datalist_modelo from "./Datalist_modelo";
 import Datalist_marca from "./Datalist_marca";
 import Datalist_codigo_barras from "./Datalist_codigo_barras";
 import Datalist_ubicacion from "./Datalist_ubicacion";
+import Datalist_descripcion from "./Datalist_descripcion";
 import Inputbox_cantidad from "./Inputbox_cantidad";
+import Inputbox_precio_venta_neto from "./Inputbox_precio_venta_neto";
+import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
+import Inputbox_iva from "./Inputbox_iva";
+import Button_Reset_form from "./Button_Reset_form";
 
 class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
   constructor(props) {
@@ -45,13 +50,33 @@ class Form_Modify_Product extends Component<Props_Form_Modify_Product> {
             {/*//@ts-ignore */}
             <Datalist_marca cssClassContainer="col-md-4 form-group" />
           </div>
+          <div className="row mb-3">
+            {/*//@ts-ignore*/}
+            <Inputbox_precio_venta_neto
+              {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
+            />
+            {/*//@ts-ignore UBUCACION*/}
+            <Inputbox_iva
+              {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
+            />
+            {/*//@ts-ignore */}
+            <Inputbox_precio_venta_bruto
+              {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
+            />
+          </div>
+          <div className="row mb-3">
+            {/*//@ts-ignore */}
+            <Datalist_descripcion cssClassContainer="col-md-12 form-group" />
+          </div>
 
-          <div className="row mb-3"></div>
-          {this.props.cachedProductList === undefined && (
-            <div className="ms-auto">
-              <Throbber />
-            </div>
-          )}
+          <div className="d-flex align-items-center">
+            <Button_Reset_form />
+            {this.props.cachedProductList === undefined && (
+              <div className="ms-auto">
+                <Throbber />
+              </div>
+            )}
+          </div>
         </form>
       </>
     );
