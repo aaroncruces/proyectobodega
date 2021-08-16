@@ -68,9 +68,56 @@ export const execOnInput = (
     props.paramName,
     inputValue
   );
-
   setDatalistText_LockUnlock(filteredListWithValue, props);
+  setInvalidMessage(props, inputValue, stateSetter, currentState);
+};
 
+export const execOnBlur = (
+  props: Props_Datalist,
+  inputValue: string,
+  currentState: State_Datalist,
+  stateSetter: (stateDatalist: State_Datalist) => any
+): void => {
+  //idk
+};
+
+export const execOnFocus = (
+  props: Props_Datalist,
+  inputValue: string
+): void => {
+  rebuilFilteredListFromCache_IgnoringCurrentDatalist(props);
+};
+
+export const commonStateProps = (
+  state,
+  paramName: ParameterName
+): Props_Datalist => ({
+  cachedProductList: cachedProductListFromState(state),
+  filteredProductList:
+    cachedProductListFromState(state) && !filteredProductListFromState(state)
+      ? cachedProductListFromState(state)
+      : filteredProductListFromState(state), //can be Undefined
+  valueSkuParam: skuFromState(state),
+  valueModeloParam: modeloFromState(state),
+  valueMarcaParam: marcaFromState(state),
+  valueCodigoBarrasParam: codigo_barrasFromState(state),
+  valueDescripcionParam: descripcionFromState(state),
+  valueUbicacionParam: ubicacionFromState(state),
+  modeloParamActive: modeloActiveFromState(state),
+  listOfData:
+    !!cachedProductListFromState(state) && !filteredProductListFromState(state)
+      ? listOfDataFromCachedProductList(state, paramName)
+      : filteredProductListFromState(state)
+      ? listOfDataFromFilteredProductList(state, paramName)
+      : ["Cargando..."],
+});
+
+function setInvalidMessage(
+  props: Props_Datalist,
+  inputValue: string,
+  stateSetter: (stateDatalist: State_Datalist) => any,
+  currentState: State_Datalist
+) {
   if (!listContains(props.filteredProductList, props.paramName, inputValue)) {
     stateSetter({
       ...currentState,
@@ -82,75 +129,66 @@ export const execOnInput = (
       invalidMessage: "",
     });
   }
-};
+}
 
-export const execOnBlur = (
-  props: Props_Datalist,
-  inputValue: string,
-  currentState: State_Datalist,
-  stateSetter: (stateDatalist: State_Datalist) => any
-): void => {
-  const filteredListWithValue = filterProductListBy(
-    props.filteredProductList,
-    props.paramName,
-    inputValue
+function listOfDataFromFilteredProductList(
+  state: any,
+  paramName: ParameterName
+): string[] {
+  return Array.from(
+    new Set(
+      filteredProductListFromState(state)
+        .map((product: Product) => product[translateParameterName(paramName)])
+        .filter((value) => value != "")
+    )
   );
+}
 
-  if (filteredListWithValue.length == 0) {
-  }
-};
+function listOfDataFromCachedProductList(
+  state: any,
+  paramName: ParameterName
+): string[] {
+  return Array.from(
+    new Set(
+      cachedProductListFromState(state)
+        .map((product: Product) => product[translateParameterName(paramName)])
+        .filter((value) => value != "")
+    )
+  );
+}
+export const commonDispatchers = (dispatch: (any) => any): Props_Datalist => ({
+  updateFilteredProductList: (productList: Product[]) =>
+    dispatch(setFilteredProductList(productList)),
 
-export const execOnFocus = (
-  props: Props_Datalist,
-  inputValue: string
-): void => {
-  rebuilFilteredListFromCache(props);
-};
+  updateSku: (sku: string) => dispatch(setSku(sku)),
+  activateSku: () => dispatch(activateSku()),
+  deactivateSku: () => dispatch(deactivateSku()),
 
-const rebuilFilteredListFromCache = (props: Props_Datalist): void => {
-  const valueSkuText = props.valueSkuParam;
-  const valueModeloText = props.valueModeloParam;
-  const valueMarcaText = props.valueMarcaParam;
-  const valueCodigoBarrasText = props.valueCodigoBarrasParam;
-  const valueUbicacionText = props.valueUbicacionParam;
-  const valueDescripcionText = props.valueDescripcionParam;
-  const reFilteredProductList = props.cachedProductList.filter((product) => {
-    let productValid = true;
-    if (props.paramName != ParameterName.SKU) {
-      productValid =
-        productValid && (product.sku == valueSkuText || valueSkuText == "");
-    }
-    if (props.paramName != ParameterName.MODELO) {
-      productValid =
-        productValid &&
-        (product.modelo == valueModeloText || valueModeloText == "");
-    }
-    if (props.paramName != ParameterName.MARCA) {
-      productValid =
-        productValid &&
-        (product.marca == valueMarcaText || valueMarcaText == "");
-    }
-    if (props.paramName != ParameterName.CODIGO_BARRAS) {
-      productValid =
-        productValid &&
-        (product.codigo_barras == valueCodigoBarrasText ||
-          valueCodigoBarrasText == "");
-    }
-    if (props.paramName != ParameterName.DESCRIPCION) {
-      productValid =
-        productValid &&
-        (product.descripcion == valueDescripcionText ||
-          valueDescripcionText == "");
-    }
-    if (props.paramName != ParameterName.UBICACION) {
-      productValid =
-        productValid &&
-        (product.ubicacion == valueUbicacionText || valueUbicacionText == "");
-    }
-    return productValid;
-  });
-  props.updateFilteredProductList(reFilteredProductList);
-};
+  updateModelo: (modelo: string) => dispatch(setModelo(modelo)),
+  activateModelo: () => dispatch(activateModelo()),
+  deactivateModelo: () => dispatch(deactivateModelo()),
+
+  updateMarca: (marca: string) => dispatch(setMarca(marca)),
+  activateMarca: () => dispatch(activateMarca()),
+  deactivateMarca: () => dispatch(deactivateMarca()),
+
+  updateUbicacion: (ubicacion: string) => dispatch(setUbicacion(ubicacion)),
+  activateUbicacion: () => dispatch(activateUbicacion()),
+  deactivateUbicacion: () => dispatch(deactivateUbicacion()),
+
+  updateDescripcion: (descripcion: string) =>
+    dispatch(setDescripcion(descripcion)),
+  activateDescripcion: () => dispatch(activateDescripcion()),
+  deactivateDescripcion: () => dispatch(deactivateDescripcion()),
+
+  updateCodigoBarras: (descripcion: string) =>
+    dispatch(setCodigo_barras(descripcion)),
+  activateCodigoBarras: () => dispatch(activateCodigo_barras()),
+  deactivateCodigoBarras: () => dispatch(deactivateCodigo_barras()),
+
+  updateCantidad: (cantidad: number) => dispatch(setCantidad(cantidad)),
+  updatePrecioNeto: (precio: number) => dispatch(setPrecio_venta_neto(precio)),
+});
 
 const availableValuesOnList = (
   productList: Product[],
@@ -226,6 +264,28 @@ const setDatalistText_LockUnlock = (
   props: Props_Datalist
 ): void => {
   const paramNameCurrentDatalist = props.paramName;
+  lockUnlockFillSku(paramNameCurrentDatalist, currentFilteredList, props);
+  lockUnlockFillModelo(paramNameCurrentDatalist, currentFilteredList, props);
+  lockUnlockFillMarca(paramNameCurrentDatalist, currentFilteredList, props);
+  lockUnlockFillUbicacion(paramNameCurrentDatalist, currentFilteredList, props);
+  lockUnlockFillDescripcion(
+    paramNameCurrentDatalist,
+    currentFilteredList,
+    props
+  );
+  lockUnlockFillCodigoBarras(
+    paramNameCurrentDatalist,
+    currentFilteredList,
+    props
+  );
+  fillCantidadAndPrecioFromFilteredList(currentFilteredList, props);
+};
+
+function lockUnlockFillSku(
+  paramNameCurrentDatalist: ParameterName,
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (paramNameCurrentDatalist != ParameterName.SKU) {
     const listOfAvailableSku = availableValuesOnList(
       currentFilteredList,
@@ -246,6 +306,13 @@ const setDatalistText_LockUnlock = (
       props.deactivateSku();
     }
   }
+}
+
+function lockUnlockFillModelo(
+  paramNameCurrentDatalist: ParameterName,
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (paramNameCurrentDatalist != ParameterName.MODELO) {
     const listOfAvailableModelo = availableValuesOnList(
       currentFilteredList,
@@ -266,6 +333,13 @@ const setDatalistText_LockUnlock = (
       props.deactivateModelo();
     }
   }
+}
+
+function lockUnlockFillMarca(
+  paramNameCurrentDatalist: ParameterName,
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (paramNameCurrentDatalist != ParameterName.MARCA) {
     const listOfAvailableMarca = availableValuesOnList(
       currentFilteredList,
@@ -287,6 +361,13 @@ const setDatalistText_LockUnlock = (
       props.deactivateMarca();
     }
   }
+}
+
+function lockUnlockFillUbicacion(
+  paramNameCurrentDatalist: ParameterName,
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (paramNameCurrentDatalist != ParameterName.UBICACION) {
     const listOfAvailableUbicacion = availableValuesOnList(
       currentFilteredList,
@@ -307,6 +388,13 @@ const setDatalistText_LockUnlock = (
       props.deactivateUbicacion();
     }
   }
+}
+
+function lockUnlockFillDescripcion(
+  paramNameCurrentDatalist: ParameterName,
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (paramNameCurrentDatalist != ParameterName.DESCRIPCION) {
     const listOfAvailableDescripcion = availableValuesOnList(
       currentFilteredList,
@@ -327,6 +415,13 @@ const setDatalistText_LockUnlock = (
       props.deactivateDescripcion();
     }
   }
+}
+
+function lockUnlockFillCodigoBarras(
+  paramNameCurrentDatalist: ParameterName,
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (paramNameCurrentDatalist != ParameterName.CODIGO_BARRAS) {
     const listOfAvailableCodigoBarras = availableValuesOnList(
       currentFilteredList,
@@ -347,82 +442,150 @@ const setDatalistText_LockUnlock = (
       props.deactivateCodigoBarras();
     }
   }
+}
+
+function fillCantidadAndPrecioFromFilteredList(
+  currentFilteredList: Product[],
+  props: Props_Datalist
+) {
   if (currentFilteredList.length == 1) {
     props.updateCantidad(currentFilteredList[0].cantidad);
     props.updatePrecioNeto(currentFilteredList[0].precio_venta_neto);
   }
+}
+
+const rebuilFilteredListFromCache_IgnoringCurrentDatalist = (
+  props: Props_Datalist
+): void => {
+  const valueSkuText = props.valueSkuParam;
+  const valueModeloText = props.valueModeloParam;
+  const valueMarcaText = props.valueMarcaParam;
+  const valueCodigoBarrasText = props.valueCodigoBarrasParam;
+  const valueUbicacionText = props.valueUbicacionParam;
+  const valueDescripcionText = props.valueDescripcionParam;
+  const reFilteredProductList = props.cachedProductList.filter((product) => {
+    let productValid = true;
+    productValid = otherDatalist_SkuMatches(
+      props,
+      productValid,
+      product,
+      valueSkuText
+    );
+    productValid = otherDatalist_ModeloMatches(
+      props,
+      productValid,
+      product,
+      valueModeloText
+    );
+    productValid = otherDatalist_MarcaMatches(
+      props,
+      productValid,
+      product,
+      valueMarcaText
+    );
+    productValid = otherDatalist_CodigoBarrasMatches(
+      props,
+      productValid,
+      product,
+      valueCodigoBarrasText
+    );
+    productValid = otherDatalist_DescripcionMatches(
+      props,
+      productValid,
+      product,
+      valueDescripcionText
+    );
+    productValid = otherDatalist_UbicacionMatches(
+      props,
+      productValid,
+      product,
+      valueUbicacionText
+    );
+    return productValid;
+  });
+  props.updateFilteredProductList(reFilteredProductList);
 };
 
-export const commonStateProps = (
-  state,
-  paramName: ParameterName
-): Props_Datalist => ({
-  cachedProductList: cachedProductListFromState(state),
-  filteredProductList:
-    cachedProductListFromState(state) && !filteredProductListFromState(state)
-      ? cachedProductListFromState(state)
-      : filteredProductListFromState(state), //can be Undefined
-  valueSkuParam: skuFromState(state),
-  valueModeloParam: modeloFromState(state),
-  valueMarcaParam: marcaFromState(state),
-  valueCodigoBarrasParam: codigo_barrasFromState(state),
-  valueDescripcionParam: descripcionFromState(state),
-  valueUbicacionParam: ubicacionFromState(state),
-  modeloParamActive: modeloActiveFromState(state),
-  listOfData:
-    !!cachedProductListFromState(state) && !filteredProductListFromState(state)
-      ? Array.from(
-          new Set(
-            cachedProductListFromState(state)
-              .map(
-                (product: Product) => product[translateParameterName(paramName)]
-              )
-              .filter((value) => value != "")
-          )
-        )
-      : filteredProductListFromState(state)
-      ? Array.from(
-          new Set(
-            filteredProductListFromState(state)
-              .map(
-                (product: Product) => product[translateParameterName(paramName)]
-              )
-              .filter((value) => value != "")
-          )
-        )
-      : ["Cargando..."],
-});
+function otherDatalist_SkuMatches(
+  props: Props_Datalist,
+  productValid: boolean,
+  product: Product,
+  valueSkuText: string
+) {
+  if (props.paramName != ParameterName.SKU) {
+    productValid =
+      productValid && (product.sku == valueSkuText || valueSkuText == "");
+  }
+  return productValid;
+}
 
-export const commonDispatchers = (dispatch: (any) => any): Props_Datalist => ({
-  updateFilteredProductList: (productList: Product[]) =>
-    dispatch(setFilteredProductList(productList)),
+function otherDatalist_ModeloMatches(
+  props: Props_Datalist,
+  productValid: boolean,
+  product: Product,
+  valueModeloText: string
+) {
+  if (props.paramName != ParameterName.MODELO) {
+    productValid =
+      productValid &&
+      (product.modelo == valueModeloText || valueModeloText == "");
+  }
+  return productValid;
+}
 
-  updateSku: (sku: string) => dispatch(setSku(sku)),
-  activateSku: () => dispatch(activateSku()),
-  deactivateSku: () => dispatch(deactivateSku()),
+function otherDatalist_MarcaMatches(
+  props: Props_Datalist,
+  productValid: boolean,
+  product: Product,
+  valueMarcaText: string
+) {
+  if (props.paramName != ParameterName.MARCA) {
+    productValid =
+      productValid && (product.marca == valueMarcaText || valueMarcaText == "");
+  }
+  return productValid;
+}
 
-  updateModelo: (modelo: string) => dispatch(setModelo(modelo)),
-  activateModelo: () => dispatch(activateModelo()),
-  deactivateModelo: () => dispatch(deactivateModelo()),
+function otherDatalist_CodigoBarrasMatches(
+  props: Props_Datalist,
+  productValid: boolean,
+  product: Product,
+  valueCodigoBarrasText: string
+) {
+  if (props.paramName != ParameterName.CODIGO_BARRAS) {
+    productValid =
+      productValid &&
+      (product.codigo_barras == valueCodigoBarrasText ||
+        valueCodigoBarrasText == "");
+  }
+  return productValid;
+}
 
-  updateMarca: (marca: string) => dispatch(setMarca(marca)),
-  activateMarca: () => dispatch(activateMarca()),
-  deactivateMarca: () => dispatch(deactivateMarca()),
+function otherDatalist_DescripcionMatches(
+  props: Props_Datalist,
+  productValid: boolean,
+  product: Product,
+  valueDescripcionText: string
+) {
+  if (props.paramName != ParameterName.DESCRIPCION) {
+    productValid =
+      productValid &&
+      (product.descripcion == valueDescripcionText ||
+        valueDescripcionText == "");
+  }
+  return productValid;
+}
 
-  updateUbicacion: (ubicacion: string) => dispatch(setUbicacion(ubicacion)),
-  activateUbicacion: () => dispatch(activateUbicacion()),
-  deactivateUbicacion: () => dispatch(deactivateUbicacion()),
-
-  updateDescripcion: (descripcion: string) =>
-    dispatch(setDescripcion(descripcion)),
-  activateDescripcion: () => dispatch(activateDescripcion()),
-  deactivateDescripcion: () => dispatch(deactivateDescripcion()),
-
-  updateCodigoBarras: (descripcion: string) =>
-    dispatch(setCodigo_barras(descripcion)),
-  activateCodigoBarras: () => dispatch(activateCodigo_barras()),
-  deactivateCodigoBarras: () => dispatch(deactivateCodigo_barras()),
-
-  updateCantidad: (cantidad: number) => dispatch(setCantidad(cantidad)),
-  updatePrecioNeto: (precio: number) => dispatch(setPrecio_venta_neto(precio)),
-});
+function otherDatalist_UbicacionMatches(
+  props: Props_Datalist,
+  productValid: boolean,
+  product: Product,
+  valueUbicacionText: string
+) {
+  if (props.paramName != ParameterName.UBICACION) {
+    productValid =
+      productValid &&
+      (product.ubicacion == valueUbicacionText || valueUbicacionText == "");
+  }
+  return productValid;
+}
