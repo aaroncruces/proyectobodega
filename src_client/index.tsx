@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import Form_Create_Product from "./components/Form_Create_Product";
+import Form_Search_Product from "./components/Form_Search_Product";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
@@ -22,12 +23,14 @@ import Form_Modify_Product from "./components/Form_Modify_Product";
           <Form_Modify_Product />
         </Route>
       </Router>
+
+      Form_Search_Product
 */
 
 const APP = () => {
   return (
     <Provider store={store}>
-      <Form_Modify_Product />
+      <Form_Search_Product />
     </Provider>
   );
 };

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // Subcomponentes
-import Inputbox_sku from "./Inputbox_sku";
+import Inputbox_sku_Create_Product from "./Inputbox_sku_Create_Product";
 import Inputbox_codigo_barras from "./Inputbox_codigo_barras";
 import Inputbox_modelo from "./Inputbox_modelo";
 import Inputbox_cantidad from "./Inputbox_cantidad";
@@ -36,7 +36,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
         <form className="container">
           <div className="row mb-3">
             {/*//@ts-ignore */}
-            <Inputbox_sku cssClassContainer="col-md-4 form-group" />
+            <Inputbox_sku_Create_Product cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
             <Inputbox_codigo_barras cssClassContainer="col-md-3 form-group" />
             {/*//@ts-ignore */}
