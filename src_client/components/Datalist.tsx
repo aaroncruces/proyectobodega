@@ -481,21 +481,7 @@ class Datalist extends Component<Props_Datalist> {
       )
     );
   };
-  /*
-className={
-            this.state.invalidMessage == ""
-              ? "form-control"
-              : "form-control is-invalid"
-          }
 
-
-          </datalist>
-        {this.state.invalidMessage != undefined &&
-          this.state.invalidMessage != "" && (
-            <div className="invalid-feedback">{this.state.invalidMessage}</div>
-          )}
-
-*/
   render() {
     const invalidMessage = this.getInvalidMessage();
     return (
