@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { lowerCase, trim } from "voca";
 import Product from "../../src_server/types/Product";
 import Props_Datalist from "../helpers/type_props_Datalist";
-import State_Datalist from "../helpers/type_State_Datalist";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
 import { setFilteredProductList } from "../redux/filteredProductList/filteredProductListActionCreators";
 import {
@@ -51,23 +50,14 @@ import {
   ubicacionFromState,
 } from "../redux/StateValueExtractor";
 
-class Datalist extends Component<Props_Datalist, State_Datalist> {
+class Datalist extends Component<Props_Datalist> {
   constructor(props) {
     super(props);
-    this.state = {
-      invalidMessage: "",
-      placeholder: "",
-    };
   }
 
   private onInput_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = this.props.format_onInput(event.target.value).toString();
     this.props.updateParameterStoreReducer(inputValue);
-
-    this.setState({
-      ...this.state,
-      invalidMessage: "",
-    });
 
     if (!this.props.filteredProductList) {
       return;
@@ -78,7 +68,6 @@ class Datalist extends Component<Props_Datalist, State_Datalist> {
     const filteredListWithValue = this.filterProductListBy(inputValue);
 
     this.setDatalistText_LockUnlock(filteredListWithValue);
-    this.setInvalidMessage(inputValue);
   };
 
   private setDatalistText_LockUnlock = (
@@ -302,25 +291,14 @@ class Datalist extends Component<Props_Datalist, State_Datalist> {
     );
   };
 
-  private setInvalidMessage(inputValue: string) {
-    if (
-      !this.listContains(
-        this.props.filteredProductList,
-        this.props.paramName,
-        inputValue
-      )
-    ) {
-      this.setState({
-        ...this.state,
-        invalidMessage: `${this.props.labelBody} Invalido`,
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        invalidMessage: "",
-      });
-    }
-  }
+  private getInvalidMessage = (): string =>
+    !this.listContains(
+      this.props.filteredProductList,
+      this.props.paramName,
+      this.props.textCurrentParam.toString()
+    )
+      ? `${this.props.labelBody} Invalido`
+      : "";
 
   private listContains = (
     productList: Product[],
@@ -503,8 +481,23 @@ class Datalist extends Component<Props_Datalist, State_Datalist> {
       )
     );
   };
+  /*
+className={
+            this.state.invalidMessage == ""
+              ? "form-control"
+              : "form-control is-invalid"
+          }
 
+
+          </datalist>
+        {this.state.invalidMessage != undefined &&
+          this.state.invalidMessage != "" && (
+            <div className="invalid-feedback">{this.state.invalidMessage}</div>
+          )}
+
+*/
   render() {
+    const invalidMessage = this.getInvalidMessage();
     return (
       <div
         className={this.props.cssClassContainer}
@@ -517,18 +510,15 @@ class Datalist extends Component<Props_Datalist, State_Datalist> {
           name={this.props.name}
           type="text"
           className={
-            this.state.invalidMessage == ""
-              ? "form-control"
-              : "form-control is-invalid"
+            invalidMessage == "" ? "form-control" : "form-control is-invalid"
           }
           value={this.props.textCurrentParam}
-          onInput={this.onInput_Datalist}
+          onInput={this.onInput_Datalist.bind(this)}
           onBlur={this.onBlur_Datalist}
           onFocus={this.onFocus_Datalist}
           disabled={!this.props.enabled}
           list={this.props.name + "-datalistOptions"}
           id={this.props.name + "-iddatalist"}
-          placeholder={this.state.placeholder}
         />
         <datalist id={this.props.name + "-datalistOptions"}>
           {this.listOfDataFromFilteredProductList().map(
@@ -537,10 +527,9 @@ class Datalist extends Component<Props_Datalist, State_Datalist> {
             )
           )}
         </datalist>
-        {this.state.invalidMessage != undefined &&
-          this.state.invalidMessage != "" && (
-            <div className="invalid-feedback">{this.state.invalidMessage}</div>
-          )}
+        {invalidMessage != undefined && invalidMessage != "" && (
+          <div className="invalid-feedback">{invalidMessage}</div>
+        )}
       </div>
     );
   }
