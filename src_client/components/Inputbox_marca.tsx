@@ -3,12 +3,7 @@ import Inputbox from "./Inputbox";
 import Props_inputbox from "../helpers/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
 import { setMarca } from "../redux/productParameters/marca/marcaActionCreators";
-import StateModelo from "../redux/productParameters/modelo/type_state_modelo";
-import Product from "../../src_server/types/Product";
-import {
-  cachedProductListFromState,
-  marcaFromState,
-} from "../redux/StateValueExtractor";
+import { marcaFromState } from "../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: marcaFromState(state),
@@ -16,21 +11,7 @@ const mapStateToProps = (state): Props_inputbox => ({
   labelBody: "Marca",
   format_onBlur: onBlur,
   format_onInput: onInput,
-  invalidComparator:
-    cachedProductListFromState(state) == undefined
-      ? () => ""
-      : marcaAndModeloRepeated_ListFetched(state),
 });
-const marcaAndModeloRepeated_ListFetched = (state) => (text: string) => {
-  const productoEncontrado: Product = cachedProductListFromState(state).find(
-    (producto) =>
-      producto.marca == text &&
-      producto.modelo == (state.modeloReducer as StateModelo).modelo
-  );
-  return productoEncontrado
-    ? `El producto con modelo ${productoEncontrado.modelo} ya tiene esta marca.`
-    : "";
-};
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_inputbox => ({
   updateStoreValueReducer: (marca) => dispatch(setMarca(marca)),
