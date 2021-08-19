@@ -64,34 +64,51 @@ class Datalist extends Component<Props_Datalist> {
     }
 
     this.lockDatalistsExcept();
-
-    const filteredListWithValue = this.filterProductListBy(inputValue);
-
-    this.setDatalistText_LockUnlock(filteredListWithValue);
+    this.setDatalistText_LockUnlock(inputValue);
   };
 
-  private setDatalistText_LockUnlock = (
-    currentFilteredList: Product[]
-  ): void => {
+  private setDatalistText_LockUnlock = (inputValue: string): void => {
+    const filteredListWithCurrentValue = this.productListWithValue(inputValue);
     const paramNameCurrentDatalist = this.props.paramName;
-    this.lockUnlockFillSku(paramNameCurrentDatalist, currentFilteredList);
-    this.lockUnlockFillModelo(paramNameCurrentDatalist, currentFilteredList);
-    this.lockUnlockFillMarca(paramNameCurrentDatalist, currentFilteredList);
-    this.lockUnlockFillUbicacion(paramNameCurrentDatalist, currentFilteredList);
+    const lockCurrentParam =
+      this.productListThatContains(inputValue).length == 1;
+    this.lockUnlockFillSku(
+      paramNameCurrentDatalist,
+      filteredListWithCurrentValue,
+      lockCurrentParam
+    );
+    this.lockUnlockFillModelo(
+      paramNameCurrentDatalist,
+      filteredListWithCurrentValue,
+      lockCurrentParam
+    );
+    this.lockUnlockFillMarca(
+      paramNameCurrentDatalist,
+      filteredListWithCurrentValue,
+      lockCurrentParam
+    );
+    this.lockUnlockFillUbicacion(
+      paramNameCurrentDatalist,
+      filteredListWithCurrentValue,
+      lockCurrentParam
+    );
     this.lockUnlockFillDescripcion(
       paramNameCurrentDatalist,
-      currentFilteredList
+      filteredListWithCurrentValue,
+      lockCurrentParam
     );
     this.lockUnlockFillCodigoBarras(
       paramNameCurrentDatalist,
-      currentFilteredList
+      filteredListWithCurrentValue,
+      lockCurrentParam
     );
-    this.fillCantidadAndPrecioFromFilteredList(currentFilteredList);
+    this.fillCantidadAndPrecioFromFilteredList(filteredListWithCurrentValue);
   };
 
   private lockUnlockFillSku = (
     paramNameCurrentDatalist: ParameterName,
-    currentFilteredList: Product[]
+    currentFilteredList: Product[],
+    lockCurrentParam: boolean
   ) => {
     if (paramNameCurrentDatalist != ParameterName.SKU) {
       const listOfAvailableSku = this.availableValuesOnList(
@@ -109,15 +126,40 @@ class Datalist extends Component<Props_Datalist> {
         this.props.activateSku();
       }
     } else {
-      if (currentFilteredList.length == 1) {
-        this.props.deactivateSku();
+      lockCurrentParam && this.props.deactivateSku();
+    }
+  };
+
+  private lockUnlockFillCodigoBarras = (
+    paramNameCurrentDatalist: ParameterName,
+    currentFilteredList: Product[],
+    lockCurrentParam: boolean
+  ) => {
+    if (paramNameCurrentDatalist != ParameterName.CODIGO_BARRAS) {
+      const listOfAvailableCodigoBarras = this.availableValuesOnList(
+        currentFilteredList,
+        ParameterName.CODIGO_BARRAS
+      );
+      console.log(listOfAvailableCodigoBarras);
+      if (listOfAvailableCodigoBarras.length == 0) {
+        this.props.updateCodigoBarras("");
       }
+      if (listOfAvailableCodigoBarras.length == 1) {
+        this.props.deactivateCodigoBarras();
+        this.props.updateCodigoBarras(listOfAvailableCodigoBarras[0]);
+      }
+      if (listOfAvailableCodigoBarras.length > 1) {
+        this.props.activateCodigoBarras();
+      }
+    } else {
+      lockCurrentParam && this.props.deactivateCodigoBarras();
     }
   };
 
   private lockUnlockFillModelo = (
     paramNameCurrentDatalist: ParameterName,
-    currentFilteredList: Product[]
+    currentFilteredList: Product[],
+    lockCurrentParam: boolean
   ) => {
     if (paramNameCurrentDatalist != ParameterName.MODELO) {
       const listOfAvailableModelo = this.availableValuesOnList(
@@ -135,15 +177,14 @@ class Datalist extends Component<Props_Datalist> {
         this.props.activateModelo();
       }
     } else {
-      if (currentFilteredList.length == 1) {
-        this.props.deactivateModelo();
-      }
+      lockCurrentParam && this.props.deactivateModelo();
     }
   };
 
   private lockUnlockFillMarca = (
     paramNameCurrentDatalist: ParameterName,
-    currentFilteredList: Product[]
+    currentFilteredList: Product[],
+    lockCurrentParam: boolean
   ) => {
     if (paramNameCurrentDatalist != ParameterName.MARCA) {
       const listOfAvailableMarca = this.availableValuesOnList(
@@ -162,15 +203,14 @@ class Datalist extends Component<Props_Datalist> {
         this.props.activateMarca();
       }
     } else {
-      if (currentFilteredList.length == 1) {
-        this.props.deactivateMarca();
-      }
+      lockCurrentParam && this.props.deactivateMarca();
     }
   };
 
   private lockUnlockFillUbicacion = (
     paramNameCurrentDatalist: ParameterName,
-    currentFilteredList: Product[]
+    currentFilteredList: Product[],
+    lockCurrentParam: boolean
   ) => {
     if (paramNameCurrentDatalist != ParameterName.UBICACION) {
       const listOfAvailableUbicacion = this.availableValuesOnList(
@@ -188,15 +228,14 @@ class Datalist extends Component<Props_Datalist> {
         this.props.activateUbicacion();
       }
     } else {
-      if (currentFilteredList.length == 1) {
-        this.props.deactivateUbicacion();
-      }
+      lockCurrentParam && this.props.deactivateUbicacion();
     }
   };
 
   private lockUnlockFillDescripcion = (
     paramNameCurrentDatalist: ParameterName,
-    currentFilteredList: Product[]
+    currentFilteredList: Product[],
+    lockCurrentParam: boolean
   ) => {
     if (paramNameCurrentDatalist != ParameterName.DESCRIPCION) {
       const listOfAvailableDescripcion = this.availableValuesOnList(
@@ -214,35 +253,7 @@ class Datalist extends Component<Props_Datalist> {
         this.props.activateDescripcion();
       }
     } else {
-      if (currentFilteredList.length == 1) {
-        this.props.deactivateDescripcion();
-      }
-    }
-  };
-
-  private lockUnlockFillCodigoBarras = (
-    paramNameCurrentDatalist: ParameterName,
-    currentFilteredList: Product[]
-  ) => {
-    if (paramNameCurrentDatalist != ParameterName.CODIGO_BARRAS) {
-      const listOfAvailableCodigoBarras = this.availableValuesOnList(
-        currentFilteredList,
-        ParameterName.CODIGO_BARRAS
-      );
-      if (listOfAvailableCodigoBarras.length == 0) {
-        this.props.updateCodigoBarras("");
-      }
-      if (listOfAvailableCodigoBarras.length == 1) {
-        this.props.deactivateCodigoBarras();
-        this.props.updateCodigoBarras(listOfAvailableCodigoBarras[0]);
-      }
-      if (listOfAvailableCodigoBarras.length > 1) {
-        this.props.activateCodigoBarras();
-      }
-    } else {
-      if (currentFilteredList.length == 1) {
-        this.props.deactivateCodigoBarras();
-      }
+      lockCurrentParam && this.props.deactivateDescripcion();
     }
   };
 
@@ -282,7 +293,7 @@ class Datalist extends Component<Props_Datalist> {
       this.props.deactivateCodigoBarras();
   };
 
-  private filterProductListBy = (paramValue: string): Product[] => {
+  private productListWithValue = (paramValue: string): Product[] => {
     const productList = this.props.filteredProductList;
     const paramName = this.props.paramName;
     const trueParameterName = this.translateParameterName(paramName);
@@ -290,7 +301,14 @@ class Datalist extends Component<Props_Datalist> {
       (product: Product) => product[trueParameterName] == paramValue
     );
   };
-
+  private productListThatContains = (paramValue: string): Product[] => {
+    const productList = this.props.filteredProductList;
+    const paramName = this.props.paramName;
+    const trueParameterName = this.translateParameterName(paramName);
+    return productList.filter((product: Product) =>
+      product[trueParameterName].includes(paramValue)
+    );
+  };
   private getInvalidMessage = (): string =>
     !this.listContains(
       this.props.filteredProductList,

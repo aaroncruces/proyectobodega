@@ -19,6 +19,7 @@ import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
 import Inputbox_iva from "./Inputbox_iva";
 import Button_Reset_form from "./Button_Reset_form";
 import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
+import Button_Go_To_Alter_Parameters from "./Button_Go_To_Alter_Parameters";
 
 class Form_Search_Product extends Component<Props_Form_Search_Product> {
   constructor(props) {
@@ -71,6 +72,8 @@ class Form_Search_Product extends Component<Props_Form_Search_Product> {
 
           <div className="d-flex align-items-center">
             <Button_Reset_form />
+            <Button_Go_To_Alter_Parameters />
+
             {this.props.cachedProductList === undefined && (
               <div className="ms-auto">
                 <Throbber />
