@@ -7,5 +7,6 @@ type Props_Formulario_Ingreso = {
   textboxModelo?: string;
   textboxMarca?: string;
   fetchListaProductos?: () => any;
+  resetParamsAndFilteredLists?: () => any;
 };
 export default Props_Formulario_Ingreso;

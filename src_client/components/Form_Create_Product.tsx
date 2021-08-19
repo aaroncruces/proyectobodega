@@ -1,13 +1,13 @@
 // react+redux vendor
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// Subcomponentes
+// Subcomponents
 import Inputbox_sku_Create_Product from "./Inputbox_sku_Create_Product";
-import Inputbox_codigo_barras from "./Inputbox_codigo_barras";
-import Inputbox_modelo from "./Inputbox_modelo";
+import Inputbox_codigo_barras_Create_Product from "./Inputbox_codigo_barras_Create_Product";
+import Inputbox_modelo_Create_Product from "./Inputbox_modelo_Create_Product";
 import Inputbox_cantidad from "./Inputbox_cantidad";
 import Inputbox_ubicacion from "./Inputbox_ubicacion";
-import Inputbox_marca from "./Inputbox_marca";
+import Inputbox_marca_Create_Product from "./Inputbox_marca_Create_Product";
 import Inputbox_precio_venta_neto from "./Inputbox_precio_venta_neto";
 import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
 import Inputbox_iva from "./Inputbox_iva";
@@ -19,11 +19,11 @@ import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
+import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
 
 class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
     super(props);
-    //Cargando los productos de la db a la store
     this.props.fetchListaProductos();
   }
   //todo on discharge, clear params (sku, CB, Mrca, etc)
@@ -31,6 +31,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
     const propsButtonIngreso = {
       className: "me-3 mt-3 btn btn-primary",
     };
+    this.props.resetParamsAndFilteredLists();
     return (
       <>
         <form className="container">
@@ -38,9 +39,9 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
             {/*//@ts-ignore */}
             <Inputbox_sku_Create_Product cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_codigo_barras cssClassContainer="col-md-3 form-group" />
+            <Inputbox_codigo_barras_Create_Product cssClassContainer="col-md-3 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_modelo cssClassContainer="col-md-5 form-group" />
+            <Inputbox_modelo_Create_Product cssClassContainer="col-md-5 form-group" />
           </div>
           <div className="row mb-4">
             {/*//@ts-ignore */}
@@ -48,7 +49,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
             {/*//@ts-ignore */}
             <Inputbox_ubicacion cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_marca cssClassContainer="col-md-4 form-group" />
+            <Inputbox_marca_Create_Product cssClassContainer="col-md-4 form-group" />
           </div>
           <div className="row mb-3">
             {/*//@ts-ignore */}
@@ -85,6 +86,7 @@ const mapDispatchToProps = (
 ): Props_Formulario_Ingreso => ({
   //thunk
   fetchListaProductos: () => dispatch(fetchProductsFromDBToCache()),
+  resetParamsAndFilteredLists: () => resetStoreParamsAndFilteredList(dispatch),
 });
 
 export default connect(
