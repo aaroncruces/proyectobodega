@@ -1,36 +1,33 @@
+import "bootstrap";
 import ReactDOM from "react-dom";
 import React from "react";
 import Form_Create_Product from "./components/Form_Create_Product";
-import Form_Search_Product from "./components/Form_Search_Product";
+import Navbar from "./components/Navbar";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
 import "./styling/styles.scss";
 import Form_Modify_Product from "./components/Form_Modify_Product";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 //todo: to->english+locale
-
-//import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-/*
-      <Router>
-        <Route exact path="/">
-          <a href="/ingreso_producto">ingreso_producto</a>
-          <a href="/modificacion_producto">modificacion_producto</a>
-        </Route>
-        <Route path="/ingreso_producto">
-          <Form_Create_Product /> />
-        </Route>
-        <Route path="/modificacion_producto">
-          <Form_Modify_Product />
-        </Route>
-      </Router>
-
-      Form_Search_Product
-*/
 
 const APP = () => {
   return (
     <Provider store={store}>
-      <Form_Search_Product />
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/" exact>
+            <h1>HOME</h1>
+          </Route>
+          <Route path="/crear_producto" exact component={Form_Create_Product} />
+          <Route
+            path="/modificar_producto"
+            exact
+            component={Form_Modify_Product}
+          />
+        </Switch>
+      </Router>
     </Provider>
   );
 };

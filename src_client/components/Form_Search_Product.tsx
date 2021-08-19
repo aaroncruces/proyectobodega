@@ -6,7 +6,7 @@ import Throbber from "./Throbber";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
-import Props_Form_Search_Product from "../helpers/type_Props_Form_Modify_Product";
+import Props_Form_Search_Product from "../helpers/type_Props_Form_Search_Product";
 import Datalist_sku from "./Datalist_sku";
 import Datalist_modelo from "./Datalist_modelo";
 import Datalist_marca from "./Datalist_marca";
@@ -18,6 +18,7 @@ import Inputbox_precio_venta_neto from "./Inputbox_precio_venta_neto";
 import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
 import Inputbox_iva from "./Inputbox_iva";
 import Button_Reset_form from "./Button_Reset_form";
+import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
 
 class Form_Search_Product extends Component<Props_Form_Search_Product> {
   constructor(props) {
@@ -26,9 +27,8 @@ class Form_Search_Product extends Component<Props_Form_Search_Product> {
   }
 
   render() {
-    const propsButtonIngreso = {
-      className: "me-3 mt-3 btn btn-primary",
-    };
+    this.props.resetParamsAndFilteredLists();
+
     return (
       <>
         <form className="container">
@@ -92,6 +92,7 @@ const mapDispatchToProps = (
 ): Props_Form_Search_Product => ({
   //thunk
   reFetchProductListToCache: () => dispatch(fetchProductsFromDBToCache()),
+  resetParamsAndFilteredLists: () => resetStoreParamsAndFilteredList(dispatch),
 });
 
 export default connect(
