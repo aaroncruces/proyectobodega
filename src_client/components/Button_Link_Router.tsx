@@ -5,7 +5,11 @@ export default class Button_Link_Router extends Component<type_Props_Button_Link
   render() {
     return (
       <Link
-        className={this.props.cssClass}
+        className={
+          this.props.invalid
+            ? "btn disabled " + this.props.cssClass
+            : "btn " + this.props.cssClass
+        }
         type="button"
         disabled={this.props.invalid}
         to={this.props.url}

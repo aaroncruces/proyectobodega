@@ -7,7 +7,10 @@ import {
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
 import Props_Datalist from "../helpers/type_props_Datalist";
-import { setMarca } from "../redux/productParameters/marca/marcaActionCreators";
+import {
+  deactivateMarca,
+  setMarca,
+} from "../redux/productParameters/marca/marcaActionCreators";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
 
 const mapStateToProps = (state): Props_Datalist => ({
@@ -25,5 +28,6 @@ const mapStateToProps = (state): Props_Datalist => ({
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
   updateParameterStoreReducer: (marca: string) => dispatch(setMarca(marca)),
+  deactivateCurrentDatalist: () => dispatch(deactivateMarca()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Datalist);

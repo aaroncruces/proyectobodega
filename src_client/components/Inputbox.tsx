@@ -16,6 +16,10 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
       this.props.format_onBlur(event.target.value)
     );
   };
+  private onClick_Inputbox = () => {
+    console.log("click");
+    this.props.execOnclick?.();
+  };
 
   render() {
     return (
@@ -38,6 +42,7 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
           value={this.props.textInputBox}
           onInput={this.onInput_Inputbox}
           onBlur={this.onBlur_Inputbox}
+          onClick={this.onClick_Inputbox}
           disabled={this.props.disabled}
         />
         {this.props.invalidComparator != undefined &&

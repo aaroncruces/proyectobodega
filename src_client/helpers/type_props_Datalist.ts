@@ -39,6 +39,7 @@ type Props_Datalist = {
   //dispatchers
   updateParameterStoreReducer?: (string) => any;
   updateFilteredProductList?: (string) => any;
+  deactivateCurrentDatalist?: () => any;
 
   updateSku?: (sku: string) => any;
   activateSku?: () => any;

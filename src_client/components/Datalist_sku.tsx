@@ -1,6 +1,9 @@
 import { connect } from "react-redux";
 import { onInput, onBlur } from "../helpers/formato_codigos";
-import { setSku } from "../redux/productParameters/sku/skuActionCreators";
+import {
+  deactivateSku,
+  setSku,
+} from "../redux/productParameters/sku/skuActionCreators";
 import {
   cachedProductListFromState,
   skuActiveFromState,
@@ -25,6 +28,7 @@ const mapStateToProps = (state): Props_Datalist => ({
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
   updateParameterStoreReducer: (sku: string) => dispatch(setSku(sku)),
+  deactivateCurrentDatalist: () => dispatch(deactivateSku()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Datalist);

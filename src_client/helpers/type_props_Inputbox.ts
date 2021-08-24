@@ -8,5 +8,6 @@ type Props_Inputbox = {
   format_onBlur?: (text: string) => string | number;
   format_onInput?: (text: string) => string | number;
   disabled?: boolean;
+  execOnclick?: () => any;
 };
 export default Props_Inputbox;

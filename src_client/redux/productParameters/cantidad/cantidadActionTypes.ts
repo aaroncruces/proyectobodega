@@ -1,4 +1,6 @@
 enum CantidadActionsTypes {
   SET_CANTIDAD = "SET_CANTIDAD",
+  ACTIVATE_CANTIDAD = "ACTIVATE_CANTIDAD",
+  DEACTIVATE_CANTIDAD = "DEACTIVATE_CANTIDAD",
 }
 export default CantidadActionsTypes;

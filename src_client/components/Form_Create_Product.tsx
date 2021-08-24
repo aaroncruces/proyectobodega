@@ -20,6 +20,7 @@ import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
 import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
+import Button_Reset_form from "./Button_Reset_form";
 
 class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
   constructor(props) {
@@ -64,6 +65,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
             <Inputbox_descripcion cssClassContainer="col-md-12 form-group" />
           </div>
           <div className="d-flex align-items-center">
+            <Button_Reset_form />
             <Button_Create_Product />
             {this.props.listaProductosDB === undefined && (
               <div className="ms-auto">

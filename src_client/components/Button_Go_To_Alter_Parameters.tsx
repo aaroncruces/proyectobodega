@@ -16,12 +16,12 @@ import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndF
 import { useHistory } from "react-router-dom";
 
 const mapStateToProps = (state): type_Props_Button_Link_Router => ({
+  cssClass: "btn-primary",
   label: "Modificar Producto",
-  cssClass: "btn btn-primary",
   url: "/alterar_parametros_producto",
-  invalid: false, //!productSelected(state),
+  invalid: !productSelected(state),
 });
-//select when filtered.length==1 and sku!="" and disabled
+
 const productSelected = (state): boolean =>
   skuFromState(state) != "" && !skuActiveFromState(state);
 

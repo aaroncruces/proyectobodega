@@ -6,6 +6,7 @@ import StateCachedProductList from "./cachedProductList/type_StateCachedProductL
 import StateMarca from "./productParameters/marca/type_state_marca";
 import StateModelo from "./productParameters/modelo/type_state_modelo";
 import StatePrecio_venta_neto from "./productParameters/precio_venta_neto/type_state_precio_venta_neto";
+import StatePrecio_venta_bruto from "./productParameters/precio_venta_bruto/type_state_precio_venta_bruto";
 import StateSku from "./productParameters/sku/type_state_sku";
 import StateUbicacion from "./productParameters/ubicacion/type_state_ubicacion";
 import StateFilteredProductList from "./filteredProductList/type_StateFilteredProductList";
@@ -48,9 +49,17 @@ const descripcionActiveFromState = (state): boolean =>
 
 const cantidadFromState = (state): number =>
   (state.cantidadReducer as StateCantidad).cantidad;
+const cantidadActiveFromState = (state): boolean =>
+  (state.cantidadReducer as StateCantidad).cantidad_parameterActive;
 
 const precioVentaNetoFromState = (state): number =>
   (state.precio_venta_netoReducer as StatePrecio_venta_neto).precio_venta_neto;
+const precioVentaNetoActiveFromState = (state): boolean =>
+  (state.precio_venta_netoReducer as StatePrecio_venta_neto)
+    .precio_venta_neto_parameterActive;
+const precioVentaBrutoActiveFromState = (state): boolean =>
+  (state.precio_venta_brutoReducer as StatePrecio_venta_bruto)
+    .precio_venta_bruto_parameterActive;
 
 export {
   cachedProductListFromState,
@@ -68,5 +77,8 @@ export {
   marcaFromState,
   marcaActiveFromState,
   precioVentaNetoFromState,
+  precioVentaNetoActiveFromState,
+  precioVentaBrutoActiveFromState,
   cantidadFromState,
+  cantidadActiveFromState,
 };

@@ -6,4 +6,11 @@ const setCantidad = (payload: number): Action => ({
   payload,
 });
 
-export { setCantidad };
+const activateCantidad = (): Action => ({
+  type: CantidadActionTypes.ACTIVATE_CANTIDAD,
+});
+const deactivateCantidad = (): Action => ({
+  type: CantidadActionTypes.DEACTIVATE_CANTIDAD,
+});
+
+export { setCantidad, activateCantidad, deactivateCantidad };

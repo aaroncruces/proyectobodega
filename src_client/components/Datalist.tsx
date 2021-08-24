@@ -331,7 +331,19 @@ class Datalist extends Component<Props_Datalist> {
     );
     return listContainingParam.length > 0;
   };
-
+  private listHasExact = (
+    productList: Product[],
+    paramName: ParameterName,
+    paramValue: string
+  ): boolean => {
+    const trueParameterName = this.translateParameterName(paramName);
+    const listContainingParam = productList.filter(
+      (product) =>
+        lowerCase(trim(product[trueParameterName])) ==
+        lowerCase(trim(paramValue))
+    );
+    return listContainingParam.length > 0;
+  };
   private translateParameterName = (paramName: ParameterName): string => {
     return paramName == ParameterName.SKU
       ? "sku"
@@ -355,8 +367,16 @@ class Datalist extends Component<Props_Datalist> {
   onBlur_Datalist = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = this.props.format_onBlur(event.target.value);
     this.props.updateParameterStoreReducer(inputValue);
-    //this.execOnBlur(this.props, inputValue.toString(), this.state, this.setState);
+    const productValid = this.listHasExact(
+      this.props.filteredProductList,
+      this.props.paramName,
+      this.props.textCurrentParam.toString()
+    );
+    if (productValid) {
+      this.props.deactivateCurrentDatalist();
+    }
   };
+
   private onFocus_Datalist = (event: React.FocusEvent<HTMLInputElement>) => {
     const inputValue = this.props.format_onBlur(event.target.value);
     this.rebuilFilteredListFromCache_IgnoringCurrentDatalist();

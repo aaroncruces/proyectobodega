@@ -4,5 +4,6 @@
  */
 type StateCantidad = {
   cantidad: number;
+  cantidad_parameterActive: boolean;
 };
 export default StateCantidad;

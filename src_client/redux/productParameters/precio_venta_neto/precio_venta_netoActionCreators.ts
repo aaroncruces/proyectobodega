@@ -6,8 +6,14 @@ const setPrecio_venta_neto = (payload: number): Action => ({
   payload,
 });
 
-const resetPrecio_venta_neto = (): Action => ({
-  type: Precio_venta_netoActionTypes.RESET_PRECIO_VENTA_NETO,
+const activatePrecio_venta_neto = (): Action => ({
+  type: Precio_venta_netoActionTypes.ACTIVATE_PRECIO_VENTA_NETO,
 });
-
-export { setPrecio_venta_neto, resetPrecio_venta_neto };
+const deactivatePrecio_venta_neto = (): Action => ({
+  type: Precio_venta_netoActionTypes.DEACTIVATE_PRECIO_VENTA_NETO,
+});
+export {
+  setPrecio_venta_neto,
+  activatePrecio_venta_neto,
+  deactivatePrecio_venta_neto,
+};

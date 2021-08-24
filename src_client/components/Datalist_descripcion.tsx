@@ -8,7 +8,10 @@ import {
 import Datalist from "./Datalist";
 import Props_Datalist from "../helpers/type_props_Datalist";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
-import { setDescripcion } from "../redux/productParameters/descripcion/descripcionActionCreators";
+import {
+  deactivateDescripcion,
+  setDescripcion,
+} from "../redux/productParameters/descripcion/descripcionActionCreators";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textCurrentParam: descripcionFromState(state),
@@ -27,5 +30,6 @@ const mapStateToProps = (state): Props_Datalist => ({
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
   updateParameterStoreReducer: (descripcion: string) =>
     dispatch(setDescripcion(descripcion)),
+  deactivateCurrentDatalist: () => dispatch(deactivateDescripcion()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Datalist);

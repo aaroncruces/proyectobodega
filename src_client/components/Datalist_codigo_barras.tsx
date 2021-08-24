@@ -1,6 +1,9 @@
 import { connect } from "react-redux";
 import { onInput, onBlur } from "../helpers/formato_codigos";
-import { setCodigo_barras } from "../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
+import {
+  deactivateCodigo_barras,
+  setCodigo_barras,
+} from "../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
 import {
   cachedProductListFromState,
   codigo_barrasActiveFromState,
@@ -27,6 +30,7 @@ const mapStateToProps = (state): Props_Datalist => ({
 const mapDispatchToProps = (dispatch: (any) => any): Props_Datalist => ({
   updateParameterStoreReducer: (codigo_barras: string) =>
     dispatch(setCodigo_barras(codigo_barras)),
+  deactivateCurrentDatalist: () => dispatch(deactivateCodigo_barras()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Datalist);
