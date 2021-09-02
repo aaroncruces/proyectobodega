@@ -2,19 +2,15 @@ import Product from "../../src_server/types/Product";
 import { HttpStatusCode } from "../../src_server/types/HttpStatusCode";
 import { InsertErrors } from "../../src_server/types/InsertErrors";
 
-//Webpack dev or prod
+//To diferentiate between devel and prod
 //@ts-ignore
 const url = WP_URL;
 
-export const postProducto = async (
+export const postProduct = async (
   producto: Product
-): Promise<{
-  exito: boolean;
-  mensaje: string;
-  codigo_error: InsertErrors | undefined;
-}> => {
+): Promise<{ success: boolean; message: string }> => {
   //intento ingresar el producto
-  const respuesta = await fetch(url + "/api/ingreso", {
+  const response = await fetch(url + "/api/ingreso", {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -24,75 +20,15 @@ export const postProducto = async (
     body: JSON.stringify(producto),
   });
 
-  const datos_error = await respuesta.json();
-  let mensaje = "";
-  let exito = false;
-  let codigo_error;
+  const datos_error = await response.json();
 
-  if (respuesta.status == HttpStatusCode.CREATED) {
-    exito = true;
+  if (response.status == HttpStatusCode.CREATED) {
+    return { success: true, message: "Producto ingresado con exito" };
   }
-
-  if (respuesta.status == HttpStatusCode.CONFLICT) {
-    exito = false;
-    codigo_error = datos_error.codigo_error;
-
-    if (datos_error.codigo_error == InsertErrors.PRODUCTO_NO_EXISTE)
-      mensaje = "El producto no se ha ingresado.";
-
-    if (datos_error.codigo_error == InsertErrors.SKU_VACIA)
-      mensaje = "Ingrese SKU.";
-
-    if (datos_error.codigo_error == InsertErrors.MODELO_VACIO)
-      mensaje = "El producto no se ha ingresado";
-
-    if (datos_error.codigo_error == InsertErrors.SKU_REPETIDA) {
-      mensaje =
-        "El producto con la SKU: '" + datos_error.producto.sku + "' ya existe";
-      mensaje +=
-        ". Se trata del producto con modelo: '" +
-        datos_error.producto.modelo +
-        "'";
-      if (datos_error.producto.marca != "")
-        mensaje += "; y marca: '" + datos_error.producto.marca + "'";
-      mensaje += ".";
-    }
-
-    if (datos_error.codigo_error == InsertErrors.MODELO_MARCA_REPETIDA) {
-      mensaje = "El producto con modelo: '" + datos_error.producto.modelo + "'";
-      if (datos_error.producto.marca != "")
-        mensaje += ", y marca: '" + datos_error.producto.marca + "'";
-      mensaje +=
-        " ya existe. Se trata del producto con SKU: '" +
-        datos_error.producto.sku +
-        "'.";
-    }
-
-    if (
-      datos_error.codigo_error == InsertErrors.CODIGO_BARRAS_NO_VACIO_REPETIDO
-    ) {
-      mensaje =
-        "El producto con la el codigo de barras: '" +
-        datos_error.producto.codigo_barras +
-        "' ya existe";
-      mensaje +=
-        ". Se trata del producto con modelo: '" +
-        datos_error.producto.modelo +
-        "'";
-      if (datos_error.producto.marca != "")
-        mensaje += "; y marca: '" + datos_error.producto.marca + "'";
-      mensaje += ".";
-    }
-  }
-
-  if (respuesta.status == HttpStatusCode.INTERNAL_SERVER_ERROR) {
-    exito = false;
-    mensaje = "Hubo un error de servidor. Contactese con soporte.";
-  }
-
+  const failureMessage = "Producto no ingresado";
   //@ts-ignore
   if (WP_URL) await delay(5000);
-  return { exito, mensaje, codigo_error };
+  return { success: false, message: failureMessage };
 };
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
