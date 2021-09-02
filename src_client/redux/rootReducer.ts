@@ -10,6 +10,8 @@ import cachedProductListReducer from "./cachedProductList/cachedProductListReduc
 import filteredProductListReducer from "./filteredProductList/filteredProductListReducer";
 import { combineReducers } from "redux";
 import precio_venta_brutoReducer from "./productParameters/precio_venta_bruto/precio_venta_brutoReducer";
+import connectionStatusReducer from "./connectionStatus/connectionStatusReducer";
+
 const rootReducer = combineReducers({
   skuReducer,
   modeloReducer,
@@ -22,5 +24,6 @@ const rootReducer = combineReducers({
   descripcionReducer,
   cachedProductListReducer,
   filteredProductListReducer,
+  connectionStatusReducer,
 });
 export default rootReducer;
