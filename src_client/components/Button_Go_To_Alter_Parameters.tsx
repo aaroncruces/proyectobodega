@@ -11,6 +11,7 @@ import {
   precioVentaNetoFromState,
   cantidadFromState,
   skuActiveFromState,
+  cachedProductListFromState,
 } from "../redux/StateValueExtractor";
 import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
 import { useHistory } from "react-router-dom";
@@ -23,7 +24,9 @@ const mapStateToProps = (state): type_Props_Button_Link_Router => ({
 });
 
 const productSelected = (state): boolean =>
-  skuFromState(state) != "" && !skuActiveFromState(state);
+  !!cachedProductListFromState(state)?.find(
+    (product) => product.sku == skuFromState(state)
+  );
 
 const mapDispatchToProps = (
   dispatch: (any) => any

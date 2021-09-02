@@ -12,7 +12,6 @@ export const disableInputboxesExcept = (
   paramName: ParameterName,
   dispatcher: (any) => any
 ) => {
-  console.log(paramName);
   paramName != ParameterName.CODIGO_BARRAS &&
     dispatcher(deactivateCodigo_barras());
   paramName != ParameterName.MODELO && dispatcher(deactivateModelo());

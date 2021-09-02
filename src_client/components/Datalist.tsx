@@ -140,7 +140,6 @@ class Datalist extends Component<Props_Datalist> {
         currentFilteredList,
         ParameterName.CODIGO_BARRAS
       );
-      console.log(listOfAvailableCodigoBarras);
       if (listOfAvailableCodigoBarras.length == 0) {
         this.props.updateCodigoBarras("");
       }

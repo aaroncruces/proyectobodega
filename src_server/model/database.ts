@@ -79,24 +79,20 @@ export const obtener_lista_productos = async (): Promise<Product[]> => {
   }
 };
 
-/**
- * Encontrar 1 solo :
- */
-//  .findOne({ cantidad: 0 });
-
-/**
- * Modificar.
- * $set permite conservar valores antiguos del objeto encontrado
- */
-// (async () => {
-//   console.log(
-//     await ModeloProducto.updateOne(
-//       { _id: "60c2ce4074f5e42acda6a8c2" },
-//       { $set: { cantidad: 7 } }
-//     )
-//   );
-// })();
-
+export const modify_product_parameter = async (
+  sku: string,
+  keyValuePair: object
+) => {
+  try {
+    const result = await ModeloProducto.updateOne(
+      { sku },
+      { $set: keyValuePair }
+    );
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
 /**
  * Borrar:
  */

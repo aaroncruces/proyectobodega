@@ -14,12 +14,13 @@ import Inputbox_iva from "./Inputbox_iva";
 import Inputbox_descripcion_Alter_Product from "./Inputbox_descripcion_Alter_Product";
 import Props_Form_Alter_Product from "../helpers/type_Props_Form_Alter_Product";
 import { activateParams } from "../helpers/activateParams";
+import Button_Go_To_Search_Product_Parameters from "./Button_Go_To_Search_Product_Parameters";
+import Button_Accept_Modifications_Product from "./Button_Accept_Modifications_Product";
 
 class Form_Alter_Product_Parameters extends Component<Props_Form_Alter_Product> {
   constructor(props) {
     super(props);
   }
-  //todo on discharge, clear params (sku, CB, Mrca, etc)
   render() {
     this.props.unlockParams();
     return (
@@ -54,9 +55,8 @@ class Form_Alter_Product_Parameters extends Component<Props_Form_Alter_Product> 
             <Inputbox_descripcion_Alter_Product cssClassContainer="col-md-12 form-group" />
           </div>
           <div className="d-flex align-items-center">
-            {
-              //button
-            }
+            <Button_Go_To_Search_Product_Parameters />
+            <Button_Accept_Modifications_Product />
           </div>
         </form>
       </>

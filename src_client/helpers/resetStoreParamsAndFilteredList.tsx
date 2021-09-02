@@ -16,7 +16,7 @@ export const resetStoreParamsAndFilteredList = (
   activateParams(dispatcher);
   dispatcher(reloadFilteredProductListFromCache());
 };
-const resetParams = (dispatcher: (any: any) => any) => {
+export const resetParams = (dispatcher: (any: any) => any) => {
   dispatcher(setSku(""));
   dispatcher(setCodigo_barras(""));
   dispatcher(setModelo(""));

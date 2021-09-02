@@ -1,9 +1,8 @@
-/**
- * todo: to->english+locale
- * Para compilacion rapida, se usa la opcion -T en ts-script descrita en nodemon.json
- * Para enforcing y aviso de errores, quitar -T
- */
-import { ingresar_producto, obtener_lista_productos } from "./model/database";
+import {
+  ingresar_producto,
+  modify_product_parameter,
+  obtener_lista_productos,
+} from "./model/database";
 import express from "express";
 const app = express();
 import path from "path";
@@ -12,23 +11,37 @@ import { HttpStatusCode } from "./types/HttpStatusCode";
 
 const Cors = require("cors");
 
-/**
- * carpeta de recursos y cosas
- * entrega index.html en ruta "/"
- */
 app.use(express.static(path.resolve(__dirname, "../dist_client")));
 
-//TODO: investigar sobre cors
 app.use(
   Cors({
     "Access-Control-Allow-Origin": "*",
   })
 );
 
-//app.use(express.urlencoded({ extended: false }));
-//TODO: investigar opciones
 // @ts-ignore
 app.use(express.json());
+
+app.get(
+  "/api/productos",
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const lista_productos = await obtener_lista_productos();
+      if (!lista_productos || lista_productos.length == 0) {
+        res.status(HttpStatusCode.NOT_FOUND);
+      } else {
+        res.status(HttpStatusCode.OK);
+      }
+
+      res.setHeader("Content-Type", "application/json").json(lista_productos);
+    } catch (error) {
+      res
+        .setHeader("Content-Type", "application/json")
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .send();
+    }
+  }
+);
 
 app.post(
   "/api/ingreso",
@@ -51,23 +64,16 @@ app.post(
   }
 );
 
-app.get(
-  "/api/productos",
+app.patch(
+  "/api/modify_product_parameter",
   async (req: express.Request, res: express.Response) => {
     try {
-      const lista_productos = await obtener_lista_productos();
-      if (!lista_productos || lista_productos.length == 0) {
-        res.status(HttpStatusCode.NOT_FOUND);
-      } else {
-        res.status(HttpStatusCode.OK);
-      }
-
-      res.setHeader("Content-Type", "application/json").json(lista_productos);
+      await modify_product_parameter(req.body.sku, req.body.keyValuePair);
+      res.status(HttpStatusCode.CREATED).send({});
     } catch (error) {
-      res
-        .setHeader("Content-Type", "application/json")
-        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-        .send();
+      console.error(error);
+      res.status(HttpStatusCode.I_AM_A_TEAPOT);
+      res.setHeader("Content-Type", "application/json").json(error);
     }
   }
 );

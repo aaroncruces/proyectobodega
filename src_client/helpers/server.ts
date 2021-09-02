@@ -112,3 +112,23 @@ export const fetchProductos = async (): Promise<Product[]> => {
   const lista_productos = await respuesta.json();
   return lista_productos;
 };
+
+export const patchProduct = async (
+  sku: string,
+  keyValuePair: object
+): Promise<object> => {
+  const response = await fetch(url + "/api/modify_product_parameter", {
+    method: "PATCH",
+    mode: "cors",
+    cache: "no-cache",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      sku,
+      keyValuePair,
+    }),
+  });
+
+  return {};
+};

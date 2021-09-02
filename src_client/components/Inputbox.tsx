@@ -17,7 +17,6 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
     );
   };
   private onClick_Inputbox = () => {
-    console.log("click");
     this.props.execOnclick?.();
   };
 
