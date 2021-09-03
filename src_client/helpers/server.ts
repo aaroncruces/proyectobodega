@@ -5,6 +5,33 @@ import { InsertErrors } from "../../src_server/types/InsertErrors";
 //To diferentiate between devel and prod
 //@ts-ignore
 const url = WP_URL;
+const delay_amount = 3000;
+
+export const fetchProducts = async (): Promise<Product[]> => {
+  try {
+    const response = await fetch(url + "/api/productos", {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const productList = await response.json();
+    let errorMessage = "";
+    //@ts-ignore
+    if (WP_URL) await delay(delay_amount);
+
+    if (response.status == HttpStatusCode.OK) {
+      return productList;
+    }
+    //todo: differentiate between httpStatusCodes
+    errorMessage = "Ha habido un error en el servidor";
+    throw errorMessage;
+  } catch (error) {
+    throw "Ha habido un error";
+  }
+};
 
 export const postProduct = async (
   producto: Product
@@ -32,22 +59,6 @@ export const postProduct = async (
 };
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
-export const fetchProductos = async (): Promise<Product[]> => {
-  const respuesta = await fetch(url + "/api/productos", {
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
-  //@ts-ignore
-  if (WP_URL) await delay(0);
-
-  const lista_productos = await respuesta.json();
-  return lista_productos;
-};
 
 export const patchProduct = async (
   sku: string,

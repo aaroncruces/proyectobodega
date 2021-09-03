@@ -1,11 +1,7 @@
 import cachedProductListActionTypes from "./cachedProductListActionTypes";
 import Action from "../type_action";
 import Product from "../../../src_server/types/Product";
-import {
-  fetchProductos,
-  patchProduct,
-  postProduct,
-} from "../../helpers/server";
+import { fetchProducts, patchProduct, postProduct } from "../../helpers/server";
 
 import {
   cantidadActiveFromState,
@@ -26,6 +22,11 @@ import {
   ubicacionFromState,
 } from "../StateValueExtractor";
 import { resetParams } from "../../helpers/resetStoreParamsAndFilteredList";
+import {
+  setConnectionMessage,
+  setConnectionStatus,
+} from "../connectionStatus/connectionStatusActionCreators";
+import ConnectionStatusTypes from "../connectionStatus/enumConnectionStatusTypes";
 
 const setProductListToCache = (payload: Product[]): Action => ({
   type: cachedProductListActionTypes.SET_PRODUCT_LIST_TO_CACHE,
@@ -39,13 +40,18 @@ const pushProductToCache = (payload: Product): Action => ({
 /**
  * Thunk
  */
-const fetchProductsFromDBToCache = () => (dispatch) => {
-  fetchProductos()
-    .then((productos) => {
-      dispatch(setProductListToCache(productos));
+const fetchProductsFromDBToCache = () => async (dispatch) => {
+  dispatch(setConnectionStatus(ConnectionStatusTypes.FETCHING));
+  await fetchProducts()
+    .then((productList) => {
+      dispatch(setProductListToCache(productList));
+      dispatch(setConnectionStatus(ConnectionStatusTypes.SUCCESSFUL_FETCH));
+      dispatch(setConnectionMessage("Productos cargados con exito"));
     })
-    .catch((error) => {
+    .catch((errorMessage: string) => {
       setProductListToCache(undefined);
+      dispatch(setConnectionStatus(ConnectionStatusTypes.FAILED_FETCH));
+      dispatch(setConnectionMessage(errorMessage));
     });
 };
 
