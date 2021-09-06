@@ -1,14 +1,14 @@
 import { connect } from "react-redux";
-import Props_Button from "./prop_types/type_props_button";
+import Props_Button from "../prop_types/type_props_button";
 import Button from "./Button";
-import { postTextToDBAndCache } from "../redux/cachedProductList/cachedProductListActionCreators";
+import { postTextToDBAndCache } from "../../redux/cachedProductList/cachedProductListActionCreators";
 import {
   codigo_barrasFromState,
   cachedProductListFromState,
   marcaFromState,
   modeloFromState,
   skuFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_Button => ({
   label: checkStateForLabel(state),

@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
-import Props_inputbox from "./prop_types/type_props_Inputbox";
+import Props_inputbox from "../prop_types/type_props_Inputbox";
 import {
   valueToString,
   valueToNumber,
-} from "../helpers/formato_cantidades_enteras";
-import { setCantidad } from "../redux/productParameters/cantidad/cantidadActionCreators";
-import { cantidadFromState } from "../redux/StateValueExtractor";
+} from "../../helpers/formato_cantidades_enteras";
+import { setCantidad } from "../../redux/productParameters/cantidad/cantidadActionCreators";
+import { cantidadFromState } from "../../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: valueToString(cantidadFromState(state)),

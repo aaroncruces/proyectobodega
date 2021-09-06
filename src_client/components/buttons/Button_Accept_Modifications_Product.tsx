@@ -1,15 +1,15 @@
 import { connect } from "react-redux";
-import Props_Button from "./prop_types/type_props_button";
+import Props_Button from "../prop_types/type_props_button";
 import Button from "./Button";
-import { patchTextToDBAndRefetch } from "../redux/cachedProductList/cachedProductListActionCreators";
+import { patchTextToDBAndRefetch } from "../../redux/cachedProductList/cachedProductListActionCreators";
 import {
   onInput as descriptionFormatInput,
   onBlur as descriptionFormatBlur,
-} from "../helpers/formato_descripciones";
+} from "../../helpers/formato_descripciones";
 import {
   onInput as codesFormatInput,
   onBlur as codesFormatBlur,
-} from "../helpers/formato_codigos";
+} from "../../helpers/formato_codigos";
 import {
   codigo_barrasFromState,
   cachedProductListFromState,
@@ -28,7 +28,7 @@ import {
   ubicacionFromState,
   descripcionFromState,
   precioVentaNetoFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 import { lowerCase } from "voca";
 
 const mapStateToProps = (state): Props_Button => ({

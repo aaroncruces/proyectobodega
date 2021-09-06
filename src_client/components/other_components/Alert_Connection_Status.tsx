@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { delay } from "../helpers/delay";
-import { resetConnectionStatus } from "../helpers/resetConnectionStatus";
-import ConnectionStatusTypes from "../redux/connectionStatus/enumConnectionStatusTypes";
+import { delay } from "../../helpers/delay";
+import { resetConnectionStatus } from "../../helpers/resetConnectionStatus";
+import ConnectionStatusTypes from "../../redux/connectionStatus/enumConnectionStatusTypes";
 import {
   connectionMessageFromState,
   connectionStatusFromState,
-} from "../redux/StateValueExtractor";
-import Props_Alert_Connection_Status from "./prop_types/type_Props_Alert_Connection_Status";
+} from "../../redux/StateValueExtractor";
+import Props_Alert_Connection_Status from "../prop_types/type_Props_Alert_Connection_Status";
 
 export class Alert_Connection_Status extends Component<Props_Alert_Connection_Status> {
   render() {

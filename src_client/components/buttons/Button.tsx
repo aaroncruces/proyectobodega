@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Props_Button from "./prop_types/type_props_button";
+import Props_Button from "../prop_types/type_props_button";
 import { Link } from "react-router-dom";
 export default class Button extends Component<Props_Button> {
   render() {

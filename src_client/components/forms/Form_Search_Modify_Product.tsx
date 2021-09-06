@@ -2,25 +2,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // Subcomponentes
-import Throbber from "./Throbber";
+import Throbber from "../other_components/Throbber";
 // redux custom
-import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
-import { cachedProductListFromState } from "../redux/StateValueExtractor";
-import Props_Form_Search_Modify_Product from "./prop_types/type_Props_Form_Search_Modify_Product";
-import Datalist_sku from "./Datalist_sku";
-import Datalist_modelo from "./Datalist_modelo";
-import Datalist_marca from "./Datalist_marca";
-import Datalist_codigo_barras from "./Datalist_codigo_barras";
-import Datalist_ubicacion from "./Datalist_ubicacion";
-import Datalist_descripcion from "./Datalist_descripcion";
-import Inputbox_cantidad from "./Inputbox_cantidad";
-import Inputbox_precio_venta_neto from "./Inputbox_precio_venta_neto";
-import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
-import Inputbox_iva from "./Inputbox_iva";
-import Button_Reset_form from "./Button_Reset_form";
-import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
-import Button_Go_To_Alter_Parameters from "./Button_Go_To_Alter_Parameters";
-import Alert_Connection_Status from "./Alert_Connection_Status";
+import { fetchProductsFromDBToCache } from "../../redux/cachedProductList/cachedProductListActionCreators";
+import { cachedProductListFromState } from "../../redux/StateValueExtractor";
+import Props_Form_Search_Modify_Product from "../prop_types/type_Props_Form_Search_Modify_Product";
+import Datalist_sku from "../datalists/Datalist_sku";
+import Datalist_modelo from "../datalists/Datalist_modelo";
+import Datalist_marca from "../datalists/Datalist_marca";
+import Datalist_codigo_barras from "../datalists/Datalist_codigo_barras";
+import Datalist_ubicacion from "../datalists/Datalist_ubicacion";
+import Datalist_descripcion from "../datalists/Datalist_descripcion";
+import Inputbox_cantidad from "../inputboxes/Inputbox_cantidad";
+import Inputbox_precio_venta_neto from "../inputboxes/Inputbox_precio_venta_neto";
+import Inputbox_precio_venta_bruto from "../inputboxes/Inputbox_precio_venta_bruto";
+import Inputbox_iva from "../inputboxes/Inputbox_iva";
+import Button_Reset_form from "../buttons/Button_Reset_form";
+import { resetStoreParamsAndFilteredList } from "../../helpers/resetStoreParamsAndFilteredList";
+import Button_Go_To_Alter_Parameters from "../buttons/Button_Go_To_Alter_Parameters";
+import Alert_Connection_Status from "../other_components/Alert_Connection_Status";
 
 class Form_Search_Modify_Product extends Component<Props_Form_Search_Modify_Product> {
   constructor(props) {

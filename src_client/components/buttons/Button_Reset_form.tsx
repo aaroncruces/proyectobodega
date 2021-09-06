@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Props_Button from "./prop_types/type_props_button";
+import Props_Button from "../prop_types/type_props_button";
 import Button from "./Button";
 import {
   skuFromState,
@@ -10,8 +10,8 @@ import {
   marcaFromState,
   precioVentaNetoFromState,
   cantidadFromState,
-} from "../redux/StateValueExtractor";
-import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
+} from "../../redux/StateValueExtractor";
+import { resetStoreParamsAndFilteredList } from "../../helpers/resetStoreParamsAndFilteredList";
 
 const mapStateToProps = (state): Props_Button => ({
   label: "Borrar Formulario",

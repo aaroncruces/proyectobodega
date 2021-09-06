@@ -2,9 +2,9 @@ import { connect } from "react-redux";
 import {
   skuFromState,
   cachedProductListFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 import Button from "./Button";
-import Props_Button from "./prop_types/type_props_button";
+import Props_Button from "../prop_types/type_props_button";
 
 const mapStateToProps = (state): Props_Button => ({
   cssClass: "btn-primary",

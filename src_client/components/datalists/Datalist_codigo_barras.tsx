@@ -1,17 +1,17 @@
 import { connect } from "react-redux";
-import { onInput, onBlur } from "../helpers/formato_codigos";
+import { onInput, onBlur } from "../../helpers/formato_codigos";
 import {
   deactivateCodigo_barras,
   setCodigo_barras,
-} from "../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
+} from "../../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
 import {
   cachedProductListFromState,
   codigo_barrasActiveFromState,
   codigo_barrasFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 import Datalist from "./Datalist";
-import Props_Datalist from "./prop_types/type_props_Datalist";
-import ParameterName from "../redux/productParameters/enum_ParameterName";
+import Props_Datalist from "../prop_types/type_props_Datalist";
+import ParameterName from "../../redux/productParameters/enum_ParameterName";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textCurrentParam: codigo_barrasFromState(state),

@@ -1,19 +1,17 @@
 import { connect } from "react-redux";
-import { onInput, onBlur } from "../helpers/formato_descripciones";
-import Product from "../../src_server/types/Product";
+import { onInput, onBlur } from "../../helpers/formato_descripciones";
 import {
   cachedProductListFromState,
-  filteredProductListFromState,
   modeloActiveFromState,
   modeloFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 import Datalist from "./Datalist";
-import Props_Datalist from "./prop_types/type_props_Datalist";
+import Props_Datalist from "../prop_types/type_props_Datalist";
 import {
   deactivateModelo,
   setModelo,
-} from "../redux/productParameters/modelo/modeloActionCreators";
-import ParameterName from "../redux/productParameters/enum_ParameterName";
+} from "../../redux/productParameters/modelo/modeloActionCreators";
+import ParameterName from "../../redux/productParameters/enum_ParameterName";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textCurrentParam: modeloFromState(state),

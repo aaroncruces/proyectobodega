@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
-import Props_inputbox from "./prop_types/type_props_Inputbox";
+import Props_inputbox from "../prop_types/type_props_Inputbox";
 import {
   valueToMoney,
   valueToNumber,
-} from "../helpers/formato_cantidades_enteras";
-import { setPrecio_venta_neto } from "../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
-import { IVA } from "../helpers/impuestos";
-import { precioVentaNetoFromState } from "../redux/StateValueExtractor";
+} from "../../helpers/formato_cantidades_enteras";
+import { setPrecio_venta_neto } from "../../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
+import { IVA } from "../../helpers/impuestos";
+import { precioVentaNetoFromState } from "../../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
   textInputBox: valueToMoney(

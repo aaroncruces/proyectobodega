@@ -1,17 +1,17 @@
 import { connect } from "react-redux";
-import { onInput, onBlur } from "../helpers/formato_descripciones";
+import { onInput, onBlur } from "../../helpers/formato_descripciones";
 import {
   cachedProductListFromState,
   descripcionActiveFromState,
   descripcionFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 import Datalist from "./Datalist";
-import Props_Datalist from "./prop_types/type_props_Datalist";
-import ParameterName from "../redux/productParameters/enum_ParameterName";
+import Props_Datalist from "../prop_types/type_props_Datalist";
+import ParameterName from "../../redux/productParameters/enum_ParameterName";
 import {
   deactivateDescripcion,
   setDescripcion,
-} from "../redux/productParameters/descripcion/descripcionActionCreators";
+} from "../../redux/productParameters/descripcion/descripcionActionCreators";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textCurrentParam: descripcionFromState(state),

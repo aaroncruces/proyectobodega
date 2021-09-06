@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import Inputbox_sku from "./Inputbox_sku";
-import Props_inputbox from "./prop_types/type_props_Inputbox";
-import Producto from "../../src_server/types/Product";
-import { cachedProductListFromState } from "../redux/StateValueExtractor";
+import Props_inputbox from "../prop_types/type_props_Inputbox";
+import Producto from "../../../src_server/types/Product";
+import { cachedProductListFromState } from "../../redux/StateValueExtractor";
 
 const mapStateToProps = (state): Props_inputbox => ({
   invalidComparator:

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Props_inputbox from "./prop_types/type_props_Inputbox";
+import Props_inputbox from "../prop_types/type_props_Inputbox";
 
 export default class Inputbox<T extends Props_inputbox> extends Component<T> {
   constructor(props) {

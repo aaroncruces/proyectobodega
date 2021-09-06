@@ -1,42 +1,42 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { lowerCase, trim } from "voca";
-import Product from "../../src_server/types/Product";
-import Props_Datalist from "./prop_types/type_props_Datalist";
-import ParameterName from "../redux/productParameters/enum_ParameterName";
-import { setFilteredProductList } from "../redux/filteredProductList/filteredProductListActionCreators";
+import Product from "../../../src_server/types/Product";
+import Props_Datalist from "../prop_types/type_props_Datalist";
+import ParameterName from "../../redux/productParameters/enum_ParameterName";
+import { setFilteredProductList } from "../../redux/filteredProductList/filteredProductListActionCreators";
 import {
   activateMarca,
   deactivateMarca,
   setMarca,
-} from "../redux/productParameters/marca/marcaActionCreators";
+} from "../../redux/productParameters/marca/marcaActionCreators";
 import {
   activateModelo,
   deactivateModelo,
   setModelo,
-} from "../redux/productParameters/modelo/modeloActionCreators";
+} from "../../redux/productParameters/modelo/modeloActionCreators";
 import {
   activateSku,
   deactivateSku,
   setSku,
-} from "../redux/productParameters/sku/skuActionCreators";
+} from "../../redux/productParameters/sku/skuActionCreators";
 import {
   activateUbicacion,
   deactivateUbicacion,
   setUbicacion,
-} from "../redux/productParameters/ubicacion/ubicacionActionCreators";
+} from "../../redux/productParameters/ubicacion/ubicacionActionCreators";
 import {
   activateDescripcion,
   deactivateDescripcion,
   setDescripcion,
-} from "../redux/productParameters/descripcion/descripcionActionCreators";
+} from "../../redux/productParameters/descripcion/descripcionActionCreators";
 import {
   activateCodigo_barras,
   deactivateCodigo_barras,
   setCodigo_barras,
-} from "../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
-import { setCantidad } from "../redux/productParameters/cantidad/cantidadActionCreators";
-import { setPrecio_venta_neto } from "../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
+} from "../../redux/productParameters/codigo_barras/codigo_barrasActionCreators";
+import { setCantidad } from "../../redux/productParameters/cantidad/cantidadActionCreators";
+import { setPrecio_venta_neto } from "../../redux/productParameters/precio_venta_neto/precio_venta_netoActionCreators";
 
 import {
   cachedProductListFromState,
@@ -48,7 +48,7 @@ import {
   modeloFromState,
   skuFromState,
   ubicacionFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 
 class Datalist extends Component<Props_Datalist> {
   constructor(props) {

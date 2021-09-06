@@ -1,17 +1,17 @@
 import { connect } from "react-redux";
-import { onInput, onBlur } from "../helpers/formato_descripciones";
+import { onInput, onBlur } from "../../helpers/formato_descripciones";
 import {
   cachedProductListFromState,
   ubicacionActiveFromState,
   ubicacionFromState,
-} from "../redux/StateValueExtractor";
+} from "../../redux/StateValueExtractor";
 import Datalist from "./Datalist";
-import Props_Datalist from "./prop_types/type_props_Datalist";
+import Props_Datalist from "../prop_types/type_props_Datalist";
 import {
   deactivateUbicacion,
   setUbicacion,
-} from "../redux/productParameters/ubicacion/ubicacionActionCreators";
-import ParameterName from "../redux/productParameters/enum_ParameterName";
+} from "../../redux/productParameters/ubicacion/ubicacionActionCreators";
+import ParameterName from "../../redux/productParameters/enum_ParameterName";
 
 const mapStateToProps = (state): Props_Datalist => ({
   textCurrentParam: ubicacionFromState(state),

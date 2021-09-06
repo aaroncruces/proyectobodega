@@ -2,33 +2,33 @@
 import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 // Subcomponents
-import Inputbox_sku_Create_Product from "./Inputbox_sku_Create_Product";
-import Inputbox_codigo_barras_Create_Product from "./Inputbox_codigo_barras_Create_Product";
-import Inputbox_modelo_Create_Product from "./Inputbox_modelo_Create_Product";
-import Inputbox_cantidad from "./Inputbox_cantidad";
-import Inputbox_ubicacion from "./Inputbox_ubicacion";
-import Inputbox_marca_Create_Product from "./Inputbox_marca_Create_Product";
-import Inputbox_precio_venta_neto from "./Inputbox_precio_venta_neto";
-import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
-import Inputbox_iva from "./Inputbox_iva";
-import Inputbox_descripcion from "./Inputbox_descripcion";
-import Button_Create_Product from "./Button_Create_Product";
-import Throbber from "./Throbber";
+import Inputbox_sku_Create_Product from "../inputboxes/Inputbox_sku_Create_Product";
+import Inputbox_codigo_barras_Create_Product from "../inputboxes/Inputbox_codigo_barras_Create_Product";
+import Inputbox_modelo_Create_Product from "../inputboxes/Inputbox_modelo_Create_Product";
+import Inputbox_cantidad from "../inputboxes/Inputbox_cantidad";
+import Inputbox_ubicacion from "../inputboxes/Inputbox_ubicacion";
+import Inputbox_marca_Create_Product from "../inputboxes/Inputbox_marca_Create_Product";
+import Inputbox_precio_venta_neto from "../inputboxes/Inputbox_precio_venta_neto";
+import Inputbox_precio_venta_bruto from "../inputboxes/Inputbox_precio_venta_bruto";
+import Inputbox_iva from "../inputboxes/Inputbox_iva";
+import Inputbox_descripcion from "../inputboxes/Inputbox_descripcion";
+import Button_Create_Product from "../buttons/Button_Create_Product";
+import Throbber from "../other_components/Throbber";
 // helpers & utilities
-import Props_Form_Create_Product from "./prop_types/type_Props_Form_Create_Product";
+import Props_Form_Create_Product from "../prop_types/type_Props_Form_Create_Product";
 // redux custom
-import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
+import { fetchProductsFromDBToCache } from "../../redux/cachedProductList/cachedProductListActionCreators";
 import {
   cachedProductListFromState,
   connectionMessageFromState,
   connectionStatusFromState,
-} from "../redux/StateValueExtractor";
-import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
-import Button_Reset_form from "./Button_Reset_form";
-import { resetConnectionStatus } from "../helpers/resetConnectionStatus";
-import ConnectionStatusTypes from "../redux/connectionStatus/enumConnectionStatusTypes";
-import { delay } from "../helpers/delay";
-import Alert_Connection_Status from "./Alert_Connection_Status";
+} from "../../redux/StateValueExtractor";
+import { resetStoreParamsAndFilteredList } from "../../helpers/resetStoreParamsAndFilteredList";
+import Button_Reset_form from "../buttons/Button_Reset_form";
+import { resetConnectionStatus } from "../../helpers/resetConnectionStatus";
+import ConnectionStatusTypes from "../../redux/connectionStatus/enumConnectionStatusTypes";
+import { delay } from "../../helpers/delay";
+import Alert_Connection_Status from "../other_components/Alert_Connection_Status";
 
 class Form_Create_Product extends Component<Props_Form_Create_Product> {
   constructor(props) {
