@@ -2,15 +2,15 @@ import "bootstrap/js/dist/alert";
 import "bootstrap";
 import ReactDOM from "react-dom";
 import React from "react";
-import Form_Create_Product from "./components/Form_Create_Product";
-import Form_Alter_Product_Parameters from "./components/Form_Alter_Product_Parameters";
+import Form_Create_Product from "./components/forms/Form_Create_Product";
+import Form_Alter_Product_Parameters from "./components/forms/Form_Alter_Product_Parameters";
 import Navbar from "./components/Navbar";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 //estilos+custom
 import "./styling/styles.scss";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Form_Search_Modify_Product from "./components/Form_Search_Modify_Product";
+import Form_Search_Modify_Product from "./components/forms/Form_Search_Modify_Product";
 
 const APP = () => {
   return (
