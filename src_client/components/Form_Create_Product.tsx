@@ -1,5 +1,5 @@
 // react+redux vendor
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { connect } from "react-redux";
 // Subcomponents
 import Inputbox_sku_Create_Product from "./Inputbox_sku_Create_Product";
@@ -15,17 +15,24 @@ import Inputbox_descripcion from "./Inputbox_descripcion";
 import Button_Create_Product from "./Button_Create_Product";
 import Throbber from "./Throbber";
 // helpers & utilities
-import Props_Formulario_Ingreso from "../helpers/type_props_Formulario";
+import Props_Form_Create_Product from "../helpers/type_Props_Form_Create_Product";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
-import { cachedProductListFromState } from "../redux/StateValueExtractor";
+import {
+  cachedProductListFromState,
+  connectionMessageFromState,
+  connectionStatusFromState,
+} from "../redux/StateValueExtractor";
 import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
 import Button_Reset_form from "./Button_Reset_form";
+import { resetConnectionStatus } from "../helpers/resetConnectionStatus";
+import ConnectionStatusTypes from "../redux/connectionStatus/enumConnectionStatusTypes";
+import { delay } from "../helpers/delay";
 
-class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
+class Form_Create_Product extends Component<Props_Form_Create_Product> {
   constructor(props) {
     super(props);
-    this.props.fetchListaProductos();
+    this.props.fetchProductList();
   }
   //todo on discharge, clear params (sku, CB, Mrca, etc)
   render() {
@@ -67,7 +74,7 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
           <div className="d-flex align-items-center">
             <Button_Reset_form />
             <Button_Create_Product />
-            {this.props.listaProductosDB === undefined && (
+            {this.props.productListDB === undefined && (
               <div className="ms-auto">
                 <Throbber />
               </div>
@@ -79,16 +86,18 @@ class Form_Create_Product extends Component<Props_Formulario_Ingreso> {
   }
 }
 
-const mapStateToProps = (state: any): Props_Formulario_Ingreso => ({
-  listaProductosDB: cachedProductListFromState(state),
+const mapStateToProps = (state: any): Props_Form_Create_Product => ({
+  productListDB: cachedProductListFromState(state),
+  conectionStatus: connectionStatusFromState(state),
+  connectionMessage: connectionMessageFromState(state),
 });
 
 const mapDispatchToProps = (
   dispatch: (any) => any
-): Props_Formulario_Ingreso => ({
-  //thunk
-  fetchListaProductos: () => dispatch(fetchProductsFromDBToCache()),
+): Props_Form_Create_Product => ({
+  fetchProductList: () => dispatch(fetchProductsFromDBToCache()),
   resetParamsAndFilteredLists: () => resetStoreParamsAndFilteredList(dispatch),
+  resetConnectionStatus: () => resetConnectionStatus(dispatch),
 });
 
 export default connect(

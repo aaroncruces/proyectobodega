@@ -1,3 +1,4 @@
+import "bootstrap/js/dist/alert";
 import "bootstrap";
 import ReactDOM from "react-dom";
 import React from "react";

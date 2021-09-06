@@ -1,6 +1,7 @@
 import Product from "../../src_server/types/Product";
 import { HttpStatusCode } from "../../src_server/types/HttpStatusCode";
 import { InsertErrors } from "../../src_server/types/InsertErrors";
+import { delay } from "./delay";
 
 //To diferentiate between devel and prod
 //@ts-ignore
@@ -57,8 +58,6 @@ export const postProduct = async (
   if (WP_URL) await delay(5000);
   return { success: false, message: failureMessage };
 };
-
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export const patchProduct = async (
   sku: string,
