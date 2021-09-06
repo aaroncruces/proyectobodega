@@ -46,7 +46,7 @@ class Form_Search_Product extends Component<Props_Form_Search_Product> {
             <Inputbox_cantidad
               {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
             />
-            {/*//@ts-ignore UBUCACION*/}
+            {/*//@ts-ignore*/}
             <Datalist_ubicacion cssClassContainer="col-md-4 form-group" />
             {/*//@ts-ignore */}
             <Datalist_marca cssClassContainer="col-md-4 form-group" />
@@ -56,7 +56,7 @@ class Form_Search_Product extends Component<Props_Form_Search_Product> {
             <Inputbox_precio_venta_neto
               {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
             />
-            {/*//@ts-ignore UBUCACION*/}
+            {/*//@ts-ignore*/}
             <Inputbox_iva
               {...{ cssClassContainer: "col-md-4 form-group", disabled: true }}
             />

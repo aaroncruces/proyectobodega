@@ -28,6 +28,7 @@ import Button_Reset_form from "./Button_Reset_form";
 import { resetConnectionStatus } from "../helpers/resetConnectionStatus";
 import ConnectionStatusTypes from "../redux/connectionStatus/enumConnectionStatusTypes";
 import { delay } from "../helpers/delay";
+import Alert_Connection_Status from "./Alert_Connection_Status";
 
 class Form_Create_Product extends Component<Props_Form_Create_Product> {
   constructor(props) {
@@ -42,6 +43,7 @@ class Form_Create_Product extends Component<Props_Form_Create_Product> {
     this.props.resetParamsAndFilteredLists();
     return (
       <>
+        <Alert_Connection_Status />
         <form className="container">
           <div className="row mb-3">
             {/*//@ts-ignore */}
@@ -88,8 +90,6 @@ class Form_Create_Product extends Component<Props_Form_Create_Product> {
 
 const mapStateToProps = (state: any): Props_Form_Create_Product => ({
   productListDB: cachedProductListFromState(state),
-  conectionStatus: connectionStatusFromState(state),
-  connectionMessage: connectionMessageFromState(state),
 });
 
 const mapDispatchToProps = (
@@ -97,7 +97,6 @@ const mapDispatchToProps = (
 ): Props_Form_Create_Product => ({
   fetchProductList: () => dispatch(fetchProductsFromDBToCache()),
   resetParamsAndFilteredLists: () => resetStoreParamsAndFilteredList(dispatch),
-  resetConnectionStatus: () => resetConnectionStatus(dispatch),
 });
 
 export default connect(

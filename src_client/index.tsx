@@ -11,6 +11,7 @@ import store from "./redux/store";
 //estilos+custom
 import "./styling/styles.scss";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Form_Search_Product from "./components/Form_Search_Product";
 
 const APP = () => {
   return (
@@ -25,7 +26,7 @@ const APP = () => {
           <Route
             path="/modificar_producto"
             exact
-            component={Form_Modify_Product}
+            component={Form_Search_Product}
           />
           <Route
             path="/alterar_parametros_producto"

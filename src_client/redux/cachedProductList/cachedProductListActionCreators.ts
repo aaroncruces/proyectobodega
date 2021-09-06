@@ -42,6 +42,7 @@ const pushProductToCache = (payload: Product): Action => ({
  */
 const fetchProductsFromDBToCache = () => async (dispatch) => {
   dispatch(setConnectionStatus(ConnectionStatusTypes.FETCHING));
+  dispatch(setConnectionMessage("Cargando Productos..."));
   await fetchProducts()
     .then((productList) => {
       dispatch(setProductListToCache(productList));

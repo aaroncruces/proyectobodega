@@ -91,8 +91,6 @@ const isParameterSelected = (state): boolean =>
   !precioVentaBrutoActiveFromState(state) ||
   !descripcionActiveFromState(state);
 
-//todo: al aplicar cambios, refrescar cached (supongo que en las forms, para que aparezca el throbber)
-
 const codigo_barrasChanged = (state): boolean =>
   !cachedProductListFromState(state)?.find(
     (product) =>
@@ -198,8 +196,11 @@ const precio_venta_netoChanged = (state): boolean =>
 
 const mapDispatchToProps = (dispatch: (any) => any): Props_Button => ({
   onClick: () => {
-    dispatch(patchTextToDBAndRefetch());
+    patchAndGoBack(dispatch);
   },
 });
+const patchAndGoBack = (dispatch) => {
+  dispatch(patchTextToDBAndRefetch());
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Button);

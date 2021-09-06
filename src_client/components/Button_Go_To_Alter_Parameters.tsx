@@ -1,6 +1,4 @@
 import { connect } from "react-redux";
-import type_Props_Button_Link_Router from "./prop_types/type_Props_Button_Link_Router";
-import Button_Link_Router from "./Button_Link_Router";
 import {
   skuFromState,
   codigo_barrasFromState,
@@ -15,8 +13,10 @@ import {
 } from "../redux/StateValueExtractor";
 import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
 import { useHistory } from "react-router-dom";
+import Button from "./Button";
+import Props_Button from "./prop_types/type_props_button";
 
-const mapStateToProps = (state): type_Props_Button_Link_Router => ({
+const mapStateToProps = (state): Props_Button => ({
   cssClass: "btn-primary",
   label: "Modificar Producto",
   url: "/alterar_parametros_producto",
@@ -28,8 +28,6 @@ const productSelected = (state): boolean =>
     (product) => product.sku == skuFromState(state)
   );
 
-const mapDispatchToProps = (
-  dispatch: (any) => any
-): type_Props_Button_Link_Router => ({});
+const mapDispatchToProps = (dispatch: (any) => any): Props_Button => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Button_Link_Router);
+export default connect(mapStateToProps, mapDispatchToProps)(Button);
