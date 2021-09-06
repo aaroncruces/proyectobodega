@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Inputbox from "./Inputbox";
-import Props_inputbox from "../helpers/type_props_Inputbox";
+import Props_inputbox from "./prop_types/type_props_Inputbox";
 import { onInput, onBlur } from "../helpers/formato_descripciones";
 import { setUbicacion } from "../redux/productParameters/ubicacion/ubicacionActionCreators";
 import { ubicacionFromState } from "../redux/StateValueExtractor";

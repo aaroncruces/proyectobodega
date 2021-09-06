@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Inputbox_marca from "./Inputbox_marca";
-import Props_inputbox from "../helpers/type_props_Inputbox";
+import Props_inputbox from "./prop_types/type_props_Inputbox";
 import StateModelo from "../redux/productParameters/modelo/type_state_modelo";
 import Product from "../../src_server/types/Product";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";

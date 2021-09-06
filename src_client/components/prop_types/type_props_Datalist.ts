@@ -1,5 +1,5 @@
-import Product from "../../src_server/types/Product";
-import ParameterName from "../redux/productParameters/enum_ParameterName";
+import Product from "../../../src_server/types/Product";
+import ParameterName from "../../redux/productParameters/enum_ParameterName";
 
 type Props_Datalist = {
   cssClassContainer?: string;

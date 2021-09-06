@@ -12,7 +12,7 @@ import Inputbox_precio_venta_neto_Alter_Product from "./Inputbox_precio_venta_ne
 import Inputbox_precio_venta_bruto_Alter_Product from "./Inputbox_precio_venta_bruto_Alter_Product";
 import Inputbox_iva from "./Inputbox_iva";
 import Inputbox_descripcion_Alter_Product from "./Inputbox_descripcion_Alter_Product";
-import Props_Form_Alter_Product from "../helpers/type_Props_Form_Alter_Product";
+import Props_Form_Alter_Product from "./prop_types/type_Props_Form_Alter_Product";
 import { activateParams } from "../helpers/activateParams";
 import Button_Go_To_Search_Product_Parameters from "./Button_Go_To_Search_Product_Parameters";
 import Button_Accept_Modifications_Product from "./Button_Accept_Modifications_Product";

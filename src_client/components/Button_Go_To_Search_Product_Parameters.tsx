@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import type_Props_Button_Link_Router from "../helpers/type_Props_Button_Link_Router";
+import type_Props_Button_Link_Router from "./prop_types/type_Props_Button_Link_Router";
 import Button_Link_Router from "./Button_Link_Router";
 
 const mapStateToProps = (state): type_Props_Button_Link_Router => ({

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Props_inputbox from "../helpers/type_props_Inputbox";
+import Props_inputbox from "./prop_types/type_props_Inputbox";
 import { precioVentaBrutoActiveFromState } from "../redux/StateValueExtractor";
 import Inputbox_precio_venta_bruto from "./Inputbox_precio_venta_bruto";
 import ParameterName from "../redux/productParameters/enum_ParameterName";

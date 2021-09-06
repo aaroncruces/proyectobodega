@@ -1,5 +1,5 @@
-import Product from "../../src_server/types/Product";
-import ConnectionStatusTypes from "../redux/connectionStatus/enumConnectionStatusTypes";
+import Product from "../../../src_server/types/Product";
+import ConnectionStatusTypes from "../../redux/connectionStatus/enumConnectionStatusTypes";
 
 type Props_Form_Create_Product = {
   productListDB?: Product[];

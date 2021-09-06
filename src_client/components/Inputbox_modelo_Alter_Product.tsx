@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Inputbox_modelo from "./Inputbox_modelo";
-import Props_inputbox from "../helpers/type_props_Inputbox";
+import Props_inputbox from "./prop_types/type_props_Inputbox";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
 import { disableInputboxesExcept } from "../helpers/disableInputboxesExcept";
 import { modeloActiveFromState } from "../redux/StateValueExtractor";

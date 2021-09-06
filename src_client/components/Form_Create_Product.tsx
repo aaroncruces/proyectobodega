@@ -15,7 +15,7 @@ import Inputbox_descripcion from "./Inputbox_descripcion";
 import Button_Create_Product from "./Button_Create_Product";
 import Throbber from "./Throbber";
 // helpers & utilities
-import Props_Form_Create_Product from "../helpers/type_Props_Form_Create_Product";
+import Props_Form_Create_Product from "./prop_types/type_Props_Form_Create_Product";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import {

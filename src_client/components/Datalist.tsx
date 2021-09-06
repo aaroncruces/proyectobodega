@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { lowerCase, trim } from "voca";
 import Product from "../../src_server/types/Product";
-import Props_Datalist from "../helpers/type_props_Datalist";
+import Props_Datalist from "./prop_types/type_props_Datalist";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
 import { setFilteredProductList } from "../redux/filteredProductList/filteredProductListActionCreators";
 import {

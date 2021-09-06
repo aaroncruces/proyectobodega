@@ -6,7 +6,7 @@ import {
   descripcionFromState,
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
-import Props_Datalist from "../helpers/type_props_Datalist";
+import Props_Datalist from "./prop_types/type_props_Datalist";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
 import {
   deactivateDescripcion,

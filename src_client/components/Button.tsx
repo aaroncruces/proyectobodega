@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Props_Button from "../helpers/type_props_button";
+import Props_Button from "./prop_types/type_props_button";
 
 export default class Button extends Component<Props_Button> {
   render() {

@@ -10,7 +10,7 @@ import {
   codigo_barrasFromState,
 } from "../redux/StateValueExtractor";
 import Datalist from "./Datalist";
-import Props_Datalist from "../helpers/type_props_Datalist";
+import Props_Datalist from "./prop_types/type_props_Datalist";
 import ParameterName from "../redux/productParameters/enum_ParameterName";
 
 const mapStateToProps = (state): Props_Datalist => ({

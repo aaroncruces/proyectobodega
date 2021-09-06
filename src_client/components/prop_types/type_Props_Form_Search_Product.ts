@@ -1,4 +1,4 @@
-import Product from "../../src_server/types/Product";
+import Product from "../../../src_server/types/Product";
 
 type Props_Form_Search_Product = {
   reFetchProductListToCache?: () => any;
