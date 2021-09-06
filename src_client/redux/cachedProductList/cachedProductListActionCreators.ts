@@ -71,16 +71,18 @@ const postTextToDBAndCache = () => async (dispatch, getState) => {
     precio_venta_neto: precioVentaNetoFromState(state),
     descripcion: descripcionFromState(state),
   };
-  dispatch(pushProductToCache(currentProduct));
-  resetParams(dispatch);
-
+  dispatch(setConnectionStatus(ConnectionStatusTypes.FETCHING));
+  dispatch(setConnectionMessage("Ingresando Producto..."));
   await postProduct(currentProduct)
     .then((serverMessage) => {
-      //console.log(getState());
-      //todo
+      dispatch(pushProductToCache(currentProduct));
+      resetParams(dispatch);
+      dispatch(setConnectionStatus(ConnectionStatusTypes.SUCCESSFUL_FETCH));
+      dispatch(setConnectionMessage("Producto ingresado con exito"));
     })
     .catch((error) => {
-      //todo
+      dispatch(setConnectionStatus(ConnectionStatusTypes.FAILED_FETCH));
+      dispatch(setConnectionMessage(error));
     });
 };
 
@@ -108,16 +110,17 @@ const patchTextToDBAndRefetch = () => (dispatch, getState) => {
     keyValuePair = { precio_venta_neto: precioVentaNetoFromState(state) };
   if (descripcionActiveFromState(state))
     keyValuePair = { descripcion: descripcionFromState(state) };
-
+  dispatch(setConnectionStatus(ConnectionStatusTypes.FETCHING));
+  dispatch(setConnectionMessage("Actualizando Producto..."));
   patchProduct(sku, keyValuePair)
-    .then((message) => {
-      if (message) {
-        //todo
-      }
-      //fetchProductsFromDBToCache()(dispatch);
-      //todo
+    .then((serverMessage) => {
+      dispatch(setConnectionStatus(ConnectionStatusTypes.SUCCESSFUL_FETCH));
+      dispatch(setConnectionMessage("Producto actualizado con exito"));
     })
-    .catch((error) => {});
+    .catch((error) => {
+      dispatch(setConnectionStatus(ConnectionStatusTypes.FAILED_FETCH));
+      dispatch(setConnectionMessage(error));
+    });
 };
 
 export {

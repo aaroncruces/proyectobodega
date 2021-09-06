@@ -6,7 +6,7 @@ import Throbber from "./Throbber";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
-import Props_Form_Search_Product from "./prop_types/type_Props_Form_Search_Product";
+import Props_Form_Search_Modify_Product from "./prop_types/type_Props_Form_Search_Modify_Product";
 import Datalist_sku from "./Datalist_sku";
 import Datalist_modelo from "./Datalist_modelo";
 import Datalist_marca from "./Datalist_marca";
@@ -20,8 +20,9 @@ import Inputbox_iva from "./Inputbox_iva";
 import Button_Reset_form from "./Button_Reset_form";
 import { resetStoreParamsAndFilteredList } from "../helpers/resetStoreParamsAndFilteredList";
 import Button_Go_To_Alter_Parameters from "./Button_Go_To_Alter_Parameters";
+import Alert_Connection_Status from "./Alert_Connection_Status";
 
-class Form_Search_Product extends Component<Props_Form_Search_Product> {
+class Form_Search_Modify_Product extends Component<Props_Form_Search_Modify_Product> {
   constructor(props) {
     super(props);
     this.props.reFetchProductListToCache();
@@ -32,6 +33,7 @@ class Form_Search_Product extends Component<Props_Form_Search_Product> {
 
     return (
       <>
+        <Alert_Connection_Status />
         <form className="container">
           <div className="row mb-3">
             {/*//@ts-ignore */}
@@ -86,13 +88,13 @@ class Form_Search_Product extends Component<Props_Form_Search_Product> {
   }
 }
 
-const mapStateToProps = (state: any): Props_Form_Search_Product => ({
+const mapStateToProps = (state: any): Props_Form_Search_Modify_Product => ({
   cachedProductList: cachedProductListFromState(state),
 });
 
 const mapDispatchToProps = (
   dispatch: (any) => any
-): Props_Form_Search_Product => ({
+): Props_Form_Search_Modify_Product => ({
   //thunk
   reFetchProductListToCache: () => dispatch(fetchProductsFromDBToCache()),
   resetParamsAndFilteredLists: () => resetStoreParamsAndFilteredList(dispatch),
@@ -101,4 +103,4 @@ const mapDispatchToProps = (
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form_Search_Product);
+)(Form_Search_Modify_Product);

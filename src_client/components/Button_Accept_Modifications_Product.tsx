@@ -1,10 +1,7 @@
 import { connect } from "react-redux";
 import Props_Button from "./prop_types/type_props_button";
 import Button from "./Button";
-import {
-  patchTextToDBAndRefetch,
-  postTextToDBAndCache,
-} from "../redux/cachedProductList/cachedProductListActionCreators";
+import { patchTextToDBAndRefetch } from "../redux/cachedProductList/cachedProductListActionCreators";
 import {
   onInput as descriptionFormatInput,
   onBlur as descriptionFormatBlur,
@@ -13,7 +10,6 @@ import {
   onInput as codesFormatInput,
   onBlur as codesFormatBlur,
 } from "../helpers/formato_codigos";
-import { valueToNumber } from "../helpers/formato_cantidades_enteras";
 import {
   codigo_barrasFromState,
   cachedProductListFromState,
@@ -42,6 +38,7 @@ const mapStateToProps = (state): Props_Button => ({
       ? "ms-2 btn btn-primary"
       : "ms-2 btn btn-danger",
   invalid: checkStateForLabel(state) != SUCCESSFUL_LABEL,
+  url: "/modificar_producto",
 });
 
 const SUCCESSFUL_LABEL = "Aplicar Cambios";

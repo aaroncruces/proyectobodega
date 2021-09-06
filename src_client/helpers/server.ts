@@ -6,7 +6,7 @@ import { delay } from "./delay";
 //To diferentiate between devel and prod
 //@ts-ignore
 const url = WP_URL;
-const delay_amount = 3000;
+const delay_amount = 2000;
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
@@ -27,16 +27,14 @@ export const fetchProducts = async (): Promise<Product[]> => {
       return productList;
     }
     //todo: differentiate between httpStatusCodes
-    errorMessage = "Ha habido un error en el servidor";
+    errorMessage = "Ha habido un error en el servidor, Productos no obtenidos.";
     throw errorMessage;
   } catch (error) {
     throw "Ha habido un error";
   }
 };
 
-export const postProduct = async (
-  producto: Product
-): Promise<{ success: boolean; message: string }> => {
+export const postProduct = async (producto: Product) => {
   //intento ingresar el producto
   const response = await fetch(url + "/api/ingreso", {
     method: "POST",
@@ -50,19 +48,17 @@ export const postProduct = async (
 
   const datos_error = await response.json();
 
-  if (response.status == HttpStatusCode.CREATED) {
-    return { success: true, message: "Producto ingresado con exito" };
-  }
-  const failureMessage = "Producto no ingresado";
   //@ts-ignore
-  if (WP_URL) await delay(5000);
-  return { success: false, message: failureMessage };
+  if (WP_URL) await delay(delay_amount);
+
+  if (response.status == HttpStatusCode.CREATED) {
+    return;
+  }
+  //todo: differentiate between httpStatusCodes
+  throw "Ha habido un error en el servidor, Producto no ingresado.";
 };
 
-export const patchProduct = async (
-  sku: string,
-  keyValuePair: object
-): Promise<object> => {
+export const patchProduct = async (sku: string, keyValuePair: object) => {
   const response = await fetch(url + "/api/modify_product_parameter", {
     method: "PATCH",
     mode: "cors",
@@ -75,6 +71,14 @@ export const patchProduct = async (
       keyValuePair,
     }),
   });
+  const datos_error = await response.json();
 
-  return {};
+  //@ts-ignore
+  if (WP_URL) await delay(delay_amount);
+
+  if (response.status == HttpStatusCode.CREATED) {
+    return;
+  }
+  //todo: differentiate between httpStatusCodes
+  throw "Ha habido un error en el servidor, Producto no actualizado.";
 };
