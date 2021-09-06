@@ -6,7 +6,7 @@ import Throbber from "./Throbber";
 // redux custom
 import { fetchProductsFromDBToCache } from "../redux/cachedProductList/cachedProductListActionCreators";
 import { cachedProductListFromState } from "../redux/StateValueExtractor";
-import Props_Form_Search_Product from "../helpers/type_Props_Form_Search_Product";
+import Props_Form_Search_Product from "./prop_types/type_Props_Form_Search_Product";
 import Datalist_sku from "./Datalist_sku";
 import Datalist_modelo from "./Datalist_modelo";
 import Datalist_marca from "./Datalist_marca";
