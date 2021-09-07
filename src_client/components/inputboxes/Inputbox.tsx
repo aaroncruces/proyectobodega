@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, KeyboardEventHandler } from "react";
 import Props_inputbox from "../prop_types/type_props_Inputbox";
 
 export default class Inputbox<T extends Props_inputbox> extends Component<T> {
@@ -19,6 +19,9 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
   private onClick_Inputbox = () => {
     this.props.execOnclick?.();
   };
+  private onKeyDown_Inputbox = (event: React.KeyboardEvent<any>) => {
+    this.props.execOnKeyDown?.(event);
+  };
 
   render() {
     return (
@@ -31,10 +34,11 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
         </label>
         <input
           name={this.props.name}
-          type="text"
+          type={this.props.type || "text"}
           className={
             this.props.invalidComparator == undefined ||
-            this.props.invalidComparator(this.props.textInputBox) == ""
+            this.props.invalidComparator(this.props.textInputBox.toString()) ==
+              ""
               ? "form-control"
               : "form-control is-invalid"
           }
@@ -42,12 +46,14 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
           onInput={this.onInput_Inputbox}
           onBlur={this.onBlur_Inputbox}
           onClick={this.onClick_Inputbox}
+          onKeyDown={this.onKeyDown_Inputbox}
           disabled={this.props.disabled}
         />
         {this.props.invalidComparator != undefined &&
-          this.props.invalidComparator(this.props.textInputBox) != "" && (
+          this.props.invalidComparator(this.props.textInputBox.toString()) !=
+            "" && (
             <div className="invalid-feedback">
-              {this.props.invalidComparator(this.props.textInputBox)}
+              {this.props.invalidComparator(this.props.textInputBox.toString())}
             </div>
           )}
       </div>

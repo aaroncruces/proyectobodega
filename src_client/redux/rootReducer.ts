@@ -11,6 +11,7 @@ import filteredProductListReducer from "./filteredProductList/filteredProductLis
 import { combineReducers } from "redux";
 import precio_venta_brutoReducer from "./productParameters/precio_venta_bruto/precio_venta_brutoReducer";
 import connectionStatusReducer from "./connectionStatus/connectionStatusReducer";
+import amountPerScanReducer from "./amountPerScan/amountPerScanReducer";
 
 const rootReducer = combineReducers({
   skuReducer,
@@ -25,5 +26,6 @@ const rootReducer = combineReducers({
   cachedProductListReducer,
   filteredProductListReducer,
   connectionStatusReducer,
+  amountPerScanReducer,
 });
 export default rootReducer;

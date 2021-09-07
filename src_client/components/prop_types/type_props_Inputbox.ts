@@ -1,13 +1,17 @@
+import { KeyboardEventHandler } from "react";
+
 type Props_Inputbox = {
-  textInputBox?: string;
+  textInputBox?: string | number;
   updateStoreValueReducer?: (string) => any;
   cssClassContainer?: string;
   invalidComparator?: (text: string) => string;
   name?: string;
+  type?: string;
   labelBody?: string;
-  format_onBlur?: (text: string) => string | number;
-  format_onInput?: (text: string) => string | number;
+  format_onBlur?: (text) => string | number;
+  format_onInput?: (text) => string | number;
   disabled?: boolean;
   execOnclick?: () => any;
+  execOnKeyDown?: (event: React.KeyboardEvent<any>) => any;
 };
 export default Props_Inputbox;

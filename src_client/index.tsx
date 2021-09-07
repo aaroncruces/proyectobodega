@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import React from "react";
 import Form_Create_Product from "./components/forms/Form_Create_Product";
 import Form_Alter_Product_Parameters from "./components/forms/Form_Alter_Product_Parameters";
+import Form_Add_By_Codigo_Barras from "./components/forms/Form_Add_By_Codigo_Barras";
 import Navbar from "./components/other_components/Navbar";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -31,6 +32,11 @@ const APP = () => {
             path="/alterar_parametros_producto"
             exact
             component={Form_Alter_Product_Parameters}
+          />
+          <Route
+            path="/agregar_por_codigo_barras"
+            exact
+            component={Form_Add_By_Codigo_Barras}
           />
         </Switch>
       </Router>

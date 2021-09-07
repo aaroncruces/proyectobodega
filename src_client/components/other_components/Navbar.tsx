@@ -39,7 +39,12 @@ export default class Navbar extends Component {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="alterar_parametros_producto">
-                  Alterar Parametros
+                  Alterar Parametros (testing)
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="agregar_por_codigo_barras">
+                  Agregar por Codigo de barras
                 </NavLink>
               </li>
               <li className="nav-item dropdown">

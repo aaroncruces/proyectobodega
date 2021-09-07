@@ -2,61 +2,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // Subcomponents
-import Inputbox_sku_Alter_Product from "../inputboxes/Inputbox_sku_Alter_Product";
-import Inputbox_codigo_barras_Alter_Product from "../inputboxes/Inputbox_codigo_barras_Alter_Product";
-import Inputbox_modelo_Alter_Product from "../inputboxes/Inputbox_modelo_Alter_Product";
-import Inputbox_cantidad_Alter_Product from "../inputboxes/Inputbox_cantidad_Alter_Product";
-import Inputbox_ubicacion_Alter_Product from "../inputboxes/Inputbox_ubicacion_Alter_Product";
-import Inputbox_marca_Alter_Product from "../inputboxes/Inputbox_marca_Alter_Product";
-import Inputbox_precio_venta_neto_Alter_Product from "../inputboxes/Inputbox_precio_venta_neto_Alter_Product";
-import Inputbox_precio_venta_bruto_Alter_Product from "../inputboxes/Inputbox_precio_venta_bruto_Alter_Product";
-import Inputbox_iva from "../inputboxes/Inputbox_iva";
-import Inputbox_descripcion_Alter_Product from "../inputboxes/Inputbox_descripcion_Alter_Product";
-import Props_Form_Alter_Product from "../prop_types/type_Props_Form_Alter_Product";
-import { activateParams } from "../../helpers/activateParams";
-import Button_Go_To_Search_Product_Parameters from "../buttons/Button_Go_To_Search_Product_Parameters";
-import Button_Accept_Modifications_Product from "../buttons/Button_Accept_Modifications_Product";
+import Inputbox_amount_per_scan from "../inputboxes/Inputbox_amount_per_scan";
+import Inputbox_Add_By_Codigo_Barras from "../inputboxes/Inputbox_codigo_barras_Add_By_Codigo_Barras";
+import Alert_Connection_Status from "../other_components/Alert_Connection_Status";
+import { fetchProductsFromDBToCache } from "../../redux/cachedProductList/cachedProductListActionCreators";
+import Props_Form_Add_By_Codigo_Barras from "../prop_types/type_Props_Form_Add_By_Codigo_Barras";
 
-class Form_Alter_Product_Parameters extends Component<Props_Form_Alter_Product> {
+class Form_Add_By_Codigo_Barras extends Component<Props_Form_Add_By_Codigo_Barras> {
   constructor(props) {
     super(props);
+    this.props.fetchProductList();
   }
   render() {
-    this.props.unlockParams();
     return (
       <>
+        <Alert_Connection_Status />
         <form className="container">
           <div className="row mb-3">
             {/*//@ts-ignore */}
-            <Inputbox_sku_Alter_Product cssClassContainer="col-md-4 form-group" />
+            <Inputbox_Add_By_Codigo_Barras cssClassContainer="col-md-12 form-group" />
             {/*//@ts-ignore */}
-            <Inputbox_codigo_barras_Alter_Product cssClassContainer="col-md-3 form-group" />
-            {/*//@ts-ignore */}
-            <Inputbox_modelo_Alter_Product cssClassContainer="col-md-5 form-group" />
-          </div>
-          <div className="row mb-4">
-            {/*//@ts-ignore */}
-            <Inputbox_cantidad_Alter_Product cssClassContainer="col-md-4 form-group" />
-            {/*//@ts-ignore */}
-            <Inputbox_ubicacion_Alter_Product cssClassContainer="col-md-4 form-group" />
-            {/*//@ts-ignore */}
-            <Inputbox_marca_Alter_Product cssClassContainer="col-md-4 form-group" />
-          </div>
-          <div className="row mb-3">
-            {/*//@ts-ignore */}
-            <Inputbox_precio_venta_neto_Alter_Product cssClassContainer="col-md-4 form-group" />
-            {/*//@ts-ignore */}
-            <Inputbox_iva cssClassContainer="col-md-4 form-group" />
-            {/*//@ts-ignore */}
-            <Inputbox_precio_venta_bruto_Alter_Product cssClassContainer="col-md-4 form-group" />
-          </div>
-          <div className="row mb-3">
-            {/*//@ts-ignore */}
-            <Inputbox_descripcion_Alter_Product cssClassContainer="col-md-12 form-group" />
+            <Inputbox_amount_per_scan cssClassContainer="col-md-12 form-group" />
           </div>
           <div className="d-flex align-items-center">
-            <Button_Go_To_Search_Product_Parameters />
-            <Button_Accept_Modifications_Product />
+            {
+              //buttons
+            }
           </div>
         </form>
       </>
@@ -64,15 +35,15 @@ class Form_Alter_Product_Parameters extends Component<Props_Form_Alter_Product> 
   }
 }
 
-const mapStateToProps = (state: any): Props_Form_Alter_Product => ({});
+const mapStateToProps = (state: any): Props_Form_Add_By_Codigo_Barras => ({});
 
 const mapDispatchToProps = (
   dispatch: (any) => any
-): Props_Form_Alter_Product => ({
-  unlockParams: () => activateParams(dispatch),
+): Props_Form_Add_By_Codigo_Barras => ({
+  fetchProductList: () => dispatch(fetchProductsFromDBToCache()),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form_Alter_Product_Parameters);
+)(Form_Add_By_Codigo_Barras);

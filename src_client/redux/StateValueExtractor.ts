@@ -12,6 +12,7 @@ import StateUbicacion from "./productParameters/ubicacion/type_state_ubicacion";
 import StateFilteredProductList from "./filteredProductList/type_StateFilteredProductList";
 import StateConnectionStatus from "./connectionStatus/type_state_connectionStatus";
 import ConnectionStatusTypes from "./connectionStatus/enumConnectionStatusTypes";
+import StateAmountPerScan from "./amountPerScan/type_StateAmountPerScan";
 
 const cachedProductListFromState = (state): Product[] =>
   (state.cachedProductListReducer as StateCachedProductList).cachedProductList;
@@ -62,10 +63,15 @@ const precioVentaNetoActiveFromState = (state): boolean =>
 const precioVentaBrutoActiveFromState = (state): boolean =>
   (state.precio_venta_brutoReducer as StatePrecio_venta_bruto)
     .precio_venta_bruto_parameterActive;
+
 const connectionStatusFromState = (state): ConnectionStatusTypes =>
   (state.connectionStatusReducer as StateConnectionStatus).connectionStatus;
 const connectionMessageFromState = (state): string =>
   (state.connectionStatusReducer as StateConnectionStatus).connectionMessage;
+
+const amountPerScanFromState = (state): number =>
+  (state.amountPerScanReducer as StateAmountPerScan).amountPerScan;
+
 export {
   cachedProductListFromState,
   filteredProductListFromState,
@@ -88,4 +94,5 @@ export {
   cantidadActiveFromState,
   connectionStatusFromState,
   connectionMessageFromState,
+  amountPerScanFromState,
 };
