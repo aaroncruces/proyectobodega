@@ -8,10 +8,10 @@ import {
 import { setCantidad } from "../../redux/productParameters/cantidad/cantidadActionCreators";
 import { cantidadFromState } from "../../redux/StateValueExtractor";
 
-const mapStateToProps = (state): Props_inputbox => ({
+const mapStateToProps = (state, ownprops: Props_inputbox): Props_inputbox => ({
   textInputBox: valueToString(cantidadFromState(state)),
   name: "cantidad",
-  labelBody: "Cantidad",
+  labelBody: ownprops.labelBody || "Cantidad",
   format_onBlur: valueToNumber,
   format_onInput: valueToNumber,
 });

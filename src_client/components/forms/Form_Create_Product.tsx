@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Inputbox_sku_Create_Product from "../inputboxes/Inputbox_sku_Create_Product";
 import Inputbox_codigo_barras_Create_Product from "../inputboxes/Inputbox_codigo_barras_Create_Product";
 import Inputbox_modelo_Create_Product from "../inputboxes/Inputbox_modelo_Create_Product";
-import Inputbox_cantidad from "../inputboxes/Inputbox_cantidad_Add_By_Codigo_Barras";
+import Inputbox_cantidad from "../inputboxes/Inputbox_cantidad";
 import Inputbox_ubicacion from "../inputboxes/Inputbox_ubicacion";
 import Inputbox_marca_Create_Product from "../inputboxes/Inputbox_marca_Create_Product";
 import Inputbox_precio_venta_neto from "../inputboxes/Inputbox_precio_venta_neto";

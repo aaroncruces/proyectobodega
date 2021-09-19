@@ -10,6 +10,7 @@ export default class Inputbox<T extends Props_inputbox> extends Component<T> {
     this.props.updateStoreValueReducer(
       this.props.format_onInput(event.target.value)
     );
+    this.props.execOnInput?.(event);
   };
   private onBlur_Inputbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.props.updateStoreValueReducer(

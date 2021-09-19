@@ -13,5 +13,6 @@ type Props_Inputbox = {
   disabled?: boolean;
   execOnclick?: () => any;
   execOnKeyDown?: (event: React.KeyboardEvent<any>) => any;
+  execOnInput?: (event: React.ChangeEvent<HTMLInputElement>) => any;
 };
 export default Props_Inputbox;
